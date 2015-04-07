@@ -47,7 +47,7 @@
     <h3 style="position:absolute; top:00px; left:50px;"><span id="stats"></span></h3>
 </div>
 
-<div style="width:100% height:50px; background-color:#ddd; padding:10px; margin:10px;">
+<div style="width:100%; height:50px; background-color:#ddd; padding:10px; margin:10px;">
     <?php echo _("Edit feed_"); ?><?php echo $feedid; ?> <?php echo _("@ time:"); ?> <input type="text" id="time" style="width:150px;" value="" /> <?php echo _("new value:"); ?>
     <input type="text" id="newvalue" style="width:150px;" value="" />
     <button id="okb" class="btn btn-info"><?php echo _('Save'); ?></button>

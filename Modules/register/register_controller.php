@@ -24,11 +24,18 @@ function register_controller() {
             if (strlen ($apikey)!= 32){
                 misformedError();
                 return array('content'=> " Json string wrong length");
+            }else{
+                if (correctApiKey($apikey)===0){
+                    return array ('content'=> " Apikey is incorrect to write for this user");
+                }
             }
+            
             if (!ip2long ($nodeip)){
                 misformedError();
                 return array('content'=> " Node ip incorrect");
             }
+            
+            
             /*
              * Check if the node that is trying to register has been registered previously, if not add to the table Node_reg
              */
@@ -38,6 +45,41 @@ function register_controller() {
                 print_r("Already Registered Node");
             }
                 
+        }elseif($route->action == 'setup') {
+        
+            if (isset($_GET["apikey"])) {
+                $apikey = $_GET ["apikey"];
+            }
+            
+            if (isset($_GET["node"])) {
+                $nodeid = $_GET ["node"];
+            }
+            
+            if (isset($_GET["json"])) {
+                $json = $_GET ["json"];
+            }
+            
+            if (isset($_GET["timeout"])) {
+                $timeout = $_GET ["timeout"];
+            }
+            
+            if (strlen ($apikey)!= 32){
+                misformedError();
+                return array('content'=> " Json string wrong length");
+            }else{
+                if (correctApiKey($apikey)===0){
+                    return array ('content'=> " Apikey is incorrect to write for this user");
+                }
+            }
+            
+            if (correctNodeID($nodeid)===0){
+                return array ('content'=> " NodeID mismatch");
+
+            }
+            
+            
+            //print_r($apikey . $nodeid . $json . $timeout);
+            
         }else{misformedError($route);}
     }else{misformedError($route);}
 }
@@ -75,4 +117,29 @@ function nodeMessage($nodeip) {
 
 function misformedError(){
     print_r("Json string misformed");
+}
+
+function correctApiKey($apikey){
+    global $mysqli;
+    $result = $mysqli->query("SELECT apikey_write FROM users WHERE `apikey_write` = '$apikey'");
+    if ($result->num_rows === 1) {
+        return 1;
+    } else {
+        misformedError();
+    }
+}
+
+function correctNodeID($nodeid){
+    global $mysqli;
+    $result = $mysqli->query("SELECT nodeid FROM nodereg WHERE `nodeid` = '$nodeid'");
+    if ($result->num_rows === 1){
+        return 1;
+    }else{
+        misformedError();
+    }  
+}
+
+function addInput(){
+    global $mysqli;
+    
 }

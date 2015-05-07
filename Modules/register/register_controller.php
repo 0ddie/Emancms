@@ -7,6 +7,12 @@ function register_controller() {
 
     if ($route->format == 'json') {
         $timeStart = microtime(true);
+        if ($route->action == 'test'){
+            $json = '12,34,56,78';
+            $register->jsonParse($json);
+                
+        
+        }
         if ($route->action == 'create') {
 
 
@@ -86,6 +92,10 @@ function register_controller() {
 
                 $register->misformedError();
                 return array('content' => "Node id's are different within String");
+            }
+            
+            if ($register->jsonParse($json)===1){
+                print_r("Yes");
             }
 
         } else {

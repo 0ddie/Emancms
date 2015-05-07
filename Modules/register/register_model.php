@@ -132,8 +132,35 @@ class register {
         
     }
     
-    
-
+   /*
+    * Pulls the MAC Address from the node and adds it to the table
+    */
+    public function MACAddress()
+    {
+        
+    }
+    public function jsonParse($json){
+        $firstcomma = strpos( $json , ',' , 0 );
+        $firstoffset= $firstcomma + 1;
+        $secondcomma = strpos( $json, ',' , $firstoffset);
+        $secondoffset = $secondcomma + 1;
+        $thirdcomma = strpos( $json, ',' , $secondoffset);
+        $thirdoffset = $thirdcomma+1;
+        $fourthcomma = strpos( $json, ',', $thirdoffset);
+        $firstone=substr($json, 0, $firstcomma);
+        print_r($firstone);
+        print_r("       ");
+        $secondone=substr($json, $firstoffset, $secondoffset);
+        print_r($secondone);
+        print_r("       ");
+        $thirdone=substr($json, $secondoffset, $thirdcomma);
+        print_r($thirdone);
+        print_r("       ");
+        $fourthone=  substr($json, $thirdoffset, $fourthcomma);
+        print_r($fourthone);
+       
+        
+        }
 }
 
 /*

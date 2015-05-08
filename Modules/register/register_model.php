@@ -146,22 +146,26 @@ class register {
         $secondoffset = $secondcomma + 1;
         $thirdcomma = strpos( $json, ',' , $secondoffset);
         $thirdoffset = $thirdcomma+1;
-        $fourthcomma = strpos( $json, ',', $thirdoffset);
-        $firstone=substr($json, 0, $firstcomma);
-        print_r($firstone);
-        print_r("       ");
-        $secondone=substr($json, $firstoffset, $secondoffset);
-        print_r($secondone);
-        print_r("       ");
-        $thirdone=substr($json, $secondoffset, $thirdcomma);
-        print_r($thirdone);
-        print_r("       ");
-        $fourthone=  substr($json, $thirdoffset, $fourthcomma);
-        print_r($fourthone);
-       
-        
+        $groupID=substr($json, 0, $firstcomma);
+        print_r($groupID);
+        print_r(",");
+        $attributeID=substr($json, $firstoffset, ($secondcomma - $firstoffset));
+        print_r($attributeID);
+        print_r(",");
+        $attributeNumber=substr($json, $secondoffset, ($thirdcomma - $secondoffset));
+        print_r($attributeNumber);
+        print_r(",");
+        $attributeDefaultValue=  substr($json, $thirdoffset);
+        print_r($attributeDefaultValue);
         }
+        
+    public function saveToAttributes($groupID,$attributeID,$attributeNumber,$attributeDefaultValue){
+         global $mysqli;
+        $mysqli->query("INSERT INTO Node_reg (groupid,attributeId,attributeNumber,attributeDefaultValue) VALUES ('$groupID','$attributeID','$attributeNumber','$attributeDefaultValue)");
+        print_r("Attribute added to attributes");
+    }
 }
+    
 
 /*
  * To change this license header, choose License Headers in Project Properties.

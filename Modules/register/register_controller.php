@@ -8,7 +8,7 @@ function register_controller() {
     if ($route->format == 'json') {
         $timeStart = microtime(true);
         if ($route->action == 'test'){
-            $json = '12,34,56,78';
+            $json = '11111,22222,33333,44444';
             $register->jsonParse($json);
                 
         

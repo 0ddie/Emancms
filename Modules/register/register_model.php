@@ -7,11 +7,11 @@ class register {
      * Querys the db to see if the node you're trying to register exist
      */
 
-    public function exists($nodeip) {
+    public function exists($nodeMAC) {
         global $mysqli;
-        $result = $mysqli->query("SELECT FromAddress FROM Node_reg WHERE `FromAddress` = '$nodeip'");
+        $result = $mysqli->query("SELECT FromAddress FROM Node_reg WHERE `FromAddress` = '$nodeMAC'");
         if ($result->num_rows === 1) {
-            nodeMessage($nodeip);
+            nodeMessage($nodeMAC);
             return 1;
         } else {
             return 0;
@@ -46,13 +46,35 @@ class register {
     }
     /*
      * Checks the IP is a valid IP
-     */
+     
 
-    public function ipchecker($nodeip) {
+    public function ipchecker() {
         if (!ip2long($nodeip)) {
             $this->misformedError();
             return 1;
         }
+    }
+     * 
+     * 
+     */
+    public function checkMACAddress($nodeMAC){
+        function is_valid_mac($nodeMAC)
+    {   
+    // 01:23:45:67:89:ab
+    if (preg_match('/^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$/', $nodeMAC))
+        return 1;
+    // 01-23-45-67-89-ab
+    if (preg_match('/^([a-fA-F0-9]{2}\-){5}[a-fA-F0-9]{2}$/', $nodeMAC))
+        return 1;
+    // 0123456789ab
+    else if (preg_match('/^[a-fA-F0-9]{12}$/', $nodeMAC))
+        return 1;
+    // 0123.4567.89ab
+    else if (preg_match('/^([a-fA-F0-9]{4}\.){2}[a-fA-F0-9]{4}$/', $nodeMAC))
+        return 1;
+    else
+        return 0;
+}
     }
     /*
      * checks the node ID is a correct node ID
@@ -103,11 +125,11 @@ class register {
      * adds a node to the Node_Reg table
      */
 
-    public function addNode($nodeip) {
+    public function addNode($nodeMAC) {
         global $mysqli;
         $nodeid = $this->nodeIDIncrementer();
-        $mysqli->query("INSERT INTO Node_reg (NodeID,FromAddress) VALUES ('$nodeid','$nodeip')");
-        $this->nodeMessage($nodeip);
+        $mysqli->query("INSERT INTO Node_reg (NodeID,FromAddress) VALUES ('$nodeid','$nodeMAC')");
+        $this->nodeMessage($nodeMAC);
         print_r("Node added to Node_reg");
     }
 
@@ -115,9 +137,9 @@ class register {
      * Function to pull node id from table Node_reg
      */
 
-    public function nodeMessage($nodeip) {
+    public function nodeMessage($nodeMAC) {
         global $mysqli;
-        $result = $mysqli->query("SELECT NodeID FROM `Node_reg` WHERE `FromAddress` = '$nodeip' ");
+        $result = $mysqli->query("SELECT NodeID FROM `Node_reg` WHERE `FromAddress` = '$nodeMAC' ");
         $row = mysqli_fetch_assoc($result);
         print_r($row);
     }
@@ -139,7 +161,7 @@ class register {
     {
         
     }
-    public function jsonParse($json){
+    public function jsonParse($json,$nodeid){
         $firstcomma = strpos( $json , ',' , 0 );
         $firstoffset= $firstcomma + 1;
         $secondcomma = strpos( $json, ',' , $firstoffset);
@@ -157,14 +179,44 @@ class register {
         print_r(",");
         $attributeDefaultValue=  substr($json, $thirdoffset);
         print_r($attributeDefaultValue);
+        $this->saveToAttributes($groupID,$attributeID,$attributeNumber,$attributeDefaultValue,$nodeid);
+        return 1;
         }
-        
-    public function saveToAttributes($groupID,$attributeID,$attributeNumber,$attributeDefaultValue){
+        /* I think this should be a whole other module.
+         * What i've just written resembles a controller class
+         * Attributes registration module maybe?
+         */
+    public function checkAttributeNumber($attributeNumber){
+        global $mysqli;
+        $result = $mysqli->query("SELECT NodeID FROM Node_reg WHERE `NodeID` = '$nodeid'");
+        if ($result->num_rows === 1) {
+            return 0;
+        } else {
+
+            $this->misformedError();
+            return 1;
+        }
+        /*
+         * I want to do a bug check to check if the groupID is valid.
+         * Surely there's a better way than writing them all in a hash table then calling them?
+         */
+    }
+    public function saveToAttributes($groupID,$attributeID,$attributeNumber,$attributeDefaultValue,$nodeid){
          global $mysqli;
-        $mysqli->query("INSERT INTO Node_reg (groupid,attributeId,attributeNumber,attributeDefaultValue) VALUES ('$groupID','$attributeID','$attributeNumber','$attributeDefaultValue)");
+        $mysqli->query("INSERT INTO attributes (groupid,attributeId,attributeNumber,attributeDefaultValue,nodeid) VALUES ('$groupID','$attributeID','$attributeNumber','$attributeDefaultValue','$nodeid)");
         print_r("Attribute added to attributes");
     }
-}
+
+    public function inputcreator(){
+        global $mysqli;
+        $result = $mysqli->query("SELECT ");
+        /*
+         * Need to import userid, nodeid and name to here. Should name be groupid?
+         */
+        
+    }
+    
+    }
     
 
 /*

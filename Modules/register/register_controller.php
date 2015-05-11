@@ -22,8 +22,8 @@ function register_controller() {
             if (isset($_GET["apikey"])) {
                 $apikey = $_GET ["apikey"];
             }
-            if (isset($_GET["nodeip"])) {
-                $nodeip = $_GET ["nodeip"];
+            if (isset($_GET["nodeMAC"])) {
+                $nodeMAC = $_GET ["nodeMAC"];
             }
             if (isset($_GET["timeout"])) {
                 $timeout = $_GET ["timeout"];
@@ -38,13 +38,20 @@ function register_controller() {
             }
 
 
-            if ($register->ipchecker($nodeip) === 1) {
-                return array('content' => " Node ip incorrect");
+            /*if ($register->ipchecker($nodeMAC) === 1) {
+                return array('content' => " Node mac incorrect");
+            }*/
+            if ($register->checkMACAddress($nodeMAC)===1){
+                return array('content' => " incorrectly formatted MAC Address");
             }
+            /*
+             * What are the nodeid and Name for the create input
+             */
+                
 
-            if ($register->exists($nodeip) === 0) {
+            if ($register->exists($nodeMAC) === 0) {
                 $register->nodeIDIncrementer();
-                $register->addNode($nodeip);
+                $register->addNode($nodeMAC);
             } else {
                 print_r(" Already Registered Node");
             }
@@ -81,12 +88,14 @@ function register_controller() {
                 return array('content' => "Node ID Mismatch");
             }
 
-            if ($register->jsonStringError($json, $nodeid) === 1) {
+            /*if ($register->jsonStringError($json, $nodeid) === 1) {
                 $register->misformedError();
                 return array('content' => "Json section wrong length");
             }
+             * 
+             */
             $nodeidL = strlen($nodeid);
-
+            
 
             if ($register->nodeIDConstant($nodeid, $json, $nodeidL) === 1) {
 
@@ -94,7 +103,7 @@ function register_controller() {
                 return array('content' => "Node id's are different within String");
             }
             
-            if ($register->jsonParse($json)===1){
+            if ($register->jsonParse($json,$nodeid)===1){
                 print_r("Yes");
             }
 
@@ -104,6 +113,7 @@ function register_controller() {
     } else {
         $register->misformedError($route);
     }
+    
 }
 
 /*

@@ -1,0 +1,147 @@
+[33mcommit c44c009f1f5c4dc9c4ca4d4d1fe4bce5e995d3d7[m
+Author: cagabi <cagabi@lapiluka.org>
+Date:   Tue May 12 13:47:45 2015 +0100
+
+    Rules module added, work in progress
+
+[33mcommit 6ca0001322506df11013d845dd310eb8105d9ece[m
+Author: 0ddie <meo9@aber.ac.uk>
+Date:   Mon May 11 17:33:32 2015 +0100
+
+    	modified:   Modules/register/register_controller.php
+    	modified:   Modules/register/register_model.php
+
+[33mcommit 1284132dc9de560ef91b34dfc97149cd94abc4d1[m
+Author: 0ddie <meo9@aber.ac.uk>
+Date:   Fri May 8 20:04:46 2015 +0100
+
+    	modified:   Modules/register/register_controller.php
+    	modified:   Modules/register/register_model.php
+
+[33mcommit 08cecedff2421594532040b0604b132191ed66dc[m
+Author: 0ddie <meo9@aber.ac.uk>
+Date:   Thu May 7 20:44:40 2015 +0100
+
+    	modified:   Modules/register/register_controller.php
+    	modified:   Modules/register/register_model.php
+
+[33mcommit c0fef5f12ebd9061c069a5a42df8ac9baf6c055e[m
+Author: 0ddie <meo9@aber.ac.uk>
+Date:   Thu May 7 10:17:17 2015 +0100
+
+    	modified:   Modules/register/register_controller.php
+    	new file:   Modules/register/register_model.php
+
+[33mcommit d3ed94d328b49707fd7b25a9e8aafc3cd0937bff[m
+Author: 0ddie <meo9@aber.ac.uk>
+Date:   Fri Apr 24 15:50:55 2015 +0100
+
+    First packet finished second packet started
+
+[33mcommit 8c2d91bd140299748972f1de539c3db49d2b0c95[m
+Author: 0ddie <meo9@aber.ac.uk>
+Date:   Thu Apr 23 13:31:25 2015 +0100
+
+    latest update of registration module
+
+[33mcommit bd3cfcf1ba97d578190d1ad927049d111b9fa800[m
+Author: 0ddie <meo9@aber.ac.uk>
+Date:   Wed Apr 22 15:49:40 2015 +0100
+
+    Latest Register Module work
+
+[33mcommit 80de70a2e713b6d7b9a83cce187776c7857d98bd[m
+Author: cagabi <cagabi@lapiluka.org>
+Date:   Thu Apr 16 12:32:39 2015 +0100
+
+    last commit broke everything
+
+[33mcommit c20f2b9ad1f2154fe364463055e1f9d19935ab8a[m
+Merge: b7c01ad e08f955
+Author: cagabi <cagabi@lapiluka.org>
+Date:   Thu Apr 16 12:19:19 2015 +0100
+
+    Merge branch 'master' of https://github.com/CentreForAlternativeTechnology/OpenEMan
+
+[33mcommit b7c01ad208ae8cba892550c8536d148896c3fa93[m
+Author: cagabi <cagabi@lapiluka.org>
+Date:   Thu Apr 16 12:18:52 2015 +0100
+
+    fixed directory and controller naming - output added
+
+[33mcommit e08f955bb9b86c59c7b4dacc7fa06e5235f637f4[m
+Author: Michael Oddie <meo9@aber.ac.uk>
+Date:   Tue Apr 14 13:18:56 2015 +0000
+
+    Further development of the register module
+    
+    Deleted some useless code and added in a failsafe for if the feed is
+    already created
+
+[33mcommit b77c5b203fd1251e614d642b7596d1fea6a53907[m
+Author: cagabi <cagabi@lapiluka.org>
+Date:   Tue Apr 7 16:54:13 2015 +0100
+
+    add missing ; in editdaily.php and editrealtime.php
+
+[33mcommit 82795a915f60795e4aa01d38df3977daed31148b[m
+Author: Michael Oddie <meo9@aber.ac.uk>
+Date:   Wed Apr 1 09:09:04 2015 +0000
+
+    My current fork of emoncms
+
+[33mcommit 3afd75a60f7cc7eee66dc0cf5f936d94acd0ee32[m
+Author: Michael Oddie <meo9@aber.ac.uk>
+Date:   Tue Feb 3 14:14:57 2015 +0000
+
+    Specifications defined to aide Aber students.
+
+[33mcommit 08b81887c39704fec81e966cc4535802ba85ff8c[m
+Author: Michael Oddie <meo9@aber.ac.uk>
+Date:   Thu Jan 29 16:41:50 2015 +0000
+
+    Create Communications Specification
+
+[33mcommit 974ec6703e29f3f5f99cbcabe407f4aa06874dda[m
+Author: Michael Oddie <meo9@aber.ac.uk>
+Date:   Thu Jan 29 12:40:04 2015 +0000
+
+    Update README.md
+    
+    Extended Description
+
+[33mcommit e0bec8b230c99e81450dbf96d19b85d73cd5dd12[m
+Author: Michael Oddie <meo9@aber.ac.uk>
+Date:   Tue Jan 27 12:55:54 2015 +0000
+
+    Create EmoncmsPythonLink.py
+    
+    Copied from emoncms. Might be used to transmit data from EmonHub to the sparks (Nodes)
+
+[33mcommit e01511c5a83cfd102a253643e7ecac091cb30155[m
+Author: Michael Oddie <meo9@aber.ac.uk>
+Date:   Tue Jan 27 11:51:38 2015 +0000
+
+    Create SparkServer.c
+    
+    Testing server for Spark
+
+[33mcommit 0dabec2ad8e76f8d3b184e28c1b8e9dcff352e61[m
+Author: Michael Oddie <meo9@aber.ac.uk>
+Date:   Tue Jan 27 11:38:20 2015 +0000
+
+    Update and rename SparkClient to SparkClient.c
+    
+    C file
+
+[33mcommit 88c78184dd724dd37da124246b8b0121c1a93a42[m
+Author: Michael Oddie <meo9@aber.ac.uk>
+Date:   Tue Jan 27 11:36:00 2015 +0000
+
+    Create SparkClient
+
+[33mcommit a8b9d9f05a8437240d4b77abd20a1030f1717266[m
+Author: Michael Oddie <meo9@aber.ac.uk>
+Date:   Tue Jan 27 11:23:22 2015 +0000
+
+    Initial commit

@@ -25,6 +25,8 @@ Modules/openbem
 Modules/scheduler
 Modules/myip
 Modules/heat
+Modules/nodes
+php-console-master
 emoncms.log
 .idea
 /nbproject/

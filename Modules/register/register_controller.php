@@ -1,17 +1,21 @@
 <?php
 
 function register_controller() {
-    global $route;
+      
+    global $route, $mysqli, $redis, $feed;
     require "Modules/register/register_model.php";
     $register = new register($mysqli);
+    
+    require "Modules/input/input_model.php";
+    $input = new Input($mysqli,$redis, $feed);
 
     if ($route->format == 'json') {
-        $timeStart = microtime(true);
+        $fTime = time();
         if ($route->action == 'test'){
-            $json = '11111,22222,33333,44444';
-            $register->jsonParse($json);
-                
-        
+           
+            
+            $groupID = '0x0600';    
+            $register->CheckGroupID($groupID);
         }
         if ($route->action == 'create') {
 
@@ -25,9 +29,13 @@ function register_controller() {
             if (isset($_GET["nodeMAC"])) {
                 $nodeMAC = $_GET ["nodeMAC"];
             }
+            if (isset($_GET["nodeIP"])){
+                $nodeIP = $_GET ["nodeIP"];
+            }
             if (isset($_GET["timeout"])) {
                 $timeout = $_GET ["timeout"];
             }
+            
             
            // $timeDiff = timeoutChecker($timeStart);
             if ($register->apikeycheck($apikey) === 1) {
@@ -36,11 +44,11 @@ function register_controller() {
             } else if ($register->apikeycheck($apikey) === 2) {
                 return array('content' => "Apikey incorrect");
             }
+            
+            if ($register->checkNodeIP($nodeIP)===1){
+            return array('content' => " incorrectly formatted IP Address");
+            }
 
-
-            /*if ($register->ipchecker($nodeMAC) === 1) {
-                return array('content' => " Node mac incorrect");
-            }*/
             if ($register->checkMACAddress($nodeMAC)===1){
                 return array('content' => " incorrectly formatted MAC Address");
             }
@@ -51,12 +59,13 @@ function register_controller() {
 
             if ($register->exists($nodeMAC) === 0) {
                 $register->nodeIDIncrementer();
-                $register->addNode($nodeMAC);
+                $register->addNode($nodeMAC, $nodeIP);
             } else {
                 print_r(" Already Registered Node");
             }
             //}while($timeout>$timeDiff); 
         } elseif ($route->action == 'setup') {
+          
 
             if (isset($_GET["apikey"])) {
                 $apikey = $_GET ["apikey"];
@@ -73,6 +82,7 @@ function register_controller() {
             if (isset($_GET["timeout"])) {
                 $timeout = $_GET ["timeout"];
             }
+              $register->inputCreator($nodeid, $json, $input);
 
             //$timeDiff2 =timeoutChecker($timeStart);
             //do{
@@ -132,5 +142,5 @@ function timeoutChecker($timeStart) {
 
 */
 
-//Working Example of "Create" json string: http://localhost/OpenEMan/register/create.json?apikey=c2fe22e1099b01c7bb380b530e0508c7&nodeip=xxx.xxx.xxx.xxx&timeout=15
+//Working Example of "Create" json string: http://localhost/OpenEMan/register/create.json?apikey=4903c8a630a99c63251b5a34ac043ba5&nodeMAC=01:23:45:67:89:ab&fromAddress=123.123.123.123&timeout=15
 //Working Example of "setup" json string: http://localhost/OpenEMan/register/setup.json?apikey=7c399b2a696c8e1d3efebb7767fba593&node=50&json=55555566666677777&timeout=225

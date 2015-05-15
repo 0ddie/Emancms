@@ -5,14 +5,14 @@ class register {
     private $mysqli;
 
     /*
-     * Querys the db to see if the node you're trying to register exist
+     * Querys the db to see if the node you're trying to register exists
      */
 
     public function exists($nodeMAC) {
         global $mysqli;
         $result = $mysqli->query("SELECT MacAddress FROM Node_reg WHERE `MacAddress` = '$nodeMAC'");
         if ($result->num_rows === 1) {
-            nodeMessage($nodeMAC);
+            $this->nodeMessage($nodeMAC);
             return 1;
         } else {
             return 0;
@@ -69,15 +69,7 @@ class register {
             // 01:23:45:67:89:ab
             if (preg_match('/^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$/', $nodeMAC))
                 return 0;
-            // 01-23-45-67-89-ab
-            if (preg_match('/^([a-fA-F0-9]{2}\-){5}[a-fA-F0-9]{2}$/', $nodeMAC))
-                return 0;
-            // 0123456789ab
-            else if (preg_match('/^[a-fA-F0-9]{12}$/', $nodeMAC))
-                return 0;
-            // 0123.4567.89ab
-            else if (preg_match('/^([a-fA-F0-9]{4}\.){2}[a-fA-F0-9]{4}$/', $nodeMAC))
-                return 0;
+
             else
                 return 1;
         }
@@ -97,21 +89,6 @@ class register {
 
             $this->misformedError();
             return 1;
-        }
-    }
-
-    /*
-     * checks the json string is the right length
-     */
-
-    public function jsonStringError($json, $nodeid) {
-        global $mysqli;
-        $nodeidL = (strlen($nodeid));
-        $jsonL = 11 + $nodeidL;
-        if (strlen($json) != $jsonL) {
-            return 1;
-        } else {
-            return 0;
         }
     }
 
@@ -141,8 +118,9 @@ class register {
 
     public function addNode($nodeMAC,$nodeIP) {
         global $mysqli;
+        print_r("got here");
         $nodeid = $this->nodeIDIncrementer();
-        $mysqli->query("INSERT INTO Node_reg (NodeID,FromAddress,MacAddress) VALUES ('$nodeid','$nodeIP','$nodeMAC')");
+        $mysqli->query("INSERT INTO `OpenEMan`.`Node_reg` (`NodeID`, `FromAddress`, `MACAddress`) VALUES ('$nodeid','$nodeIP','$nodeMAC')");
         $this->nodeMessage($nodeMAC);
         print_r("Node added to Node_reg");
     }
@@ -154,9 +132,9 @@ class register {
     public function nodeMessage($nodeMAC) {
         global $mysqli;
         $result = $mysqli->query("SELECT NodeID FROM `Node_reg` WHERE `MacAddress` = '$nodeMAC' ");
-        print_r($result);
+        //print_r($result);
         $result2 = $mysqli->query("SELECT nodeIP FROM 'Node_reg' WHERE 'MacAddress' = '$nodeMAC'");
-        print_r($result2); 
+        //print_r($result2); 
     }
 
     /*
@@ -165,17 +143,18 @@ class register {
 
     public function nodeIDIncrementer() {
         global $mysqli;
-        $lastnodeid = $mysqli->query("SELECT MAX (NodeID) FROM 'Node_reg'");
-        $nodeid = $lastnodeid + 1;
-        return $nodeid;
-    }
+        $query = $mysqli->query("SELECT MAX(NodeID) FROM `Node_reg`;");
+        print_r($query);
+        //$version = $st[0] + 1;
+//        $sel = $mysqli->query("SELECT MAX(NodeID) FROM `Node_reg`;");
+//        $sel_row = $sel->fetch_object();
+//        $result = $sel_row->NodeID;
+        $result = $mysqli->query($query);
+        $followingdata = $result->fetch_assoc();
+        get_object_vars($followingdata);
+        //print_r ($result[0]);
+        //return $nodeid;
 
-    /*
-     * Pulls the MAC Address from the node and adds it to the table
-     */
-
-    public function MACAddress() {
-        
     }
 
     public function jsonParse($json, $nodeid) {
@@ -186,24 +165,33 @@ class register {
         $thirdcomma = strpos($json, ',', $secondoffset);
         $thirdoffset = $thirdcomma + 1;
         $groupID = substr($json, 0, $firstcomma);
-        print_r($groupID);
-        print_r(",");
         $attributeID = substr($json, $firstoffset, ($secondcomma - $firstoffset));
-        print_r($attributeID);
-        print_r(",");
         $attributeNumber = substr($json, $secondoffset, ($thirdcomma - $secondoffset));
-        print_r($attributeNumber);
-        print_r(",");
         $attributeDefaultValue = substr($json, $thirdoffset);
-        print_r($attributeDefaultValue);
+        
+        print_r($groupID.",".$attributeID.",".$attributeNumber.",".$attributeDefaultValue);
+        
+         if($this->checkGroupID($groupID)===1){
+                print_r ("Not in Group ID range");
+         }elseif($this->checkGroupID($groupID)===2){
+                print_r ("Not a correctly formatted group ID");
+         }
+         if($this->checkAttributeID($attributeID)===1){
+                print_r ("Not in Attribute range");
+         }elseif($this->checkAttributeID($attributeID)===2){
+                print_r ("Not a correctly formatted Attribute ID");
+         }   
+         
+         if($this->checkInputAttributeNumber($attributeNumber)===1){
+                print_r ("Not in Attribute Number range");
+         }elseif($this->checkInputAttributeNumber($attributeNumber)===2){
+                print_r ("Not a correctly formatted Attribute Number");
+         }  
+         
         $this->saveToAttributes($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid);
         return 1;
     }
 
-    /* I think this should be a whole other module.
-     * What i've just written resembles a controller class
-     * Attributes registration module maybe?
-     */
 
     public function checkAttributeNumber($attributeNumber) {
         global $mysqli;
@@ -215,10 +203,7 @@ class register {
             $this->misformedError();
             return 1;
         }
-        /*
-         * I want to do a bug check to check if the groupID is valid.
-         * Surely there's a better way than writing them all in a hash table then calling them?
-         */
+ 
     }
 
     public function saveToAttributes($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid) {
@@ -263,18 +248,48 @@ class register {
             return 1;
         }
     }
-/*
- * 
- */
-    public function CheckGroupID($groupID) {
-        if (preg_match('/^([0]{2}\x){1}([0]{1}){1}([a-fA-F0-9]){3}$/', $groupID)) {
-            return 1;
-        }
+
+    public function checkGroupID($groupID) {
+
+       if (strncmp ($groupID, '0x0', 3)===0){
+           preg_match('/^([a-fA-F0-9]){3}$/', substr($groupID,3), $matches, PREG_OFFSET_CAPTURE);
+           if (count($matches)>1){
+               return 0;
+           }else{return 1;}
+    }else{return 2;}
+ }
+     public function checkAttributeID($attributeID) {
+
+       if (strncmp ($attributeID, '0x0', 3)===0){
+           preg_match('/^([a-fA-F0-9]){3}$/', substr($attributeID,3), $matches2, PREG_OFFSET_CAPTURE);
+           if (count($matches2)>1){
+               return 0;
+           }else{return 1;}
+    }else{return 2;}
+ }
+    public function checkInputAttributeNumber($attributeNumber){
+         if (strncmp ($attributeNumber, '0x0', 3)===0){
+           preg_match('/^([a-fA-F0-9]){2}$/', substr($attributeNumber,3), $matches3, PREG_OFFSET_CAPTURE);
+           if (count($matches3)>1){
+               return 0;
+           }else{return 1;}
+    }else{return 2;}
     }
-    
+    public function correctInputJson($json) {
+        global $mysqli;
+        $result = $mysqli->query("SELECT name FROM input WHERE `name` = '$json'");
+        if ($result->field_count === 1) {
+            return 1;
+        
+            
+        } else {
 
+            //$this->misformedError();
+            return 0;
+        }
+        
+           }
 }
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates

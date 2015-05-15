@@ -10,12 +10,10 @@ function register_controller() {
     $input = new Input($mysqli,$redis, $feed);
 
     if ($route->format == 'json') {
-        $fTime = time();
+        //$fTime = time();
         if ($route->action == 'test'){
-           
+             
             
-            $groupID = '0x0600';    
-            $register->CheckGroupID($groupID);
         }
         if ($route->action == 'create') {
 
@@ -58,7 +56,7 @@ function register_controller() {
                 
 
             if ($register->exists($nodeMAC) === 0) {
-                $register->nodeIDIncrementer();
+                //$register->nodeIDIncrementer();
                 $register->addNode($nodeMAC, $nodeIP);
             } else {
                 print_r(" Already Registered Node");
@@ -82,7 +80,6 @@ function register_controller() {
             if (isset($_GET["timeout"])) {
                 $timeout = $_GET ["timeout"];
             }
-              $register->inputCreator($nodeid, $json, $input);
 
             //$timeDiff2 =timeoutChecker($timeStart);
             //do{
@@ -99,7 +96,7 @@ function register_controller() {
             }
 
             /*if ($register->jsonStringError($json, $nodeid) === 1) {
-                $register->misformedError();
+           a     $register->misformedError();
                 return array('content' => "Json section wrong length");
             }
              * 
@@ -112,10 +109,17 @@ function register_controller() {
                 $register->misformedError();
                 return array('content' => "Node id's are different within String");
             }
-            
+            if($register->correctInputJson($json)===1){
+            return array('content' => "Already been inputted");
+            }
             if ($register->jsonParse($json,$nodeid)===1){
                 print_r("Yes");
             }
+            
+           
+            
+            $register->inputCreator($nodeid, $json, $input);
+            
 
         } else {
             $register->misformedError($route);

@@ -25,7 +25,7 @@ class register {
 
     public function apikeycheck($apikey) {
         if (strlen($apikey) != 32) {
-            misformedError();
+            $this->misformedError();
 
             return 1;
         } elseif ($this->correctApiKey($apikey) === 0) {
@@ -120,7 +120,8 @@ class register {
         global $mysqli;
         print_r("got here");
         $nodeid = $this->nodeIDIncrementer();
-        $mysqli->query("INSERT INTO `OpenEMan`.`Node_reg` (`NodeID`, `FromAddress`, `MACAddress`) VALUES ('$nodeid','$nodeIP','$nodeMAC')");
+        print_r($nodeid.$nodeIP.$nodeMAC);
+        $mysqli->query("INSERT INTO `Node_reg` (`NodeID`, `FromAddress`, `MACAddress`) VALUES ('$nodeid','$nodeIP','$nodeMAC')");
         $this->nodeMessage($nodeMAC);
         print_r("Node added to Node_reg");
     }
@@ -143,20 +144,19 @@ class register {
 
     public function nodeIDIncrementer() {
         global $mysqli;
-        $query = $mysqli->query("SELECT MAX(NodeID) FROM `Node_reg`;");
-        print_r($query);
-        //$version = $st[0] + 1;
-//        $sel = $mysqli->query("SELECT MAX(NodeID) FROM `Node_reg`;");
-//        $sel_row = $sel->fetch_object();
-//        $result = $sel_row->NodeID;
-        $result = $mysqli->query($query);
-        $followingdata = $result->fetch_assoc();
-        get_object_vars($followingdata);
-        //print_r ($result[0]);
-        //return $nodeid;
+        $result = $mysqli->query("SELECT MAX(NodeID) FROM `Node_reg`");
+        $row = mysqli_fetch_row ( $result );
+        $query = $row[0];
+        print_r ($query);
+        $nextnode =$query + 1;
+        return $nextnode;
+
 
     }
-
+    /*
+     * Parses the Json string and pulls out the values using comma's
+     */
+    
     public function jsonParse($json, $nodeid) {
         $firstcomma = strpos($json, ',', 0);
         $firstoffset = $firstcomma + 1;
@@ -170,29 +170,35 @@ class register {
         $attributeDefaultValue = substr($json, $thirdoffset);
         
         print_r($groupID.",".$attributeID.",".$attributeNumber.",".$attributeDefaultValue);
-        
+
          if($this->checkGroupID($groupID)===1){
                 print_r ("Not in Group ID range");
          }elseif($this->checkGroupID($groupID)===2){
                 print_r ("Not a correctly formatted group ID");
          }
+
          if($this->checkAttributeID($attributeID)===1){
                 print_r ("Not in Attribute range");
          }elseif($this->checkAttributeID($attributeID)===2){
                 print_r ("Not a correctly formatted Attribute ID");
          }   
-         
+
          if($this->checkInputAttributeNumber($attributeNumber)===1){
                 print_r ("Not in Attribute Number range");
          }elseif($this->checkInputAttributeNumber($attributeNumber)===2){
                 print_r ("Not a correctly formatted Attribute Number");
          }  
-         
+         /*
+          * Save's the attributes to the table
+          */
         $this->saveToAttributes($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid);
         return 1;
     }
 
-
+/*
+ * Checks the attribute number is correctly formatted
+ * 
+ */
     public function checkAttributeNumber($attributeNumber) {
         global $mysqli;
         $result = $mysqli->query("SELECT NodeID FROM Node_reg WHERE `NodeID` = '$nodeid'");
@@ -205,13 +211,17 @@ class register {
         }
  
     }
-
+/*
+ * Saves the imported attributes from Jsonparse into a table
+ */
     public function saveToAttributes($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid) {
         global $mysqli;
         $mysqli->query("INSERT INTO attributes (groupid,attributeId,attributeNumber,attributeDefaultValue,nodeid) VALUES ('$groupID','$attributeID','$attributeNumber','$attributeDefaultValue','$nodeid)");
         print_r("Attribute added to attributes");
     }
-
+/*
+ * Creates an Input
+ */
     public function inputCreator($nodeid, $json, $input) {
       
         global  $session;
@@ -221,14 +231,14 @@ class register {
         
         $input->create_input($userid, $nodeid, $name);
     }
-    
+/*
+ * Create's a feed
+ */
     public function feedCreator($json){
         global $feed;
          $userid = $session['userid'];
          $name = $json;
-         /*
-          * Data type, engine, options in???
-          */
+
         $feed->create($userid,$name,$datatype,$engine,$options_in);
     }
   
@@ -248,7 +258,9 @@ class register {
             return 1;
         }
     }
-
+        /*
+         * Checks the group ID is correctly formatted
+         */
     public function checkGroupID($groupID) {
 
        if (strncmp ($groupID, '0x0', 3)===0){
@@ -258,6 +270,9 @@ class register {
            }else{return 1;}
     }else{return 2;}
  }
+          /*
+          * Checks the attribute ID is correctly formatted
+          */
      public function checkAttributeID($attributeID) {
 
        if (strncmp ($attributeID, '0x0', 3)===0){
@@ -267,6 +282,9 @@ class register {
            }else{return 1;}
     }else{return 2;}
  }
+          /*
+          * Checks the attribute number is correctly formatted
+          */
     public function checkInputAttributeNumber($attributeNumber){
          if (strncmp ($attributeNumber, '0x0', 3)===0){
            preg_match('/^([a-fA-F0-9]){2}$/', substr($attributeNumber,3), $matches3, PREG_OFFSET_CAPTURE);
@@ -275,6 +293,10 @@ class register {
            }else{return 1;}
     }else{return 2;}
     }
+    /*
+     * checks the input json is correctly formatted
+     */
+    
     public function correctInputJson($json) {
         global $mysqli;
         $result = $mysqli->query("SELECT name FROM input WHERE `name` = '$json'");
@@ -290,9 +312,5 @@ class register {
         
            }
 }
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 

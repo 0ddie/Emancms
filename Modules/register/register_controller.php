@@ -36,6 +36,7 @@ function register_controller() {
             
             
            // $timeDiff = timeoutChecker($timeStart);
+            
             if ($register->apikeycheck($apikey) === 1) {
 
                 return array('content' => "Apikey too long");

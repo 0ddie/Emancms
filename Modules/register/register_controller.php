@@ -12,8 +12,12 @@ function register_controller() {
     if ($route->format == 'json') {
         //$fTime = time();
         if ($route->action == 'test'){
-             
-            
+            $reformattedJson = "0x06300x06200x0700x0075";
+            $register->feedCreator($reformattedJson);
+            $id=($register->feed_id_getter());
+            print_r("$id");
+            $tag = "lalalalala";
+            $register->set_feed_fields($id, $tag);
         }
         if ($route->action == 'create') {
 
@@ -39,7 +43,7 @@ function register_controller() {
             
             if ($register->apikeycheck($apikey) === 1) {
 
-                return array('content' => "Apikey too long");
+                return array('content' => "Apikey wrong length");
             } else if ($register->apikeycheck($apikey) === 2) {
                 return array('content' => "Apikey incorrect");
             }
@@ -87,7 +91,7 @@ function register_controller() {
 
             if ($register->apikeycheck($apikey) === 1) {
 
-                return array('content' => "Apikey too long");
+                return array('content' => "Apikey wrong length");
             } else if ($register->apikeycheck($apikey) === 2) {
                 return array('content' => "Apikey incorrect");
             }
@@ -110,23 +114,27 @@ function register_controller() {
                 $register->misformedError();
                 return array('content' => "Node id's are different within String");
             }
-            if($register->correctInputJson($json)===1){
+            
+            if($register->correctInputJson($json,$nodeid)===1){
             return array('content' => "Already been inputted");
             }
-            if ($register->jsonParse($json,$nodeid)===1){
-                print_r("Yes");
-            }
+            $doing = 0;
+            $reformattedJson = $register->jsonParse($json,$nodeid , $doing);
+
+
+                
+   
             
-           
             
-            $register->inputCreator($nodeid, $json, $input);
+
+            $register->inputCreator($nodeid, $input, $reformattedJson);
             
 
         } else {
-            $register->misformedError($route);
+            //$register->misformedError($route);
         }
     } else {
-        $register->misformedError($route);
+        //$register->misformedError($route);
     }
     
 }

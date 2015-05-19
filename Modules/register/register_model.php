@@ -3,6 +3,7 @@
 class register {
 
     private $mysqli;
+   
 
     /*
      * Querys the db to see if the node you're trying to register exists
@@ -157,7 +158,7 @@ class register {
      * Parses the Json string and pulls out the values using comma's
      */
     
-    public function jsonParse($json, $nodeid) {
+    public function jsonParse($json, $nodeid, $doing) {
         $firstcomma = strpos($json, ',', 0);
         $firstoffset = $firstcomma + 1;
         $secondcomma = strpos($json, ',', $firstoffset);
@@ -169,8 +170,8 @@ class register {
         $attributeNumber = substr($json, $secondoffset, ($thirdcomma - $secondoffset));
         $attributeDefaultValue = substr($json, $thirdoffset);
         
-        print_r($groupID.",".$attributeID.",".$attributeNumber.",".$attributeDefaultValue);
-
+        //print_r($groupID.",".$attributeID.",".$attributeNumber.",".$attributeDefaultValue);
+        
          if($this->checkGroupID($groupID)===1){
                 print_r ("Not in Group ID range");
          }elseif($this->checkGroupID($groupID)===2){
@@ -191,8 +192,12 @@ class register {
          /*
           * Save's the attributes to the table
           */
+        
+         if ($doing === 0){
         $this->saveToAttributes($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid);
-        return 1;
+         }
+         
+         return($groupID.$attributeID.$attributeNumber.$attributeDefaultValue);
     }
 
 /*
@@ -216,32 +221,53 @@ class register {
  */
     public function saveToAttributes($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid) {
         global $mysqli;
-        $mysqli->query("INSERT INTO attributes (groupid,attributeId,attributeNumber,attributeDefaultValue,nodeid) VALUES ('$groupID','$attributeID','$attributeNumber','$attributeDefaultValue','$nodeid)");
+        $mysqli->query("INSERT INTO attributes (groupid,attributeId,attributeNumber,attributeDefaultValue,nodeid) VALUES ('$groupID','$attributeID','$attributeNumber','$attributeDefaultValue','$nodeid')");
+        print_r($mysqli->error);
         print_r("Attribute added to attributes");
     }
 /*
  * Creates an Input
  */
-    public function inputCreator($nodeid, $json, $input) {
+    public function inputCreator($nodeid, $input, $reformattedJson) {
       
         global  $session;
         
         $userid = $session['userid'];
-        $name = $json;
+        $name = $reformattedJson;
+        print_r($reformattedJson);
         
         $input->create_input($userid, $nodeid, $name);
     }
 /*
  * Create's a feed
  */
-    public function feedCreator($json){
-        global $feed;
-         $userid = $session['userid'];
-         $name = $json;
-
+    public function feedCreator($reformattedJson){
+        
+        global $feed, $session, $redis, $mysqli, $feed_settings;
+        include "Modules/feed/feed_model.php";
+        $feed = new Feed($mysqli,$redis,$feed_settings);
+        
+        $userid = $session['userid'];
+        $name = $reformattedJson;
+        $datatype = 1;
+        $engine = 2;
+        $options_in = NULL;
         $feed->create($userid,$name,$datatype,$engine,$options_in);
+        print_r ("Feed Created");
     }
-  
+    public function feed_id_getter(){
+                global $mysqli;
+
+        $result = $mysqli->query("SELECT MAX(id) FROM `feeds`");
+        $row = mysqli_fetch_row ( $result );
+        $query = $row[0];
+        return $query;
+    }
+    public function set_feed_fields($id,$tag){
+        global $mysqli;
+        $this->mysqli->query("UPDATE feeds SET ".$tag." WHERE `id` = '$id'");
+    }
+
     /*
      * starts the timer
      */
@@ -297,10 +323,15 @@ class register {
      * checks the input json is correctly formatted
      */
     
-    public function correctInputJson($json) {
+    public function correctInputJson($json,$nodeid){
+        //print_r($json);
         global $mysqli;
-        $result = $mysqli->query("SELECT name FROM input WHERE `name` = '$json'");
-        if ($result->field_count === 1) {
+        $doing = 1;
+        $reformattedJson=($this->jsonParse($json, $nodeid, $doing));
+       
+        $result = $mysqli->query("SELECT name FROM input WHERE `name` = '$reformattedJson'");
+        //print_r($result);
+        if ($result->num_rows > 0) {
             return 1;
         
             

@@ -253,6 +253,7 @@ class register {
         $engine = 2;
         $options_in = NULL;
         $feed->create($userid,$name,$datatype,$engine,$options_in);
+        
         print_r ("Feed Created");
     }
     public function feed_id_getter(){
@@ -265,7 +266,7 @@ class register {
     }
     public function set_feed_fields($id,$tag){
         global $mysqli;
-        $this->mysqli->query("UPDATE feeds SET ".$tag." WHERE `id` = '$id'");
+        $mysqli->query("UPDATE `feeds` SET `tag` = '$tag' WHERE `id` = '$id'");
     }
 
     /*
@@ -342,6 +343,11 @@ class register {
         }
         
            }
+    public function inputIdGetter($reformattedJson){
+        global $mysqli;
+        $result = $mysqli->query("SELECT `inputid` FROM input WHERE `name` = '$reformattedJson'");
+        return $result;
+    }
 }
 
 

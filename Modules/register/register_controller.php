@@ -2,7 +2,7 @@
 
 function register_controller() {
       
-    global $route, $mysqli, $redis, $feed;
+    global $route, $mysqli, $redis, $feed, $session;
     require "Modules/register/register_model.php";
     $register = new register($mysqli);
     
@@ -12,12 +12,19 @@ function register_controller() {
     if ($route->format == 'json') {
         //$fTime = time();
         if ($route->action == 'test'){
-            $reformattedJson = "0x06300x06200x0700x0075";
+            $reformattedJson = "0x06300x06600x0700x0075";
             $register->feedCreator($reformattedJson);
             $id=($register->feed_id_getter());
             print_r("$id");
             $tag = "lalalalala";
             $register->set_feed_fields($id, $tag);
+            //$input->add_process($process,$session['userid'], get('inputid'), get('processid'), get('arg'), get('newfeedname'), get('newfeedinterval'),get('engine'));
+             $userid = $session['userid'];
+             $arg = 0;
+             $inputid = inputIdGetter($reformattedJson);
+             $processid = 1;
+             
+            $input->add_process($process_class,$userid,$inputid,$processid,$arg);
         }
         if ($route->action == 'create') {
 

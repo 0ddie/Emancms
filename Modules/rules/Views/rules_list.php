@@ -1,72 +1,102 @@
 <?php
 global $path;
 ?>
+<!--<script type="text/javascript" src="<?php //echo $path;                               ?>Lib/angularjs/angular.min.js"></script>-->
+<script type="text/javascript" src="<?php echo $path; ?>Lib/angularjs/angular.js"></script>
+<script type="text/javascript" src="<?php echo $path; ?>Lib/angularjs/ui-bootstrap-tpls-0.13.0.min.js"></script>
 
-<script type="text/javascript" src="<?php echo $path; ?>Lib/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
 
-<link href="<?php echo $path; ?>Lib/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet">
 
-<style>
-    input[type="text"] {
-        width: 88%;
-    }
+<script>
+    var moduleViewApp = angular.module('moduleViewApp', ['ui.bootstrap']);
 
-    #table td:nth-of-type(1) { width:5%;}
-    #table td:nth-of-type(2) { width:10%;}
-    #table td:nth-of-type(3) { width:25%;}
+    /*moduleViewApp.config(['$locationProvider', function ($locationProvider) {
+            $locationProvider.html5Mode(true);
+        }]);*/
 
-    #table td:nth-of-type(7) { width:30px; text-align: center; }
-    #table td:nth-of-type(8) { width:30px; text-align: center; }
-    #table td:nth-of-type(9) { width:30px; text-align: center; }
-</style>
+    moduleViewApp.controller('moduleViewAppCtrl', function ($scope, $modal, $location, $window) {
 
-<br>
-<div id="apihelphead"><div style="float:right;"><a href="create" style="margin-right:25px"><i class="icon-plus-sign"></i></a><a href="api"><?php echo _('Rules API Help'); ?></a></div></div>
+        /*  Objects in the scope  */
+        $scope.rules = <?php echo json_encode($args['list_of_rules']) ?>;
+        $scope.rule_deleted = <?php echo isset($args['rule_deleted']) ? json_encode($args['rule_deleted']) : "null" ?>;
+        $scope.rule_saved = <?php echo isset($args['rule_saved']) ? json_encode($args['rule_saved']) : "null" ?>;
+        /*  End Objects in the scope  */
 
-<div class="container">
-    <div id="localheading"><h2><?php echo _('Rules'); ?></h2></div>
-    <div id="delete-rule-dialog" title="<?php echo _('Do you really want to delete the rule?'); ?>"><?php echo _('If you delete a rule you will lose it forever, be careful!!'); ?></div>
-    <div id="list_of_rules">
-        <table class="table table-hover">
-            <tbody>
-                <tr>
-                    <th><a><?php echo _('Rule Id'); ?></a></th>
-                    <th><a><?php echo _('Name'); ?></a></th>
-                    <th><a><?php echo _('Description'); ?></a></th>
-                    <th><a><?php echo _('Run on'); ?></a></th>
-                    <th><a><?php echo _('Expiry date'); ?></a></th>
-                    <th><a><?php echo _('Frequency'); ?></a></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </tbody>
-            <tbody>
-                <?php
-                foreach ($args['list_of_rules'] as $rule) {
-                    echo '<tr>';
-                    echo "<td>" . $rule['ruleid'] . "</td>";
-                    echo "<td>" . $rule['name'] . "</td>";
-                    echo "<td>" . $rule['description'] . "</td>";
-                    echo "<td>" . $rule['run_on'] . "</td>";
-                    echo "<td>" . $rule['expiry_date'] . "</td>";
-                    echo "<td>" . $rule['frequency'] . "</td>";
-                    echo "<td><a href='edit?ruleid=" . $rule['ruleid'] . "'><i class='icon-pencil'></i></a></td>";
-                    echo "<td class='delete-dialog-opener'><i class='icon-trash'></i></td>";
-                    echo '</tr>';
+        /*  Functions in the scope  */
+        $scope.openModal = function (rule_to_delete) {
+            var modalInstance = $modal.open({
+                template: '<div class = "modal-header"><h3 class="modal-title"><?php echo _('Delete rule'); ?></h3></div ><div class="modal-body"><p><?php echo _('You  are going to delete the rule: ') ?><b> {{rule_to_delete.name}}</b></p> <p><?php echo _('If you delete a rule you will lose it forever, be careful!!'); ?> </p></div><div class="modal-footer"> <button class="btn btn-primary" ng-click="ok()"> <?php echo _('OK') ?> </button><button class="btn btn-warning" ng-click="cancel();"> <?php echo _('Cancel') ?> </button ></div>',
+                controller: function ($scope, $modalInstance) {
+                    $scope.rule_to_delete = rule_to_delete;
+                    $scope.ok = function () {
+                        $modalInstance.close();
+                        //$location.path('rules/delete.json?ruleid=' + $scope.rule_to_delete.ruleid);
+                        //$location.replace();
+                        $window.location.href = "<?php echo $path; ?>rules/delete.html?ruleid=" + $scope.rule_to_delete.ruleid;
+                    };
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss();
+                    };
                 }
-                ?>
-            </tbody>
-        </table>
+            });
+
+        };
+        /*  End Functions in the scope  */
+
+    })
+</script>
+
+<link href="<?php echo $path; ?>Modules/rules/Views/rules.css" rel="stylesheet">
+
+<base href="<?php echo $path; ?>">
+<br>
+<div id="apihelphead">
+    <div style="float:right;">
+        <a title="<?php echo _('Add rule')?>" href="rules/add"><i class="icon-plus-sign"></i></a>
+        <a href="rules/add-mock-rules" ><?php echo _('Add mock rules'); ?></a>
+        <a href="rules/api"><?php echo _('Rules API Help'); ?></a>
     </div>
 </div>
-<script>
-    window.onload = function () {
-        $("#delete-rule-dialog").dialog({autoOpen: false});
-        $(".delete-dialog-opener").click(function () {
-            $("#delete-rule-dialog").dialog("open");
-        });
-    };
-</script>
+
+<div ng-app="moduleViewApp" ng-controller="moduleViewAppCtrl">
+    <div class="container">
+        <div id="localheading"><h2><?php echo _('Rules'); ?></h2></div>
+        <div id="rule_deleted" ng-if="rule_deleted !== null"><p class="bg-success"><?php echo _('Rule deleted: ')?> {{rule_deleted}}</p></div>
+        <div id="rule_saved" ng-if="rule_saved !== null"><p class="bg-success"><?php echo _('Rule saved: ')?> {{rule_saved}}</p></div>
+        <div id="list_of_rules">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th><a><?php echo _('Rule Id'); ?></a></th>
+                        <th><a><?php echo _('Name'); ?></a></th>
+                        <th><a><?php echo _('Description'); ?></a></th>
+                        <th><a><?php echo _('Run on'); ?></a></th>
+                        <th><a><?php echo _('Expiry date'); ?></a></th>
+                        <th><a><?php echo _('Frequency'); ?></a></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr ng-repeat="rule in rules">
+                        <td>{{rule.ruleid}}</td>
+                        <td>{{rule.name}}</td>
+                        <td>{{rule.description}}</td>
+                        <td>{{rule.run_on}}</td>
+                        <td>{{rule.expiry_date}}</td>
+                        <td>{{rule.frequency}}</td>
+                        <td><a title="<?php echo _('Edit rule')?>" href="<?php echo $path; ?>rules/edit?ruleid={{rule.ruleid}}"><i class='icon-pencil'></i></a></td>
+                        <td title="<?php echo _('Delete rule')?>" class='delete-dialog-opener'><i class='icon-trash' ng-click="openModal(rule)"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 

@@ -41,11 +41,10 @@ function rules_controller() {
                 $list_of_rules = $rules->get_rules($session['userid']);
                 switch ($route->format) {
                     case 'html':
-                        //echo json_encode($list_of_rules);
                         $result = view("Modules/rules/Views/rules_list.php", ['list_of_rules' => $list_of_rules]);
                         break;
                     case 'json':
-                        $result = "";
+                        $result = json_encode($list_of_rules);
                         break;
                 }
             } else {
@@ -61,17 +60,76 @@ function rules_controller() {
             }
 
             break;
-        case 'create':
+        case 'add':
+            $result = view("Modules/rules/Views/rules_edit_rule.php", ['mode' => 'add']);
+            break;
+        case 'edit':
+            $rule = $rules->get_rule((int) get('ruleid'), $session['userid']);
+            $result = view("Modules/rules/Views/rules_edit_rule.php", ['mode' => 'edit', 'rule' => $rule]);
+            break;
+        case 'save-rule':
+            $attributes = ['ruleid' => get('ruleid'),
+                'name' => get('name'),
+                'description' => get('description'),
+                'run_on' => get('run_on'),
+                'expiry_date' => get('expiry_date'),
+                'frequency' => get('frequency'),
+                'blocks' => get('blocks'),
+                'close' => get('close')];
+            $rule_saved = $rules->save_rule($attributes);
+            $rule_saved = $rule_saved == 0 ? false : true;
+            if ($attributes['close'] == "false") { //"Apply"
+                //echo $attributes['close'];
+                $rule = $rules->get_rule((int) get('ruleid'), $session['userid']);
+                $result = view("Modules/rules/Views/rules_edit_rule.php", ['mode' => 'edit', 'rule' => $rule, 'rules_saved' => $rule_saved]);
+            } else { //"Save and close"
+                $list_of_rules = $rules->get_rules($session['userid']);
+                $result = view("Modules/rules/Views/rules_list.php", ['list_of_rules' => $list_of_rules, 'rule_saved' => $rule_saved]);
+            }
             break;
         case 'api':
             $result = view("Modules/rules/Views/rules_api.php", array());
             break;
-        case 'edit':
+        case 'add-mock-rules':
+            $rules->add_mock_rules();
+            $list_of_rules = $rules->get_rules($session['userid']);
+            $result = view("Modules/rules/Views/rules_list.php", ['list_of_rules' => $list_of_rules]);
             break;
         case 'delete':
+            if ($session['write'] == 1) {
+                $rule_deleted = $rules->delete_rule((int) (get('ruleid')), $session['userid']);
+                $list_of_rules = $rules->get_rules($session['userid']);
+                switch ($route->format) {
+                    case 'html':
+                        $result = view("Modules/rules/Views/rules_list.php", ['list_of_rules' => $list_of_rules, 'rule_deleted' => $rule_deleted]);
+                        break;
+                    case 'json':
+                        if ($rule_deleted == true)
+                            $result = 'success';
+                        else
+                            $result = 'ERROR - Rule not deleted';
+                        break;
+                }
+            } else {
+                switch ($route->format) {
+                    case 'html':
+                        $result = "<h2>Permission denied</h2>"
+                                . "<p>You are not allowed to delete rules</p>";
+                        break;
+                    case 'json':
+                        $result = "Error: ERROR-CODE - permission denied";
+                        break;
+                }
+            }
             break;
     }
 
     //return array('content'=>$result);
     return array('content' => $result);
 }
+
+/*
+ *     http://localhost/OpenEMan/rules/delete.html?ruleid=3
+ * http://localhost/OpenEMan/rules/save-rule?name=%22name%22&description=%22descr%22&run_on=%22run&expiry_date=%22expiry%22&frequency=%22%22&blocks=%22nsls%22
+ *  * */
+

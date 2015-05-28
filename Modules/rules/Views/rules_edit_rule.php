@@ -13,6 +13,10 @@ global $mysqli, $redis, $session, $route;
 //include "Modules/rules/rules_model.php";
 $rules = new Rules($mysqli, $redis);
 $array_of_feeds_by_node = $rules->get_user_feeds_by_node($session['userid']); // array like: Array ( [0] => Array ( [id] => 6 [name] => Power [userid] => 1 [tag] => [time] => 1430748375 [value] => 100 [datatype] => 1 [public] => 0 [size] => [engine] => 5 ) [1] => Array ( [id] => 7 [name] => Poadasdawer [userid] => 1 [tag] => [time] => [value] => [datatype] => 1 [public] => 0 [size] => [engine] => 5 ) [2] => Array ( [id] => 8 [name] => Poaeeedasdawer [userid] => 1 [tag] => [time] => [value] => [datatype] => 1 [public] => 0 [size] => [engine] => 5 ));
+$array_of_attributes_by_node = $rules->getAttributesByNode($session['userid']);
+/*echo '<pre>';
+print_r($array_of_attributes_by_node);
+echo '</pre>';*/
 ?>
 <!--<script type="text/javascript" src="<?php //echo $path;                                                      ?>Lib/angularjs/angular.min.js"></script>-->
 <script type="text/javascript" src="<?php echo $path; ?>Lib/angularjs/angular.js"></script>
@@ -41,7 +45,6 @@ $array_of_feeds_by_node = $rules->get_user_feeds_by_node($session['userid']); //
 
         // Create IDE and add it to the world - Everything related to the IDE is in "emonCMS_RulesIDE_gui.js" 
         var array_of_feeds_by_node = <?php echo json_encode($array_of_feeds_by_node) ?>;
-        console.log(array_of_feeds_by_node);
         rulesIDE = new emonCMS_RulesIDE_Morph(world.width(), world.height(),array_of_feeds_by_node);
         world.add(rulesIDE);
         

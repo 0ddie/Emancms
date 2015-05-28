@@ -94,18 +94,13 @@ emonCMS_RulesIDE_Morph.prototype.init = function (width, height, array_of_feeds_
     this.reportersPane.add(this.listOfVariables);
     this.listOfFeeds = this.createListOfFeeds();
     this.reportersPane.add(this.listOfFeeds);
-    this.listOfAttributes = this.createListOfAttributes();
-    this.reportersPane.add(this.listOfAttributes);
-    this.listOfRules = this.createListOfRules();
-    this.reportersPane.add(this.listOfRules);
-    //this.reportersPaneFixLayout();
 
     // There is always a default variable: timeout. We create and add it here
-    this.addElementToList(this.listOfVariables,'timeout');
+    this.addVariableToList(['timeout', true]);
 
     // Create Dialog for listing nodes
-    this.listOfNodesForFeedsDialog = this.createListOfNodesForFeedsDialog();
-    this.add(this.listOfNodesForFeedsDialog);
+    this.listOfNodesDialog = this.createListOfNodesDialog();
+    this.add(this.listOfNodesDialog);
 
     // Create array to hold all the feeds dialogs (each feed dialog will display all the feeds for a give node
     this.arrayOfFeedsDialogs = this.createArrayOfFeedsDialogs();
@@ -290,7 +285,7 @@ emonCMS_RulesIDE_Morph.prototype.addBlocksToAddReportersPane = function () {
     button = new PushButtonMorph(
             null,
             function () {
-                myself.listOfNodesForFeedsDialog.show()
+                myself.listOfNodesDialog.show()
             },
             'Add feed'
             );
@@ -306,42 +301,8 @@ emonCMS_RulesIDE_Morph.prototype.addBlocksToAddReportersPane = function () {
 
     // Functions called by the buttons
     function addVar(pair) {
-        //myself.addVariableToList(pair);
-        myself.addElementToList(myself.listOfVariables,pair[0]);
+        myself.addVariableToList(pair);
     }
-};
-
-emonCMS_RulesIDE_Morph.prototype.addElementToList = function (list, name) {
-    // Variables to use
-    var lastChild = list.children[list.children.length - 1];
-    var top, left;
-
-    // Create reporter block and configure
-    reporter = new ReporterBlockMorph();
-    reporter.setSelector('reportGetVar', name);
-    reporter.isTemplate = true;
-    reporter.isDraggable = false;
-
-    // Calculate position for the reporter
-    if (list.children.length === 1) { // if the only child is the Title, aka this is the first reporter we are adding to the list
-        left = list.left() + 10; // beginning of row
-        top = lastChild.top() + 25; // Under the title
-    }
-    else if (lastChild.right() + reporter.width() + 20 > list.right()) { // if the reporter would reach the right edge of the list
-        left = list.left() + 10;
-        top = lastChild.top() + 20; // next row
-    }
-    else { // We add the reporter after the last child
-        left = lastChild.right() + 10;
-        top = lastChild.top();
-    }
-    reporter.setPosition(new Point(left, top));
-
-    list.add(reporter);
-    reporter.show();
-     //the dimensions of the pane may have changed so we need to redraw the reposrtersPane
-    this.reportersPaneFixLayout();
-
 };
 
 emonCMS_RulesIDE_Morph.prototype.addVariableToList = function (pair) {
@@ -362,9 +323,6 @@ emonCMS_RulesIDE_Morph.prototype.addVariableToList = function (pair) {
 
     // Show the varaible
     variable.show();
-
-    //the dimensions of the pane may have changed so we need to redraw the reposrtersPane
-    this.reportersPaneFixLayout();
 };
 
 emonCMS_RulesIDE_Morph.prototype.createStagesPane = function () {
@@ -387,9 +345,9 @@ emonCMS_RulesIDE_Morph.prototype.createReportersPane = function () {
 };
 
 emonCMS_RulesIDE_Morph.prototype.createListOfVariables = function () { // this list is really a pane
-    var pane = new FrameMorph();
-    pane.setHeight(20);
-    pane.setWidth(this.reportersPane.width());
+    var pane = new ScrollFrameMorph();
+    pane.setHeight(this.reportersPane.height() - 20);
+    pane.setWidth(this.reportersPane.width() / 4);
     pane.setColor(new Color(50, 60, 121));
     pane.setPosition(new Point(this.reportersPane.left() + 10, 10));
     var title = new StringMorph("Variables");
@@ -401,11 +359,11 @@ emonCMS_RulesIDE_Morph.prototype.createListOfVariables = function () { // this l
 };
 
 emonCMS_RulesIDE_Morph.prototype.createListOfFeeds = function () { // this list is really a pane
-    var pane = new FrameMorph();
-    pane.setHeight(20);
-    pane.setWidth(this.reportersPane.width());
+    var pane = new ScrollFrameMorph();
+    pane.setHeight(this.reportersPane.height() - 20);
+    pane.setWidth(this.reportersPane.width() / 4);
     pane.setColor(new Color(50, 60, 121));
-    pane.setPosition(new Point(this.reportersPane.left() + 10, 10));
+    pane.setPosition(new Point(this.listOfVariables.right() + 10, 10));
     var title = new StringMorph("Feeds");
     title.setPosition(new Point(pane.left() + 10, 20));
     title.setColor(new Color(255, 255, 255, 1));
@@ -413,54 +371,7 @@ emonCMS_RulesIDE_Morph.prototype.createListOfFeeds = function () { // this list 
     return pane;
 };
 
-emonCMS_RulesIDE_Morph.prototype.createListOfAttributes = function () { // this list is really a pane
-    var pane = new FrameMorph();
-    pane.setHeight(20);
-    pane.setWidth(this.reportersPane.width());
-    pane.setColor(new Color(50, 60, 121));
-    pane.setPosition(new Point(this.reportersPane.left() + 10, 10));
-    var title = new StringMorph("Attributes");
-    title.setPosition(new Point(pane.left() + 10, 20));
-    title.setColor(new Color(255, 255, 255, 1));
-    pane.add(title);
-    return pane;
-};
-
-emonCMS_RulesIDE_Morph.prototype.createListOfRules = function () { // this list is really a pane
-    var pane = new FrameMorph();
-    pane.setHeight(20);
-    pane.setWidth(this.reportersPane.width());
-    pane.setColor(new Color(50, 60, 121));
-    pane.setPosition(new Point(this.reportersPane.left() + 10, 10));
-    var title = new StringMorph("Rules");
-    title.setPosition(new Point(pane.left() + 10, 20));
-    title.setColor(new Color(255, 255, 255, 1));
-    pane.add(title);
-    return pane;
-};
-
-emonCMS_RulesIDE_Morph.prototype.reportersPaneFixLayout = function () {
-    // The order of the panes in the Reporters Pane is: VariablesList, FeedsList, AttributesList and RulesList
-    // variable to use
-    var lastChild;
-    var top = this.reportersPane.top() + 20;
-
-    this.reportersPane.children.forEach(function (listPane) {
-        console.log(lastChild);
-        /// Set height and postion of the List
-        lastChild = listPane.children[listPane.children.length - 1];
-        listPane.setHeight(lastChild.bottom() - listPane.top() + 10);
-        //listPane.setHeight(50);
-        listPane.setTop(top);
-        console.log(listPane);
-
-        // Calculate position of nex List
-        top = listPane.bottom() + 20;
-        listPane.show();
-    });
-};
-
-emonCMS_RulesIDE_Morph.prototype.createListOfNodesForFeedsDialog = function () {
+emonCMS_RulesIDE_Morph.prototype.createListOfNodesDialog = function () {
     var myself = this;
     // Create the dialog where we display all the nodes
     var dialog = new Morph;
@@ -513,9 +424,7 @@ emonCMS_RulesIDE_Morph.prototype.createListOfNodesForFeedsDialog = function () {
             'Cancel'
             );
     cancel_button.setColor(new Color(220, 220, 10));
-    cancel_button.setPosition(new Point(dialog.right() - 10 - cancel_button.width(), button.bottom() + 15));    
-    cancel_button.fixLayout();
-    
+    cancel_button.setPosition(new Point(dialog.right() - 10 - cancel_button.width(), button.bottom() + 15));
     dialog.add(cancel_button);
 
     // Set the height of the dialog according to the number of rows of buttons
@@ -529,8 +438,8 @@ emonCMS_RulesIDE_Morph.prototype.showFeedsDialog = function (node_key) {
     this.arrayOfFeedsDialogs.forEach(function (dialog) {
         dialog.hide();
     });
-    this.listOfNodesForFeedsDialog.hide();
-    //show the target dialog     
+    this.listOfNodesDialog.hide();
+    //show the target dialog
     this.arrayOfFeedsDialogs[node_key].show();
 };
 
@@ -539,7 +448,7 @@ emonCMS_RulesIDE_Morph.prototype.hideFeedsDialog = function () {
     this.arrayOfFeedsDialogs.forEach(function (dialog) {
         dialog.hide();
     });
-    this.listOfNodesForFeedsDialog.hide();
+    this.listOfNodesDialog.hide();
 };
 
 emonCMS_RulesIDE_Morph.prototype.createArrayOfFeedsDialogs = function () {
@@ -576,7 +485,7 @@ emonCMS_RulesIDE_Morph.prototype.createArrayOfFeedsDialogs = function () {
             }
             button = new PushButtonMorph(
                     function () {
-                        myself.addElementToList(myself.listOfFeeds,arguments[0]);
+                        myself.addFeedToList(arguments[0]);
                     },
                     button_label, //variable to be used in the function above, accesed as "arguments[0]"
                     button_label
@@ -594,7 +503,8 @@ emonCMS_RulesIDE_Morph.prototype.createArrayOfFeedsDialogs = function () {
             dialog.add(button);
         }
         //create a cancel button and add it 
-        var cancel_button = new PushButtonMorph(null,
+        var cancel_button = new PushButtonMorph(
+                null,
                 function () {
                     myself.hideFeedsDialog();
                 },
@@ -602,7 +512,6 @@ emonCMS_RulesIDE_Morph.prototype.createArrayOfFeedsDialogs = function () {
                 );
         cancel_button.setColor(new Color(220, 220, 10));
         cancel_button.setPosition(new Point(dialog.right() - 10 - cancel_button.width(), button.bottom() + 15));
-        cancel_button.fixLayout();
         dialog.add(cancel_button);
 
 
@@ -646,7 +555,8 @@ emonCMS_RulesIDE_Morph.prototype.addFeedToList = function (feed_name) {
  ) ENGINE=InnoDB DEFAULT CHARSET=latin1
  
  CREATE TABLE `attributes` (
- `attributeUid` int(11) NOT NULL AUTO_INCREMENT,  `nodeid` int(11) NOT NULL,
+ `attributeUid` int(11) NOT NULL AUTO_INCREMENT,
+ `nodeid` int(11) NOT NULL,
  `groupid` varchar(255) NOT NULL,
  `attributeId` varchar(255) NOT NULL,
  `attributeNumber` varchar(255) NOT NULL,

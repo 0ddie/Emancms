@@ -167,22 +167,42 @@ class Rules {
         $this->mysqli->query("INSERT INTO `rules` (`ruleid`, `userid`, `name`, `description`, `run_on`, `expiry_date`, `frequency`, `blocks`) VALUES (NULL, '1', 'name', 'description', '2015-05-28 00:00:00', '2015-05-29 00:00:00', '300', 'bocks'), (NULL, '1', 'another', 'another', '2015-05-29 00:00:00', '2015-05-29 00:00:00', '300', 'another')");
     }
 
+    public function getAttributesByNode($userid) {
+        $attributesByNode = [];
+
+        if ($this->redis) {
+            //ToDo
+        } else {
+            $result = $this->mysqli->query("SELECT * FROM attributes WHERE `userid` = '$userid'");
+
+            if ($result->num_rows > 0) {
+                for ($i = 0; $row = (array) $result->fetch_object(); $i++) {
+                    $attributesByNode[$row['nodeid']] = $row;
+                }
+                return $attributesByNode;
+            } else
+                return false;
+        }
+    }
+
+    /* End of other methods  */
+
     /*     * ********************************* */
     /*  Get user feeds by node    */
     /*     * *************************** */
 
     public function get_user_feeds_by_node($userid) {
-        global $mysqli, $redis, $session, $route, $feed_settings;
-
+        global $feed_settings;
         include "Modules/feed/feed_model.php";
-        $feed = new Feed($mysqli, $redis, $feed_settings);
+
+        $feed = new Feed($this->mysqli, $this->redis, $feed_settings);
 
         require "Modules/input/input_model.php";
-        $input = new Input($mysqli, $redis, $feed);
+        $input = new Input($this->mysqli, $this->redis, $feed);
 
         $array_of_feeds_by_node = array(); // The aim of this method is to fill up this array and treturn it
-        $array_of_nodes = $input->get_inputs($session['userid']); // returns inputs sorted by node
-        $array_of_user_feeds = $feed->get_user_feeds($session['userid']); // We use this one to get the name and tag of each feed
+        $array_of_nodes = $input->get_inputs($userid); // returns inputs sorted by node
+        $array_of_user_feeds = $feed->get_user_feeds($userid); // We use this one to get the name and tag of each feed
 
         foreach ($array_of_nodes as $nodeid => $array_of_inputs) {
 
@@ -204,11 +224,11 @@ class Rules {
                 }
             }
         }
-        
+
         return $array_of_feeds_by_node;
-        /*echo "<pre>";
-        print_r($array_of_feeds_by_node);
-        echo "</pre>";*/
+        /* echo "<pre>";
+          print_r($array_of_feeds_by_node);
+          echo "</pre>"; */
     }
 
     private function get_feed_name($array_of_user_feeds, $feedid) {
@@ -224,6 +244,6 @@ class Rules {
                 return $feed['tag'];
         }
     }
-    /*  End get user feeds by node    */
 
+    /*  End get user feeds by node    */
 }

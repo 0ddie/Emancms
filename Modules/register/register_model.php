@@ -3,8 +3,16 @@
 class register {
 
     private $mysqli;
-   
+    //private $feed;
+    //private $redis;
 
+    public function __construct($mysqli)
+    {
+        $this->mysqli = $mysqli;
+        //$this->feed = $feed;
+
+        //$this->redis = $redis;
+    }
     /*
      * Querys the db to see if the node you're trying to register exists
      */
@@ -159,6 +167,9 @@ class register {
      */
     
     public function jsonParse($json, $nodeid, $doing) {
+        
+        global $session;
+        
         $firstcomma = strpos($json, ',', 0);
         $firstoffset = $firstcomma + 1;
         $secondcomma = strpos($json, ',', $firstoffset);
@@ -188,13 +199,17 @@ class register {
                 print_r ("Not in Attribute Number range");
          }elseif($this->checkInputAttributeNumber($attributeNumber)===2){
                 print_r ("Not a correctly formatted Attribute Number");
-         }  
+         } 
+         
+         $userid = $session['userid'];
+
          /*
           * Save's the attributes to the table
           */
+         
         
          if ($doing === 0){
-        $this->saveToAttributes($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid);
+        $this->saveToAttributes($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid, $userid);
          }
          
          return($groupID.$attributeID.$attributeNumber.$attributeDefaultValue);
@@ -219,9 +234,9 @@ class register {
 /*
  * Saves the imported attributes from Jsonparse into a table
  */
-    public function saveToAttributes($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid) {
+    public function saveToAttributes($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid, $userid) {
         global $mysqli;
-        $mysqli->query("INSERT INTO attributes (groupid,attributeId,attributeNumber,attributeDefaultValue,nodeid) VALUES ('$groupID','$attributeID','$attributeNumber','$attributeDefaultValue','$nodeid')");
+        $mysqli->query("INSERT INTO attributes (groupid,attributeId,attributeNumber,attributeDefaultValue,nodeid,userid) VALUES ('$groupID','$attributeID','$attributeNumber','$attributeDefaultValue','$nodeid','$userid')");
         print_r($mysqli->error);
         print_r("Attribute added to attributes");
     }
@@ -271,7 +286,7 @@ class register {
 
     /*
      * starts the timer
-     */
+     
     public function timer() {
         //Start timer ($timeTaken)
         $fTime = time();
@@ -279,7 +294,7 @@ class register {
     }
     /*
      * Checks to see if the program has timed out
-     */
+     
     public function timedOut($timeout, $timeTaken) {
         if ($timeout <= $timeTaken) {
             return 1;
@@ -348,6 +363,44 @@ class register {
         $result = $mysqli->query("SELECT `inputid` FROM input WHERE `name` = '$reformattedJson'");
         return $result;
     }
+
+    public function startTimer(){
+        $startTime = time();
+        return $startTime;
+    }
+
+    public function timedOut($startTime,$ender,$timeout){
+        do{
+            if(($startTime-time())>$timeout){
+                return array ('content'=>"Request timed out");
+                        
+            }
+        }while($ender = 0);
+    }
+     public function getAttributesByNode($userid) {
+        $attributesByNode = [];
+
+        //if ($this->redis) {
+            //ToDo
+        //} else {
+            $result = $this->mysqli->query("SELECT * FROM attributes WHERE `userid` = '$userid'");
+
+            if ($result->num_rows > 0) {
+                for ($i = 0; $row = (array) $result->fetch_object(); $i++) {
+                    $attributesByNode[$row['nodeid']] = $row;
+                }
+                print_r ($attributesByNode);
+                return $attributesByNode;
+            } else
+                return false;
+        //}
+    }
+    
+
+       
+    
 }
+
+
 
 

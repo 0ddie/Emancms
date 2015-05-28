@@ -8,11 +8,13 @@ function register_controller() {
     
     require "Modules/input/input_model.php";
     $input = new Input($mysqli,$redis, $feed);
-
+    $ender = 0;
     if ($route->format == 'json') {
         //$fTime = time();
         if ($route->action == 'test'){
-            $reformattedJson = "0x06300x06600x0700x0075";
+            
+            
+            /*$reformattedJson = "0x06300x06600x0700x0075";
             $register->feedCreator($reformattedJson);
             $id=($register->feed_id_getter());
             print_r("$id");
@@ -21,10 +23,15 @@ function register_controller() {
             //$input->add_process($process,$session['userid'], get('inputid'), get('processid'), get('arg'), get('newfeedname'), get('newfeedinterval'),get('engine'));
              $userid = $session['userid'];
              $arg = 0;
-             $inputid = inputIdGetter($reformattedJson);
+             $inputid = $register->inputIdGetter($reformattedJson);
              $processid = 1;
              
             $input->add_process($process_class,$userid,$inputid,$processid,$arg);
+             * 
+             */
+            
+            $userid = $session['userid'];
+            $register->getAttributesByNode($userid);
         }
         if ($route->action == 'create') {
 
@@ -73,9 +80,15 @@ function register_controller() {
             } else {
                 print_r(" Already Registered Node");
             }
+            //returns the nodeid
+            //start timer 1
             //}while($timeout>$timeDiff); 
+            $startTime = $register->startTimer();
+            $register->timedOut($startTime, $ender, $timeout);
         } elseif ($route->action == 'setup') {
-          
+            //stop timer 1
+            sleep(16);
+            $ender = 1;
 
             if (isset($_GET["apikey"])) {
                 $apikey = $_GET ["apikey"];

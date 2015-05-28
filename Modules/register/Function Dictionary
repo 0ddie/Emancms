@@ -1,0 +1,62 @@
+#Functions of Register Module Explained:
+##Added Tables
+`Node_Reg` = Registration table containing the MAC address, Node ID, IP address of the node, a unique auto-incrementing identifier.
+`attributes` = Attributes table contains the Node ID, Group ID, Attribute ID, Attribute Identifier, Attribute Default value and a auto incrementing UUID
+
+##Variables
+Mostly missing. I’ve only put in the ones that relate heavily to the functions I’m describing 
+
+`nodeMAC` = MAC address of the registering node. Stored in the Node_Reg Table
+
+`nodeid` = The previously used identifier from emoncms. Is unique to a node. Function that auto increments it in the registration module. Used in both the Node_Reg, Attributes and 
+
+##Functions
+
+`exists($nodeMAC);` Checks if the Node that is trying to register is already registered in `Node_Reg`
+
+`apikeycheck($apikey);` Checks the apikey is the right length
+
+`correctApikey($apikey);` Checks if the apikey given by the node correlates with the apikey given by the users table
+
+`checkNodeIP($nodeIP)`; Checks the node IP is a correctly formatted IP.
+
+`checkMACAddress($nodeMAC);` Checks the Node MAC  address is a correctly formatted MAC address.
+
+`correctNodeID($nodeID);` Checks the Node ID is a valid nodeid
+
+`nodeIDConstant($nodeid, $json, $nodeIDLength);` Checks the node ID is constant in the concatenated json string and the node id field
+
+`misformedError();` Prints “json string misformed” to be called whenever there’s an error
+
+`nodeMessage($nodeMAC);` Returns the node ID and node IP (Maybe should now return the NodeMAC as well
+
+`nodeIDIncrementer();` Increments the nodeID based on the largest previous value. Should start at 32 to allow for previous. 
+
+`jsonParse($json, $nodeid, $doing);` Parse’s through the Json string and pulls out the information needed for the attributes table.
+
+`checkGroupID($groupID);`  checks group ID is a valid group ID.
+
+`checkAttributeID($attributeID);` checks the attribute ID is a valid attribute ID.
+
+`checkInputAttributeNumber($attributeNumber);` Checks the attribute number is a valid attribute number.
+
+`saveToAttributes($groupID,$attributeID, $attributeNumber, $attributeDefaultValue, $nodeid);` Saves the attributes pulled from the json string to the attributes to table.
+
+`inputCreator($nodeid, $input, $reformattedJson);` Creates inputs.
+
+`feedCreator($reformattedJson);` Creates feeds.
+
+`feed_id_getter();` gets the feed id in session from the feeds table.
+
+`set_feed_fields($id,$tag);` Sets the current field with tag and id.
+
+`timer();` Starts the timer.
+
+`timedOut($timeout, $timeTaken);` check if the request has timed out.
+
+`correctInputJson($json, $nodeid);` Checks the Json inputted is correctly formatted.
+
+inputIDGetter($reformattedJson); 
+Stub...
+
+

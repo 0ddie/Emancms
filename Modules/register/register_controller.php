@@ -1,17 +1,37 @@
 <?php
 
 function register_controller() {
-    global $route;
+      
+    global $route, $mysqli, $redis, $feed, $session;
     require "Modules/register/register_model.php";
     $register = new register($mysqli);
-
+    
+    require "Modules/input/input_model.php";
+    $input = new Input($mysqli,$redis, $feed);
+    $ender = 0;
     if ($route->format == 'json') {
-        $timeStart = microtime(true);
+        //$fTime = time();
         if ($route->action == 'test'){
-            $json = '11111,22222,33333,44444';
-            $register->jsonParse($json);
-                
-        
+            
+            
+            /*$reformattedJson = "0x06300x06600x0700x0075";
+            $register->feedCreator($reformattedJson);
+            $id=($register->feed_id_getter());
+            print_r("$id");
+            $tag = "lalalalala";
+            $register->set_feed_fields($id, $tag);
+            //$input->add_process($process,$session['userid'], get('inputid'), get('processid'), get('arg'), get('newfeedname'), get('newfeedinterval'),get('engine'));
+             $userid = $session['userid'];
+             $arg = 0;
+             $inputid = $register->inputIdGetter($reformattedJson);
+             $processid = 1;
+             
+            $input->add_process($process_class,$userid,$inputid,$processid,$arg);
+             * 
+             */
+            
+            $userid = $session['userid'];
+            $register->getAttributesByNode($userid);
         }
         if ($route->action == 'create') {
 
@@ -25,22 +45,27 @@ function register_controller() {
             if (isset($_GET["nodeMAC"])) {
                 $nodeMAC = $_GET ["nodeMAC"];
             }
+            if (isset($_GET["nodeIP"])){
+                $nodeIP = $_GET ["nodeIP"];
+            }
             if (isset($_GET["timeout"])) {
                 $timeout = $_GET ["timeout"];
             }
             
+            
            // $timeDiff = timeoutChecker($timeStart);
+            
             if ($register->apikeycheck($apikey) === 1) {
 
-                return array('content' => "Apikey too long");
+                return array('content' => "Apikey wrong length");
             } else if ($register->apikeycheck($apikey) === 2) {
                 return array('content' => "Apikey incorrect");
             }
+            
+            if ($register->checkNodeIP($nodeIP)===1){
+            return array('content' => " incorrectly formatted IP Address");
+            }
 
-
-            /*if ($register->ipchecker($nodeMAC) === 1) {
-                return array('content' => " Node mac incorrect");
-            }*/
             if ($register->checkMACAddress($nodeMAC)===1){
                 return array('content' => " incorrectly formatted MAC Address");
             }
@@ -50,13 +75,20 @@ function register_controller() {
                 
 
             if ($register->exists($nodeMAC) === 0) {
-                $register->nodeIDIncrementer();
-                $register->addNode($nodeMAC);
+                //$register->nodeIDIncrementer();
+                $register->addNode($nodeMAC, $nodeIP);
             } else {
                 print_r(" Already Registered Node");
             }
+            //returns the nodeid
+            //start timer 1
             //}while($timeout>$timeDiff); 
+            $startTime = $register->startTimer();
+            $register->timedOut($startTime, $ender, $timeout);
         } elseif ($route->action == 'setup') {
+            //stop timer 1
+            sleep(16);
+            $ender = 1;
 
             if (isset($_GET["apikey"])) {
                 $apikey = $_GET ["apikey"];
@@ -79,7 +111,7 @@ function register_controller() {
 
             if ($register->apikeycheck($apikey) === 1) {
 
-                return array('content' => "Apikey too long");
+                return array('content' => "Apikey wrong length");
             } else if ($register->apikeycheck($apikey) === 2) {
                 return array('content' => "Apikey incorrect");
             }
@@ -89,7 +121,7 @@ function register_controller() {
             }
 
             /*if ($register->jsonStringError($json, $nodeid) === 1) {
-                $register->misformedError();
+           a     $register->misformedError();
                 return array('content' => "Json section wrong length");
             }
              * 
@@ -103,15 +135,26 @@ function register_controller() {
                 return array('content' => "Node id's are different within String");
             }
             
-            if ($register->jsonParse($json,$nodeid)===1){
-                print_r("Yes");
+            if($register->correctInputJson($json,$nodeid)===1){
+            return array('content' => "Already been inputted");
             }
+            $doing = 0;
+            $reformattedJson = $register->jsonParse($json,$nodeid , $doing);
+
+
+                
+   
+            
+            
+
+            $register->inputCreator($nodeid, $input, $reformattedJson);
+            
 
         } else {
-            $register->misformedError($route);
+            //$register->misformedError($route);
         }
     } else {
-        $register->misformedError($route);
+        //$register->misformedError($route);
     }
     
 }
@@ -132,5 +175,5 @@ function timeoutChecker($timeStart) {
 
 */
 
-//Working Example of "Create" json string: http://localhost/OpenEMan/register/create.json?apikey=c2fe22e1099b01c7bb380b530e0508c7&nodeip=xxx.xxx.xxx.xxx&timeout=15
+//Working Example of "Create" json string: http://localhost/OpenEMan/register/create.json?apikey=4903c8a630a99c63251b5a34ac043ba5&nodeMAC=01:23:45:67:89:ab&fromAddress=123.123.123.123&timeout=15
 //Working Example of "setup" json string: http://localhost/OpenEMan/register/setup.json?apikey=7c399b2a696c8e1d3efebb7767fba593&node=50&json=55555566666677777&timeout=225

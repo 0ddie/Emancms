@@ -13,7 +13,7 @@ SpriteMorph.prototype.initBlocks = function () {
             };
     this.blocks.getLastFeed =
             {
-                type: 'command',
+                type: 'reporter',
                 spec: 'get last feed from %s',
                 category: 'control'
             };
@@ -38,7 +38,7 @@ SpriteMorph.prototype.initBlocks = function () {
     this.blocks.reportGetVar =
             {
                 type: 'reporter',
-                spec: 'get last %n feeds from %s',
+                spec: '',
                 category: 'variables'
             };
     this.blocks.listOfVariables =

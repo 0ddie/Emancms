@@ -121,7 +121,7 @@ class Rules {
         //$run_on = $attributes['run_on'];
         $expiry_date = preg_replace('/([^0-9\-])/', '', $attributes['expiry_date']);
         $frequency = (int) $attributes['frequency'];
-        $blocks = preg_replace('/[^\w\s-.]/', '', $attributes['blocks']);
+        $blocks = preg_replace('/[^\w\s-.\/<>"=]/', '', $attributes['blocks']);
         //print_r("hola");
         //print_r($attributes['ruleid']);
         //echo 'hola' + $this->rule_exists($attributes['ruleid']);

@@ -12,11 +12,11 @@ emonCMS_RulesIDE_Morph.uber = Morph.prototype;
 
 // IDE_Morph instance creation:
 
-function emonCMS_RulesIDE_Morph(width, height, array_of_feeds_by_node) {
-    this.init(width, height, array_of_feeds_by_node);
+function emonCMS_RulesIDE_Morph(width, height, array_of_feeds_by_node, array_of_attributes_by_node, blocks) {
+    this.init(width, height, array_of_feeds_by_node, array_of_attributes_by_node, blocks);
 }
 
-emonCMS_RulesIDE_Morph.prototype.init = function (width, height, array_of_feeds_by_node) {
+emonCMS_RulesIDE_Morph.prototype.init = function (width, height, array_of_feeds_by_node, array_of_attributes_by_node, blocks) {
     var myself = this;
 
     // initialize setting and properties
@@ -26,6 +26,12 @@ emonCMS_RulesIDE_Morph.prototype.init = function (width, height, array_of_feeds_
     this.setWidth(width);
     this.setHeight(height);
     this.array_of_feeds_by_node = array_of_feeds_by_node;
+    this.array_of_attributes_by_node = array_of_attributes_by_node;
+    this.blocks_string = blocks;
+    if (this.blocks_string !== null)
+        this.loadRule = true;
+    else
+        this.loadRule = false;
 
     //the three panes in the IDE
     this.categoriesPane = new Morph();
@@ -75,9 +81,6 @@ emonCMS_RulesIDE_Morph.prototype.init = function (width, height, array_of_feeds_
     this.blockTemplatesPane.add(this.operatorsTemplatesPane);
     this.blockTemplatesPane.add(this.addReportersPane);
 
-    // variable to keep track of all the "variables" blocks created
-    this.variables = [];
-
     //create and add block templates to the Block Templates Pane
     this.addBlocksToControlsTemplatesPane();
     this.addBlocksToOperatorsTemplatesPane();
@@ -96,23 +99,34 @@ emonCMS_RulesIDE_Morph.prototype.init = function (width, height, array_of_feeds_
     this.reportersPane.add(this.listOfFeeds);
     this.listOfAttributes = this.createListOfAttributes();
     this.reportersPane.add(this.listOfAttributes);
-    this.listOfRules = this.createListOfRules();
-    this.reportersPane.add(this.listOfRules);
-    //this.reportersPaneFixLayout();
-
-    // There is always a default variable: timeout. We create and add it here
-    this.addElementToList(this.listOfVariables,'timeout');
+    //this.listOfRules = this.createListOfRules(); // Not implemented yet
+    //this.reportersPane.add(this.listOfRules); // Not implemented yet
 
     // Create Dialog for listing nodes
     this.listOfNodesForFeedsDialog = this.createListOfNodesForFeedsDialog();
     this.add(this.listOfNodesForFeedsDialog);
+    this.listOfNodesForAttributesDialog = this.createListOfNodesForAttributesDialog();
+    this.add(this.listOfNodesForAttributesDialog);
 
-    // Create array to hold all the feeds dialogs (each feed dialog will display all the feeds for a give node
+    // Create array to hold all the feeds dialogs (each feed dialog will display all the feeds for a given node)
+    // Same for attributes
     this.arrayOfFeedsDialogs = this.createArrayOfFeedsDialogs();
     this.arrayOfFeedsDialogs.forEach(function (dialog, index) {
         myself.add(dialog);
     });
+    this.arrayOfAttributesDialogs = this.createArrayOfAttributesDialogs();
+    this.arrayOfAttributesDialogs.forEach(function (dialog, index) {
+        myself.add(dialog);
+    });
 
+    // load blocks if we are editing a rule
+    if (this.loadRule === true)
+        this.loadBlocks(this.blocks_string);
+    else // There is always a default variable: timedout. We create and add it if we are not loading (editing) a rule, in this case "timedout" will be loaded with the other variables
+        this.addElementToList(this.listOfVariables, 'timedout');
+
+    //button to see blocks xml and display in the console for debugging
+    //this.genereateCodeButton = this.createGenerateXMLButton();
 };
 
 emonCMS_RulesIDE_Morph.prototype.createControlsButton = function (width, height) {
@@ -218,7 +232,7 @@ emonCMS_RulesIDE_Morph.prototype.addBlocksToControlsTemplatesPane = function () 
     var myself = this;
     var top = this.controlsTemplatesPane.top() + 10;
 
-    list_of_hat_blocks = ['Stage']; //in this array we specify the "selector" for the each "command" block we want to add, the list of blocks can be found in "objects.js" in "SpriteMorph.prototype.initBlocks"
+    list_of_hat_blocks = ['Stage']; //in this array we specify the "selector" for the each "command" block we want to add, the list of blocks can be found in "objects.js" in "SpriteMorph.prototype.initBlocks" and "emonCMS_RulesObjects"
     list_of_hat_blocks.forEach(function (value, index) {
         block = new HatBlockMorph();
         block.setSelector(value);
@@ -230,9 +244,22 @@ emonCMS_RulesIDE_Morph.prototype.addBlocksToControlsTemplatesPane = function () 
         myself.controlsTemplatesPane.add(block);
     });
 
-    list_of_command_blocks = ['doIf', 'doIfElse', 'getLastFeed', 'requestFeed', 'setAttribute'/*, 'getFeedHistorical'*/]; //in this array we specify the "selector" for the each "command" block we want to add, the list of blocks can be found in "objects.js" in "SpriteMorph.prototype.initBlocks"
+    list_of_command_blocks = ['doIf', 'doIfElse', 'requestFeed', 'setAttribute']; //in this array we specify the "selector" for the each "command" block we want to add, the list of blocks can be found in "objects.js" in "SpriteMorph.prototype.initBlocks" and "emonCMS_RulesObjects"
     list_of_command_blocks.forEach(function (value, index) {
         block = new CommandBlockMorph();
+        block.setSelector(value);
+        block.isTemplate = true;
+        block.isDraggable = false;
+        block.setPosition(new Point(10, top));
+        block.zebraContrast = 40;
+        top = top + block.height() + 10; //calculate "top" for the next block
+        myself.controlsTemplatesPane.add(block);
+    });
+
+
+    list_of_reporters_blocks = ['getLastFeed'/*, 'getFeedHistorical'*/];
+    list_of_reporters_blocks.forEach(function (value, index) {
+        block = new ReporterBlockMorph();
         block.setSelector(value);
         block.isTemplate = true;
         block.isDraggable = false;
@@ -290,11 +317,22 @@ emonCMS_RulesIDE_Morph.prototype.addBlocksToAddReportersPane = function () {
     button = new PushButtonMorph(
             null,
             function () {
-                myself.listOfNodesForFeedsDialog.show()
+                myself.listOfNodesForFeedsDialog.show();
             },
             'Add feed'
             );
     //button.selector = 'addFeed';
+    list_of_buttons.push(button);
+
+    //button "add attribute"
+    button = new PushButtonMorph(
+            null,
+            function () {
+                myself.listOfNodesForAttributesDialog.show();
+            },
+            'Add attribute'
+            );
+    //button.selector = 'addAttribute';
     list_of_buttons.push(button);
 
     // add blocks to the pane
@@ -307,7 +345,7 @@ emonCMS_RulesIDE_Morph.prototype.addBlocksToAddReportersPane = function () {
     // Functions called by the buttons
     function addVar(pair) {
         //myself.addVariableToList(pair);
-        myself.addElementToList(myself.listOfVariables,pair[0]);
+        myself.addElementToList(myself.listOfVariables, pair[0]);
     }
 };
 
@@ -339,7 +377,7 @@ emonCMS_RulesIDE_Morph.prototype.addElementToList = function (list, name) {
 
     list.add(reporter);
     reporter.show();
-     //the dimensions of the pane may have changed so we need to redraw the reposrtersPane
+    //the dimensions of the pane may have changed so we need to redraw the reposrtersPane
     this.reportersPaneFixLayout();
 
 };
@@ -387,7 +425,7 @@ emonCMS_RulesIDE_Morph.prototype.createReportersPane = function () {
 };
 
 emonCMS_RulesIDE_Morph.prototype.createListOfVariables = function () { // this list is really a pane
-    var pane = new FrameMorph();
+    var pane = new ScriptsMorph();
     pane.setHeight(20);
     pane.setWidth(this.reportersPane.width());
     pane.setColor(new Color(50, 60, 121));
@@ -401,7 +439,7 @@ emonCMS_RulesIDE_Morph.prototype.createListOfVariables = function () { // this l
 };
 
 emonCMS_RulesIDE_Morph.prototype.createListOfFeeds = function () { // this list is really a pane
-    var pane = new FrameMorph();
+    var pane = new ScriptsMorph();
     pane.setHeight(20);
     pane.setWidth(this.reportersPane.width());
     pane.setColor(new Color(50, 60, 121));
@@ -414,7 +452,7 @@ emonCMS_RulesIDE_Morph.prototype.createListOfFeeds = function () { // this list 
 };
 
 emonCMS_RulesIDE_Morph.prototype.createListOfAttributes = function () { // this list is really a pane
-    var pane = new FrameMorph();
+    var pane = new ScriptsMorph();
     pane.setHeight(20);
     pane.setWidth(this.reportersPane.width());
     pane.setColor(new Color(50, 60, 121));
@@ -427,7 +465,7 @@ emonCMS_RulesIDE_Morph.prototype.createListOfAttributes = function () { // this 
 };
 
 emonCMS_RulesIDE_Morph.prototype.createListOfRules = function () { // this list is really a pane
-    var pane = new FrameMorph();
+    var pane = new ScriptsMorph();
     pane.setHeight(20);
     pane.setWidth(this.reportersPane.width());
     pane.setColor(new Color(50, 60, 121));
@@ -446,13 +484,11 @@ emonCMS_RulesIDE_Morph.prototype.reportersPaneFixLayout = function () {
     var top = this.reportersPane.top() + 20;
 
     this.reportersPane.children.forEach(function (listPane) {
-        console.log(lastChild);
         /// Set height and postion of the List
         lastChild = listPane.children[listPane.children.length - 1];
         listPane.setHeight(lastChild.bottom() - listPane.top() + 10);
         //listPane.setHeight(50);
         listPane.setTop(top);
-        console.log(listPane);
 
         // Calculate position of nex List
         top = listPane.bottom() + 20;
@@ -513,9 +549,73 @@ emonCMS_RulesIDE_Morph.prototype.createListOfNodesForFeedsDialog = function () {
             'Cancel'
             );
     cancel_button.setColor(new Color(220, 220, 10));
-    cancel_button.setPosition(new Point(dialog.right() - 10 - cancel_button.width(), button.bottom() + 15));    
+    cancel_button.setPosition(new Point(dialog.right() - 10 - cancel_button.width(), button.bottom() + 15));
     cancel_button.fixLayout();
-    
+
+    dialog.add(cancel_button);
+
+    // Set the height of the dialog according to the number of rows of buttons
+    dialog.setHeight(cancel_button.bottom() - dialog.top() + 15);
+
+    return dialog;
+};
+
+emonCMS_RulesIDE_Morph.prototype.createListOfNodesForAttributesDialog = function () {
+    var myself = this;
+    // Create the dialog where we display all the nodes
+    var dialog = new Morph;
+    dialog.setWidth(150);
+    dialog.setColor(new Color(50, 60, 121));
+    dialog.setCenter(this.center());
+    dialog.setTop(this.top() + 100);
+    dialog.isDraggable = true;
+    dialog.hide();
+
+    var title = new StringMorph('Choose a node');
+    title.setColor(new Color(255, 255, 255, 1));
+    title.setLeft(dialog.left() + 20);
+    title.setTop(dialog.top() + 10);
+    dialog.add(title);
+
+    //Create the one button per node and add to the dialog
+    // Postion of the first button
+    var top = dialog.top() + 35;
+    var left = dialog.left() + 20;
+
+    for (var key in this.array_of_attributes_by_node) {
+        var node_key = key;
+        button = new PushButtonMorph(
+                function () {//function to be called when clicking the button
+                    myself.showAttributesDialog(arguments[0]);
+                },
+                node_key, //variable to pass to the function as "arguments[0]"
+                'Node ' + node_key
+                );
+        // Check if there is enugh space in this row of buttons to add the button
+        if ((left + button.width()) < dialog.right() - 20)
+            button.setPosition(new Point(left, top));
+        else {
+            left = dialog.left() + 20;
+            top = top + 30;
+            button.setPosition(new Point(left, top));
+        }
+        // calculate new position for next button
+        left = button.right() + 10;
+        dialog.add(button);
+    }
+
+    //create a cancel button and add it 
+    var cancel_button = new PushButtonMorph(
+            null,
+            function () {
+                myself.hideAttributesDialog();
+            },
+            'Cancel'
+            );
+    cancel_button.setColor(new Color(220, 220, 10));
+    cancel_button.setPosition(new Point(dialog.right() - 10 - cancel_button.width(), button.bottom() + 15));
+    cancel_button.fixLayout();
+
     dialog.add(cancel_button);
 
     // Set the height of the dialog according to the number of rows of buttons
@@ -534,12 +634,30 @@ emonCMS_RulesIDE_Morph.prototype.showFeedsDialog = function (node_key) {
     this.arrayOfFeedsDialogs[node_key].show();
 };
 
+emonCMS_RulesIDE_Morph.prototype.showAttributesDialog = function (node_key) {
+    //hide all the dialogs
+    this.arrayOfAttributesDialogs.forEach(function (dialog) {
+        dialog.hide();
+    });
+    this.listOfNodesForAttributesDialog.hide();
+    //show the target dialog     
+    this.arrayOfAttributesDialogs[node_key].show();
+};
+
 emonCMS_RulesIDE_Morph.prototype.hideFeedsDialog = function () {
     //hide all the dialogs
     this.arrayOfFeedsDialogs.forEach(function (dialog) {
         dialog.hide();
     });
     this.listOfNodesForFeedsDialog.hide();
+};
+
+emonCMS_RulesIDE_Morph.prototype.hideAttributesDialog = function () {
+    //hide all the dialogs
+    this.arrayOfAttributesDialogs.forEach(function (dialog) {
+        dialog.hide();
+    });
+    this.listOfNodesForAttributesDialog.hide();
 };
 
 emonCMS_RulesIDE_Morph.prototype.createArrayOfFeedsDialogs = function () {
@@ -576,7 +694,7 @@ emonCMS_RulesIDE_Morph.prototype.createArrayOfFeedsDialogs = function () {
             }
             button = new PushButtonMorph(
                     function () {
-                        myself.addElementToList(myself.listOfFeeds,arguments[0]);
+                        myself.addElementToList(myself.listOfFeeds, arguments[0]);
                     },
                     button_label, //variable to be used in the function above, accesed as "arguments[0]"
                     button_label
@@ -615,24 +733,155 @@ emonCMS_RulesIDE_Morph.prototype.createArrayOfFeedsDialogs = function () {
     return array_of_feeds_dialogs;
 };
 
-emonCMS_RulesIDE_Morph.prototype.addFeedToList = function (feed_name) {
-    //calculate position in the scripts pane for the feed block
-    var top = this.scriptsPane.top() - 20 + 15 * this.listOfFeeds.children.length;
-    left = this.listOfFeeds.left() + 10;
+emonCMS_RulesIDE_Morph.prototype.createArrayOfAttributesDialogs = function () {
+    var myself = this;
+    var array_of_attributes_dialogs = [];
 
-    // Create feed block and configure
-    feed = new ReporterBlockMorph();
-    feed.setSelector('reportGetVar', feed_name);
-    feed.isTemplate = true;
-    feed.isDraggable = false;
-    feed.setPosition(new Point(left, top));
+    // Create a Dialog displaying all the feeds for each node
+    for (var node_key in this.array_of_attributes_by_node) {
+        var dialog = new Morph;
+        dialog.setWidth(150);
+        dialog.setColor(new Color(50, 60, 121));
+        dialog.setCenter(this.center());
+        dialog.setTop(this.top() + 100);
+        dialog.isDraggable = true;
+        dialog.hide();
 
-    //add feed
-    this.listOfFeeds.add(feed);
+        var title = new StringMorph('Node ' + node_key + ': choose an attribute');
+        title.setColor(new Color(255, 255, 255, 1));
+        title.setLeft(dialog.left() + 20);
+        title.setTop(dialog.top() + 10);
+        dialog.add(title);
 
-    // Show the varaible
-    feed.show();
+        // Postion of the first button
+        var top = dialog.top() + 35;
+        var left = dialog.left() + 20;
+
+        for (var attribute_key in this.array_of_attributes_by_node[node_key]) {
+            var attribute = this.array_of_attributes_by_node[node_key][attribute_key];
+            button_label = attribute['groupid'] + attribute['attributeId'] + attribute['attributeNumber'] + attribute['nodeid'];
+            button = new PushButtonMorph(
+                    function () {
+                        myself.addElementToList(myself.listOfAttributes, arguments[0]);
+                    },
+                    button_label, //variable to be used in the function above, accesed as "arguments[0]"
+                    button_label
+                    );
+            // Check if there is enugh space in this row of buttons to add the button
+            if ((left + button.width()) < dialog.right() - 20)
+                button.setPosition(new Point(left, top));
+            else {
+                left = dialog.left() + 20;
+                top = top + 30;
+                button.setPosition(new Point(left, top));
+            }
+            // calculate new position for next button
+            left = button.right() + 10;
+            dialog.add(button);
+        }
+        //create a cancel button and add it 
+        var cancel_button = new PushButtonMorph(null,
+                function () {
+                    myself.hideAttributesDialog();
+                },
+                'Cancel'
+                );
+        cancel_button.setColor(new Color(220, 220, 10));
+        cancel_button.setPosition(new Point(dialog.right() - 10 - cancel_button.width(), button.bottom() + 15));
+        cancel_button.fixLayout();
+        dialog.add(cancel_button);
+
+
+
+        // Set the height of the dialog according to the number of rows of buttons
+        dialog.setHeight(cancel_button.bottom() - dialog.top() + 15);
+        array_of_attributes_dialogs[node_key] = dialog;
+    }
+
+    return array_of_attributes_dialogs;
 };
+
+emonCMS_RulesIDE_Morph.prototype.createGenerateXMLButton = function () {
+    var myself = this;
+    var button = new PushButtonMorph(null,
+            function () {
+                myself.generateXML();
+            },
+            'Generate XML code'
+            );
+    button.setColor(new Color(220, 220, 10));
+    button.setLeft(this.scriptsPane.left() + 50);
+    button.setTop(this.scriptsPane.top() + 20);
+    button.fixLayout();
+    this.add(button);
+};
+
+emonCMS_RulesIDE_Morph.prototype.generateXML = function () {
+    var serializer = new XML_Serializer();
+    var xml_string = '<stages>' + serializer.serialize(this.stagesPane) + '</stages>' +
+            '<variables>' + serializer.serialize(this.listOfVariables) + '</variables>' +
+            '<feeds>' + serializer.serialize(this.listOfFeeds) + '</feeds>' +
+            '<attributes>' + serializer.serialize(this.listOfAttributes) + '</attributes>';
+    console.log(xml_string);
+    return xml_string;
+};
+
+emonCMS_RulesIDE_Morph.prototype.loadBlocks = function (blocks_string) {
+    //var serializer = new XML_Serializer();
+    var serializer = new SnapSerializer();
+    var myself = this;
+
+    var stages_string = getBlocksString(blocks_string, "stages");
+    var variables_string = getBlocksString(blocks_string, "variables");
+    var feeds_string = getBlocksString(blocks_string, "feeds");
+    var attributes_string = getBlocksString(blocks_string, "attributes");
+
+    // Load Reporters
+    loadReporters(this.listOfAttributes, attributes_string);
+    loadReporters(this.listOfFeeds, feeds_string);
+    loadReporters(this.listOfVariables, variables_string);
+
+    // Load Stages
+    loadStages(stages_string, this.stagesPane);
+    console.log(stages_string);
+
+
+    // Local functions
+    function getBlocksString(blocks_string, script_name) {
+        var begining_of_slice = blocks_string.search('<' + script_name + '>');
+        var end_of_slice = blocks_string.search('</' + script_name + '>') + script_name.length + 3;
+        return blocks_string.slice(begining_of_slice, end_of_slice); // returns something like: <attributes><script x="10" y="35"><block var="1212120"/></script><script x="72" y="35"><block var="0x06500x06500x065100"/></script></attributes>
+    }
+    function loadReporters(list, blocks_string) {
+        var blocks_XML_Element = serializer.parse(blocks_string);
+        blocks_XML_Element.children.forEach(function (child) { //each child is a <script>
+            reporter_name = child.children[0].attributes.var;
+            myself.addElementToList(list, reporter_name);
+        });
+    }
+    function loadStages(stages_string, stagesPane) {
+        //console.log(stages_string);
+        var stages_XML_Element = serializer.parse(stages_string);
+        var scripts = stagesPane;
+        stages_XML_Element.children.forEach(function (child) { //each child is a <script> whose children are a list of blocks (starting with a Stage)
+            //console.log(child);
+            //console.log(child.children[0]);
+            element = serializer.loadScript(child);
+            if (!element) {
+                return;
+            }
+            element.setPosition(new Point(
+                    (+child.attributes.x || 0),
+                    (+child.attributes.y || 0)
+                    ).add(scripts.topLeft()));
+            scripts.add(element);
+            element.fixBlockColor(null, true); // force zebra coloring
+        });
+    }
+
+};
+
+
 
 /*
  * 

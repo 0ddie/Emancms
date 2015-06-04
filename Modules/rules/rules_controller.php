@@ -76,11 +76,11 @@ function rules_controller() {
                 'frequency' => get('frequency'),
                 'blocks' => get('blocks'),
                 'close' => get('close')];
-            $rule_saved = $rules->save_rule($attributes);
-            $rule_saved = $rule_saved == 0 ? false : true;
+            $rule_id = $rules->save_rule($attributes); //returns the id of the rule or 0 if something went wrong
+            $rule_saved = $rule_id == 0 ? false : true;
             if ($attributes['close'] == "false") { //"Apply"
                 //echo $attributes['close'];
-                $rule = $rules->get_rule((int) get('ruleid'), $session['userid']);
+                $rule = $rules->get_rule($rule_id, $session['userid']);
                 $result = view("Modules/rules/Views/rules_edit_rule.php", ['mode' => 'edit', 'rule' => $rule, 'rules_saved' => $rule_saved]);
             } else { //"Save and close"
                 $list_of_rules = $rules->get_rules($session['userid']);

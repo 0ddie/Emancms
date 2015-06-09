@@ -2,36 +2,42 @@
 
 function register_controller() {
       
-    global $route, $mysqli, $redis, $feed, $session;
+    global $route, $mysqli, $redis, $feed, $session, $user;
     require "Modules/register/register_model.php";
     $register = new register($mysqli);
     
     require "Modules/input/input_model.php";
     $input = new Input($mysqli,$redis, $feed);
     $ender = 0;
+    
+    require "Modules/input/process_model.php"; // 886
+    $process = new Process($mysqli,$input,$feed);
+    
+    $process->set_timezone_offset($user->get_timezone($session['userid']));
+    
+    
     if ($route->format == 'json') {
         //$fTime = time();
         if ($route->action == 'test'){
             
+            $userid = $session['userid'];
             
-            /*$reformattedJson = "0x06300x06600x0700x0075";
-            $register->feedCreator($reformattedJson);
+            $groupIDDesc = $this->groupIDDescGetter($attributeUid);
+            $attributeIDDesc = $this->attributeIDDescGetter($attributeUid);
+            $register->feedCreator($groupIDDesc,$attributeIDDesc);
             $id=($register->feed_id_getter());
-            print_r("$id");
-            $tag = "lalalalala";
+            print_r($id);
+            $nodeid = 5;
+            $tag = ("N".$nodeid);
             $register->set_feed_fields($id, $tag);
             //$input->add_process($process,$session['userid'], get('inputid'), get('processid'), get('arg'), get('newfeedname'), get('newfeedinterval'),get('engine'));
-             $userid = $session['userid'];
-             $arg = 0;
+             $arg = -1;
              $inputid = $register->inputIdGetter($reformattedJson);
              $processid = 1;
+             //$input->add_process($process,$userid,$inputid,$processid,$arg); 
              
-            $input->add_process($process_class,$userid,$inputid,$processid,$arg);
-             * 
-             */
-            
-            $userid = $session['userid'];
-            $register->getAttributesByNode($userid);
+            //$userid = $session['userid'];
+            //$register->getAttributesByNode($userid);
         }
         if ($route->action == 'create') {
 
@@ -140,13 +146,12 @@ function register_controller() {
             }
             $doing = 0;
             $reformattedJson = $register->jsonParse($json,$nodeid , $doing);
-
-
-                
-   
+            $space = strpos($reformattedJson, '-', 0);
+            substr($attributeUid, $space);
             
+            $groupIDDesc = $this->groupIDDescGetter($attributeUid);
+            $attributeIDDesc = $this->attributeIDDescGetter($attributeUid);
             
-
             $register->inputCreator($nodeid, $input, $reformattedJson);
             
 

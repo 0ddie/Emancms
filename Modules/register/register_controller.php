@@ -12,14 +12,14 @@ function register_controller() {
     
     require "Modules/input/process_model.php"; // 886
     $process = new Process($mysqli,$input,$feed);
-    
+
     $process->set_timezone_offset($user->get_timezone($session['userid']));
     
     
     if ($route->format == 'json') {
         //$fTime = time();
         if ($route->action == 'test'){
-            
+           /* 
             $userid = $session['userid'];
             
             $groupIDDesc = $this->groupIDDescGetter($attributeUid);
@@ -38,6 +38,8 @@ function register_controller() {
              
             //$userid = $session['userid'];
             //$register->getAttributesByNode($userid);
+            * *
+            */
         }
         if ($route->action == 'create') {
 
@@ -51,8 +53,8 @@ function register_controller() {
             if (isset($_GET["nodeMAC"])) {
                 $nodeMAC = $_GET ["nodeMAC"];
             }
-            if (isset($_GET["nodeIP"])){
-                $nodeIP = $_GET ["nodeIP"];
+            if (isset($_GET["fromAddress"])){
+                $nodeIP = $_GET ["fromAddress"];
             }
             if (isset($_GET["timeout"])) {
                 $timeout = $_GET ["timeout"];
@@ -93,7 +95,7 @@ function register_controller() {
             $register->timedOut($startTime, $ender, $timeout);
         } elseif ($route->action == 'setup') {
             //stop timer 1
-            sleep(16);
+            //sleep(16);
             $ender = 1;
 
             if (isset($_GET["apikey"])) {
@@ -134,26 +136,41 @@ function register_controller() {
              */
             $nodeidL = strlen($nodeid);
             
+            
 
-            if ($register->nodeIDConstant($nodeid, $json, $nodeidL) === 1) {
+            /*if ($register->nodeIDConstant($nodeid, $json, $nodeidL) === 1) {
 
                 $register->misformedError();
                 return array('content' => "Node id's are different within String");
             }
+             * 
+             */
             
             if($register->correctInputJson($json,$nodeid)===1){
-            return array('content' => "Already been inputted");
+            return array('content' => "Already been inputted with this node ID");
             }
             $doing = 0;
             $reformattedJson = $register->jsonParse($json,$nodeid , $doing);
             $space = strpos($reformattedJson, '-', 0);
-            substr($attributeUid, $space);
+            $attributeUid = substr($reformattedJson, $space);
             
-            $groupIDDesc = $this->groupIDDescGetter($attributeUid);
-            $attributeIDDesc = $this->attributeIDDescGetter($attributeUid);
+            $groupIDDesc = $register->groupIDDescGetter($attributeUid);
+            $attributeIDDesc = $register->attributeIDDescGetter($attributeUid);
+            $id=($register->feed_id_getter());
+            $userid = $session['userid'];
             
+
+
+            $name = ($groupIDDesc." ".$attributeIDDesc);
             $register->inputCreator($nodeid, $input, $reformattedJson);
-            
+            $tag = ("N".$nodeid);
+            $inputid = $register->inputIdGetter($reformattedJson);
+            $register->feedCreator($groupIDDesc, $attributeIDDesc, $attributeUid);
+            $id = $register->feed_id_getter();
+            $arg = $id;
+            $processid = 1;
+            $input->add_process($process,$userid,$inputid,$processid,$arg); 
+            $register->set_feed_fields($id, $tag, $name);
 
         } else {
             //$register->misformedError($route);

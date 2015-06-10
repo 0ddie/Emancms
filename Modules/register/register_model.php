@@ -203,10 +203,21 @@ class register {
           * Save's the attributes to the table
           */
          if($this->checkEverything($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid, $userid)!=0){
-         print_r("already added to attributes table");    
+            if ($result->num_rows === 1) {
+            return 1;
+        }
+         else {
+            print_r("already added to attributes table");    
+
+            $this->misformedError();
+            return 0;
+        }
          }
+        
+             
          
-         $attributeUid = $this->checkEverything($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid, $userid);
+         
+        $attributeUid = $this->getEverything($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid, $userid);
         
          if ($doing === 0){
         $this->saveToAttributes($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid, $userid);
@@ -234,7 +245,11 @@ class register {
             return 1;
         }
     }
-    
+    public function checkEverything($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid, $userid){
+                global $mysqli;
+                $result = $mysqli->query("SELECT `attributeUid` FROM `attributes` WHERE `nodeid` = '$nodeid' AND `groupid` = '$groupID' AND `attributeId` = '$attributeID' AND `attributeNumber` LIKE '$attributeNumber' AND `attributeDefaultValue` LIKE '$attributeDefaultValue' AND `userid` = '$userid'");
+                if($result->num_rows === 1);
+    }
     public function getEverything($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid, $userid){
         global $mysqli;
         $result = $mysqli->query("SELECT `attributeUid` FROM `attributes` WHERE `nodeid` = '$nodeid' AND `groupid` = '$groupID' AND `attributeId` = '$attributeID' AND `attributeNumber` LIKE '$attributeNumber' AND `attributeDefaultValue` LIKE '$attributeDefaultValue' AND `userid` = '$userid'");
@@ -270,7 +285,7 @@ class register {
         $input->create_input($userid, $nodeid, $name);
     }
 
-    public function feedCreator($groupIDDesc,$attributeIDDesc){
+    public function feedCreator($groupIDDesc,$attributeIDDesc, $attributeUid){
         
 
         global $feed, $session, $redis, $mysqli, $feed_settings;
@@ -278,13 +293,23 @@ class register {
         $feed = new Feed($mysqli, $redis, $feed_settings);
 
         $userid = $session['userid'];
-        $name = ($groupIDDesc." ".$attributeIDDesc);
+        //$name = ($attributeUid . " - ".$groupIDDesc." ".$attributeIDDesc);
+        $name = "test1";
         $datatype = 1;
         $engine = 2;
         $options_in = NULL;
-        $feed->create($userid, $name, $datatype, $engine, $options_in);
-
+        $result=$feed->create($userid, $name, $datatype, $engine, $options_in);
+        echo "<pre>";
+        print_r($result);
+        echo"</pre>";
+        if($result->success != 1 ){
+            return array ('content'=> "Feed not created");
+        }
+        
         print_r("Feed Created");
+        return $result->feedid;
+        
+        //returns feed id
     }
 
     public function feed_id_getter() {
@@ -296,9 +321,11 @@ class register {
         return $query;
     }
 
-    public function set_feed_fields($id, $tag) {
+    public function set_feed_fields($id, $tag, $name) {
         global $mysqli;
         $mysqli->query("UPDATE `feeds` SET `tag` = '$tag' WHERE `id` = '$id'");
+        $mysqli->query("UPDATE `feeds` SET `name` = '$name' WHERE `id` = '$id'");
+
     }
 
     /*
@@ -373,14 +400,13 @@ class register {
     /*
      * checks the input json is correctly formatted
      */
-
     public function correctInputJson($json, $nodeid) {
         //print_r($json);
         global $mysqli;
         $doing = 1;
         $reformattedJson = ($this->jsonParse($json, $nodeid, $doing));
 
-        $result = $mysqli->query("SELECT name FROM input WHERE `name` = '$reformattedJson'");
+        $result = $mysqli->query("SELECT name FROM input WHERE `name` = '$reformattedJson' AND `nodeid` = '$nodeid' ");
         //print_r($result);
         if ($result->num_rows > 0) {
             return 1;
@@ -442,8 +468,10 @@ class register {
             $result = $mysqli->query("SELECT `groupid` FROM `attributes` WHERE `attributeUid` = '$attributeUid' ");
             $row = mysqli_fetch_row ( $result );
             $groupid = $row[0];
-            $result2 = $mysqli->query("SELECT `Description` FROM `groupids` WHERE `ID` = '$groupid'");
-            return $result2;
+            $result2 = $mysqli->query("SELECT `Description` FROM `group_ids` WHERE `ID` = '$groupid'");
+            $row2 = mysqli_fetch_row ( $result2 );
+            $Description= $row2[0];
+            return $Description;
             
         }
         public function attributeIDDescGetter($attributeUid){
@@ -452,7 +480,9 @@ class register {
             $row = mysqli_fetch_row ( $result );
             $attributeid = $row[0];
             $result2 = $mysqli->query("SELECT `Name` FROM `attribute_information` WHERE `Identifier` = '$attributeid'");
-            return $result2;
+            $row2 = mysqli_fetch_row ( $result2 );
+            $Name = $row2[0];
+            return $Name;
         }
 
 }

@@ -2,36 +2,44 @@
 
 function register_controller() {
       
-    global $route, $mysqli, $redis, $feed, $session;
+    global $route, $mysqli, $redis, $feed, $session, $user;
     require "Modules/register/register_model.php";
     $register = new register($mysqli);
     
     require "Modules/input/input_model.php";
     $input = new Input($mysqli,$redis, $feed);
     $ender = 0;
+    
+    require "Modules/input/process_model.php"; // 886
+    $process = new Process($mysqli,$input,$feed);
+
+    $process->set_timezone_offset($user->get_timezone($session['userid']));
+    
+    
     if ($route->format == 'json') {
         //$fTime = time();
         if ($route->action == 'test'){
+           /* 
+            $userid = $session['userid'];
             
-            
-            /*$reformattedJson = "0x06300x06600x0700x0075";
-            $register->feedCreator($reformattedJson);
+            $groupIDDesc = $this->groupIDDescGetter($attributeUid);
+            $attributeIDDesc = $this->attributeIDDescGetter($attributeUid);
+            $register->feedCreator($groupIDDesc,$attributeIDDesc);
             $id=($register->feed_id_getter());
-            print_r("$id");
-            $tag = "lalalalala";
+            print_r($id);
+            $nodeid = 5;
+            $tag = ("N".$nodeid);
             $register->set_feed_fields($id, $tag);
             //$input->add_process($process,$session['userid'], get('inputid'), get('processid'), get('arg'), get('newfeedname'), get('newfeedinterval'),get('engine'));
-             $userid = $session['userid'];
-             $arg = 0;
+             $arg = -1;
              $inputid = $register->inputIdGetter($reformattedJson);
              $processid = 1;
+             //$input->add_process($process,$userid,$inputid,$processid,$arg); 
              
-            $input->add_process($process_class,$userid,$inputid,$processid,$arg);
-             * 
-             */
-            
-            $userid = $session['userid'];
-            $register->getAttributesByNode($userid);
+            //$userid = $session['userid'];
+            //$register->getAttributesByNode($userid);
+            * *
+            */
         }
         if ($route->action == 'create') {
 
@@ -45,8 +53,8 @@ function register_controller() {
             if (isset($_GET["nodeMAC"])) {
                 $nodeMAC = $_GET ["nodeMAC"];
             }
-            if (isset($_GET["nodeIP"])){
-                $nodeIP = $_GET ["nodeIP"];
+            if (isset($_GET["fromAddress"])){
+                $nodeIP = $_GET ["fromAddress"];
             }
             if (isset($_GET["timeout"])) {
                 $timeout = $_GET ["timeout"];
@@ -87,7 +95,7 @@ function register_controller() {
             $register->timedOut($startTime, $ender, $timeout);
         } elseif ($route->action == 'setup') {
             //stop timer 1
-            sleep(16);
+            //sleep(16);
             $ender = 1;
 
             if (isset($_GET["apikey"])) {
@@ -128,27 +136,41 @@ function register_controller() {
              */
             $nodeidL = strlen($nodeid);
             
+            
 
-            if ($register->nodeIDConstant($nodeid, $json, $nodeidL) === 1) {
+            /*if ($register->nodeIDConstant($nodeid, $json, $nodeidL) === 1) {
 
                 $register->misformedError();
                 return array('content' => "Node id's are different within String");
             }
+             * 
+             */
             
             if($register->correctInputJson($json,$nodeid)===1){
-            return array('content' => "Already been inputted");
+            return array('content' => "Already been inputted with this node ID");
             }
             $doing = 0;
             $reformattedJson = $register->jsonParse($json,$nodeid , $doing);
-
-
-                
-   
+            $space = strpos($reformattedJson, '-', 0);
+            $attributeUid = substr($reformattedJson, $space);
             
+            $groupIDDesc = $register->groupIDDescGetter($attributeUid);
+            $attributeIDDesc = $register->attributeIDDescGetter($attributeUid);
+            $id=($register->feed_id_getter());
+            $userid = $session['userid'];
             
 
+
+            $name = ($groupIDDesc." ".$attributeIDDesc);
             $register->inputCreator($nodeid, $input, $reformattedJson);
-            
+            $tag = ("N".$nodeid);
+            $inputid = $register->inputIdGetter($reformattedJson);
+            $register->feedCreator($groupIDDesc, $attributeIDDesc, $attributeUid);
+            $id = $register->feed_id_getter();
+            $arg = $id;
+            $processid = 1;
+            $input->add_process($process,$userid,$inputid,$processid,$arg); 
+            $register->set_feed_fields($id, $tag, $name);
 
         } else {
             //$register->misformedError($route);

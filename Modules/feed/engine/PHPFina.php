@@ -371,8 +371,7 @@ class PHPFina
         $id = (int) $id;
         
         $feedname = "$id.meta";
-        $metafile = fopen($this->dir.$feedname, 'wb');
-        
+
         if (!$metafile) {
             $this->log->warn("PHPFina:create_meta could not open meta data file id=".$id);
             return false;

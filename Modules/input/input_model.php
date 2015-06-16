@@ -170,7 +170,11 @@ class Input
         
         $process = $process_class->get_process($processid);
         $processtype = $process[1];                                       // Array position 1 is the processtype: VALUE, INPUT, FEED
-        $datatype = $process[4];                                          // Array position 4 is the datatype
+        $datatype = $process[4];  
+        echo "<pre>";
+        print_r($process);
+        echo "</pre>";
+// Array position 4 is the datatype
         
         switch ($processtype) {
             case ProcessArg::VALUE:                                       // If arg type value

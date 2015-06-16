@@ -75,6 +75,7 @@ function rules_controller() {
                 'expiry_date' => get('expiry_date'),
                 'frequency' => get('frequency'),
                 'blocks' => get('blocks'),
+                'enabled' => get('enabled'),
                 'close' => get('close')];
             $rule_id = $rules->save_rule($attributes); //returns the id of the rule or 0 if something went wrong
             $rule_saved = $rule_id == 0 ? false : true;

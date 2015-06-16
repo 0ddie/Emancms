@@ -33,13 +33,14 @@ class Rules {
      * on and to load the tables in redis
      * ************************************************** */
 
+//have a look in feeds_model: load_to_redis($userid)
     public function first_run() {
-        // ToDo
+// ToDo
         return false;
     }
 
     public function load_tables_into_redis() {
-        //ToDo    
+//ToDo    
     }
 
     /*     * *************************************** */
@@ -55,13 +56,13 @@ class Rules {
     }
 
     public function redis_get_rules($userid) {
-        //ToDo
+//ToDo
     }
 
     public function mysql_get_rules($userid) {
         $userid = (int) $userid;
         $array_of_rules = array();
-        $result = $this->mysqli->query("SELECT ruleid,name,description,run_on,expiry_date,frequency FROM rules WHERE `userid` = '$userid'");
+        $result = $this->mysqli->query("SELECT * FROM rules WHERE `userid` = '$userid'");
         for ($i = 0; $row = (array) $result->fetch_object(); $i++) {
             $array_of_rules[$i] = $row;
         }
@@ -77,12 +78,12 @@ class Rules {
     }
 
     public function redis_get_rule($ruleid, $userid) {
-        //ToDo
+//ToDo
     }
 
     public function mysql_get_rule($ruleid, $userid) {
         $userid = (int) $userid;
-        $result = $this->mysqli->query("SELECT ruleid,name,description,run_on,expiry_date,frequency,userid,blocks FROM rules WHERE `userid` = '$userid' AND `ruleid`='$ruleid'");
+        $result = $this->mysqli->query("SELECT * FROM rules WHERE `userid` = '$userid' AND `ruleid`='$ruleid'");
         if ($result->num_rows > 0)
             return $result->fetch_array();
         else
@@ -95,11 +96,11 @@ class Rules {
 
     public function delete_rule($ruleid, $userid) {
         $ruleid = (int) $ruleid;
-        //check if rule exists
+//check if rule exists
         if ($this->rule_exists($ruleid) == true) {
             $rule_deleted = $this->mysqli->query("DELETE FROM rules WHERE `ruleid` = '$ruleid' AND `userid`='$userid'");
             if ($this->redis && $rule_deleted) {
-                //ToDo delete rule
+//ToDo delete rule
             }
             return $rule_deleted;
         } else {//if rule not found in database
@@ -118,26 +119,25 @@ class Rules {
         $name = preg_replace('/[^\w\s-.]/', '', $attributes['name']);
         $description = preg_replace('/[^\w\s-.]/', '', $attributes['description']);
         $run_on = (preg_replace('/([^0-9\-: ])/', '', $attributes['run_on']));
-        //$run_on = $attributes['run_on'];
-        $expiry_date = preg_replace('/([^0-9\-])/', '', $attributes['expiry_date']);
+//$run_on = $attributes['run_on'];
+        $expiry_date = preg_replace('/([^0-9\-: ])/', '', $attributes['expiry_date']);
         $frequency = (int) $attributes['frequency'];
         $blocks = preg_replace('/[^\w\s-.\/<>"=]/', '', $attributes['blocks']);
-        //print_r("hola");
-        //print_r($attributes['ruleid']);
-        //echo 'hola' + $this->rule_exists($attributes['ruleid']);
+        $enabled = $attributes['enabled'] == 'true' ? 1 : 0;
+
         if ($this->rule_exists($attributes['ruleid']) == false) {
-            $rule_saved = $this->mysqli->query("INSERT INTO `rules` (`userid`, `name`, `description`, `run_on`, `expiry_date`, `frequency`, `blocks`) VALUES ('$userid', '$name', '$description', '$run_on', '$expiry_date', '$frequency', '$blocks')");
+            $rule_saved = $this->mysqli->query("INSERT INTO `rules` (`userid`, `name`, `description`, `run_on`, `expiry_date`, `frequency`, `blocks`,`enabled`) VALUES ('$userid', '$name', '$description', '$run_on', '$expiry_date', '$frequency', '$blocks','$enabled')");
             if ($this->redis && $rule_saved) {
-                //ToDo insert rule
+//ToDo insert rule
             }
             if ($rule_saved == false || $rule_saved == 0)
                 return 0;
             else
                 return $this->mysqli->insert_id;
         } else {
-            $rule_saved = $this->mysqli->query("UPDATE `rules` SET `name`='$name', `description`='$description', `run_on`='$run_on', `expiry_date`='$expiry_date', `frequency`='$frequency', `blocks`='$blocks' WHERE `ruleid`= '$ruleid' AND `userid` = '$userid'");
+            $rule_saved = $this->mysqli->query("UPDATE `rules` SET `name`='$name', `description`='$description', `run_on`='$run_on', `expiry_date`='$expiry_date', `frequency`='$frequency', `blocks`='$blocks', `enabled`='$enabled' WHERE `ruleid`= '$ruleid' AND `userid` = '$userid'");
             if ($this->redis && $rule_saved) {
-                //ToDo update rule
+//ToDo update rule
             }
             if ($rule_saved == false || $rule_saved == 0)
                 return 0;
@@ -152,11 +152,10 @@ class Rules {
 
     public function rule_exists($ruleid) {
         if ($this->redis) {
-            //ToDo check if rule exists
+//ToDo check if rule exists
         } else {
             $query_result = $this->mysqli->query("SELECT ruleid FROM rules WHERE `ruleid` = '$ruleid'");
         }
-        //print_r($query_result);
         if ($query_result->num_rows > 0)
             return true;
         else
@@ -171,7 +170,7 @@ class Rules {
         $attributesByNode = [];
 
         if ($this->redis) {
-            //ToDo
+//ToDo
         } else {
             $result = $this->mysqli->query("SELECT * FROM attributes WHERE `userid` = '$userid'");
 
@@ -185,6 +184,55 @@ class Rules {
         }
     }
 
+    public function disableRule($ruleid) {
+        $ruleid = (int) $ruleid;
+        $result = $this->mysqli->query("UPDATE `rules` SET `enabled`='0' WHERE `ruleid`= '$ruleid'");
+        if ($this->redis) {
+            //ToDo
+        }
+        return $result;
+    }
+
+    public function setRunOn($ruleid, $new_run_on_date) {
+        $ruleid = (int) $ruleid;
+        $result = $this->mysqli->query("UPDATE `rules` SET `run_on`='$new_run_on_date' WHERE `ruleid`= '$ruleid'");
+        if ($this->redis) {
+            //ToDo
+        }
+        return $result;
+    }
+
+    /* End of other methods  */
+
+    /* blocksToPhp()  */
+
+    public function blocksToPhp($blocks_string) {
+        //$blocks_string= $blocks_string;
+        $stages_string = $this->getBlocksString($blocks_string, 'stages');
+        $stages = new SimpleXMLElement($stages_string);
+
+        foreach ($stages->script as $stage) {
+            echo '<pre>';
+            print_r($stage);
+            echo '</pre><br/><br/><br/>';
+        }
+
+
+        echo '<pre>';
+        print_r($stages);
+        echo '</pre>';
+        echo '<pre>';
+        print_r($stages_string);
+        echo '</pre>';
+    }
+
+    public function getBlocksString($blocks_string, $script_name) {
+        $begining_of_slice = stripos($blocks_string, '<' . $script_name . '>');
+        $end_of_slice = stripos($blocks_string, '</' . $script_name . '>') + strlen($script_name) + 3;
+        return substr($blocks_string, $begining_of_slice, $end_of_slice - $begining_of_slice); // returns something like: <attributes><script x="10" y="35"><block var="1212120"/></script><script x="72" y="35"><block var="0x06500x06500x065100"/></script></attributes>
+    }
+
+    /*  End blocksToPhp()  */
     /* End of other methods  */
 
     /*     * ********************************* */
@@ -226,9 +274,6 @@ class Rules {
         }
 
         return $array_of_feeds_by_node;
-        /* echo "<pre>";
-          print_r($array_of_feeds_by_node);
-          echo "</pre>"; */
     }
 
     private function get_feed_name($array_of_user_feeds, $feedid) {
@@ -246,4 +291,30 @@ class Rules {
     }
 
     /*  End get user feeds by node    */
+
+    /*     * ************************************************************* */
+    /* Get schedule (all the rules)
+      /*************************************************************** */
+
+    public function get_schedule() {
+        if ($this->redis) {
+            return $this->redis_get_schedule();
+        } else {
+            return $this->mysql_get_schedule();
+        }
+    }
+
+    public function redis_get_schedule() {
+//ToDo
+    }
+
+    public function mysql_get_schedule() {
+        $array_of_rules = array();
+        $result = $this->mysqli->query("SELECT * FROM rules WHERE `enabled` = '1'");
+        for ($i = 0; $row = (array) $result->fetch_object(); $i++) {
+            $array_of_rules[$i] = $row;
+        }
+        return $array_of_rules;
+    }
+
 }

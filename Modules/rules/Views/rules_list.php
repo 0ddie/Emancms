@@ -71,8 +71,9 @@ global $path;
                         <th><a><?php echo _('Name'); ?></a></th>
                         <th><a><?php echo _('Description'); ?></a></th>
                         <th><a><?php echo _('Run on'); ?></a></th>
-                        <th><a><?php echo _('Expiry date'); ?></a></th>
-                        <th><a><?php echo _('Frequency'); ?></a></th>
+                        <th><a><?php echo _('Expiry date<br />(0 for no expiry date)'); ?></a></th>
+                        <th><a><?php echo _('Frequency<br />(secs)'); ?></a></th>
+                        <th><a><?php echo _('Enabled'); ?></a></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -86,6 +87,7 @@ global $path;
                         <td>{{rule.run_on}}</td>
                         <td>{{rule.expiry_date}}</td>
                         <td>{{rule.frequency}}</td>
+                        <td>{{rule.enabled === '0' ? <?php echo _('false') ?> : <?php echo _('true') ?>}}</td>
                         <td><a title="<?php echo _('Edit rule')?>" href="<?php echo $path; ?>rules/edit?ruleid={{rule.ruleid}}"><i class='icon-pencil'></i></a></td>
                         <td title="<?php echo _('Delete rule')?>" class='delete-dialog-opener'><i class='icon-trash' ng-click="openModal(rule)"></i></td>
                     </tr>

@@ -3,7 +3,7 @@
 ##Intro
 The **Rules Module** is a **User Interface** and a **Cron task** (aka *Rules Schedule*) to allow **EmonCMS** users build sets of actions (aka *Rules*) to interact with feeds and nodes. It is currently on development stage.
 
-This module is part of the **OpenEnergyManagement (OEMan)** system that the [Centre for Alternative Technology](http://cat.org.uk) (**CAT**) is developing for the OpenEnergyMonitor project. OEMan has been devised by **Adam Tyler**, bright heating engineer in CAT's Engineering department. The module itself is being developed by myself [Carlos Alonso Gabizón](https://github.com/cagabi)
+This module is part of the **OpenEnergyManagement (OEMan)** system that the [Centre for Alternative Technology](http://cat.org.uk) (**CAT**) is developing for the **OpenEnergyMonitor** project. OEMan has been devised by **Adam Tyler**, bright heating engineer in CAT's Engineering department. The module itself is being developed by myself [Carlos Alonso Gabizón](https://github.com/cagabi)
 
 The Rules Module allows users to send control statements to nodes. So far *control* has been implemented for nodes that use the Register Module that [Michael Oddie](https://github.com/0ddie) has developed as part of OEMan and can be found in this same repository. This is the only bespoke developement. Everything else works without the need of the Register Module, this was one of the main aims of this Rules Modules: **be a contribution to the OpenEnergyMonitor** but not only to OEMan.
 
@@ -29,7 +29,8 @@ When a rule is saved, xml code representing the blocks in the script is generate
 
 The potential of the rules programmer is great. Tutorials about how to add new functionality will hopefully be written next time I implement anything from the ToDo list below.
 
-##ToDo list - Rules Programmer
+##ToDo list
+- Add time picker to "expiry_time" and "run_on"
 - Look and feel nicer
 - Add license
 - Fix bugs: 

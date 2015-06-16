@@ -126,7 +126,7 @@ emonCMS_RulesIDE_Morph.prototype.init = function (width, height, array_of_feeds_
         this.addElementToList(this.listOfVariables, 'timedout');
 
     //button to see blocks xml and display in the console for debugging
-    //this.genereateCodeButton = this.createGenerateXMLButton();
+    this.genereateCodeButton = this.createGenerateXMLButton();
 };
 
 emonCMS_RulesIDE_Morph.prototype.createControlsButton = function (width, height) {
@@ -818,10 +818,10 @@ emonCMS_RulesIDE_Morph.prototype.createGenerateXMLButton = function () {
 
 emonCMS_RulesIDE_Morph.prototype.generateXML = function () {
     var serializer = new XML_Serializer();
-    var xml_string = '<stages>' + serializer.serialize(this.stagesPane) + '</stages>' +
+    var xml_string = '<blocks>'+'<stages>' + serializer.serialize(this.stagesPane) + '</stages>' +
             '<variables>' + serializer.serialize(this.listOfVariables) + '</variables>' +
             '<feeds>' + serializer.serialize(this.listOfFeeds) + '</feeds>' +
-            '<attributes>' + serializer.serialize(this.listOfAttributes) + '</attributes>';
+            '<attributes>' + serializer.serialize(this.listOfAttributes) + '</attributes>' + '</blocks>';
     console.log(xml_string);
     return xml_string;
 };

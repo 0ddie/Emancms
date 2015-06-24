@@ -11,3 +11,11 @@ $schema['rules'] = array(
     'blocks' => array('type' => 'mediumtext'),
     'enabled' => array('type' => 'tinyint', 'default' => false)
 );
+$schema['rules_pending_acks'] = array(
+    'request_time' => array('type' => 'datetime'),
+    'type' => array('type' => 'text', 'Null' => 'NO'),
+    'ruleid' => array('type' => 'int(11)'),
+    'next_stage' => array('type' => 'int(11)', 'default' => ''),
+    'args' => array('type' => 'text'),
+    'timeout' => array('type' => 'int(11)', 'default' => '0')
+);

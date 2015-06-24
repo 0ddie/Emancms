@@ -39,9 +39,13 @@ $mysqli = new mysqli($server, $username, $password, $database);
 //$redis = new Redis();
 $redis = null;
 //$redis->connect("127.0.0.1");
+
 // 3) Include files
 include "Modules/rules/rules_model.php";
 $rules = new Rules($mysqli, $redis);
+include "Modules/log/EmonLogger.php";
+$log = new EmonLogger();
+$log->set_logfile(__DIR__ . '/rules.log'); // I think this may have problems when running on cgi
 
 // 4) Run the "daemon", this is the "main" running in a loop
 //  while (true) {
@@ -67,7 +71,7 @@ function run_schedule() {
         if ($expiry_time > $time || $expiry_time == -62169987600) { //rule has not expired
             $run_on_time = strtotime($rule['run_on']);
             if ($run_on_time < $time) { // we have gone beyond the time to run -> we need to run the rule now
-                $php_string = $rules->blocksToPhp($rule['blocks']);
+                $php_string_for_web = $rules->stagesToPhp($rule['blocks'], 1); // We run the stage 1 of the rule
                 $set_next_run_on = true;
                 echo "running<br>";
             } else {

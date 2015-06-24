@@ -213,7 +213,6 @@ class Rules {
         $variables_string = $this->getBlocksString($blocks_string, 'variables');
         $variables = new SimpleXMLElement($variables_string);
         echo "/* Variables */<br/>";
-        echo '$timeout = 60;<br/>';/* default value for timeout when we wait for apndinng ack */
         foreach ($variables->script as $var) {
             //print_r($var->block);
             //echo '$' . $var->block['var'] . ';<br/>';
@@ -260,8 +259,19 @@ class Rules {
         echo ' default:<br/>  $log->warn("Wrong stage in rule $rule[\'ruleid\']");<br/> break;<br/>}';
 
         $php_code_for_web = ob_get_contents(); // $php_code_for_web uses <br/> for breaking lines
-        return $php_code_for_web;
         ob_clean();
+
+        echo '<pre>';
+        print_r($php_code_for_web);
+        echo '</pre>';
+
+
+        echo '<pre>';
+        print_r($stages);
+        echo '</pre>';
+        echo '<pre>';
+        print_r($stages_string);
+        echo '</pre>';
     }
 
     public function getBlocksString($blocks_string, $script_name) {
@@ -273,26 +283,26 @@ class Rules {
     public function blocksToPhp($block) {
         // ToDo: if there are more than two commands in an if, we are only adding the first one
         // in the 'doIfElse' command  we are always printing the firs script
+
         if ($block['s']) { // if the block is command
             switch ($block['s']) {
                 case 'doIf':
-                    return '   if(' . $this->blocksToPhp($block->block) . '){<br/>   ' . $this->blocksToPhp($block->script) . '}<br/>';
+                    print_r($block->script);
+                    return '   if(' . $this->blocksToPhp($block->block) . '){<br/>     ' . $this->blocksToPhp($block->script->block) . ';<br/>   }<br/>';
                     break;
                 case 'doIfElse':
-                    //print_r($block->script);
-                    $statement = '   if(' . $this->blocksToPhp($block->block) . '){<br/>     ' . $this->blocksToPhp($block->script[0]) . '<br/>   }<br/>';
-                    $statement .= '   else{<br/>     ' . $this->blocksToPhp($block->script[1]) . '   }<br/>';
+                    $statement = '   if(' . $this->blocksToPhp($block->block) . '){<br/>     ' . $this->blocksToPhp($block->script->block) . ';<br/>   }<br/>';
+                    $statement .= '   else{<br/>     ' . $this->blocksToPhp($block->script->block) . ';<br/>   }<br/>';
                     return $statement;
                     break;
                 case 'requestFeed':
-                    //$this->addPendingAck();
-                    return 'requestFeed();<br/>';
+                    return 'requestFeed';
                     break;
                 case 'setAttribute':
-                    return 'setAttribute();<br/>';
+                    return 'setAttribute';
                     break;
                 case 'getLastFeed':
-                    return 'getLastFeed();<br/>';
+                    return 'getLastFeed';
                     break;
                 case 'reportLessThan': // This is an 'operator' command
                     $parameters = $this->getOperatorParameters($block);
@@ -314,13 +324,6 @@ class Rules {
             return '$' . preg_replace('/[^a-zA-Z0-9_]/', '', $block['var']);
         } else if ($block['l']) { // 'l' are hand coded fields in a block, we sanitatize it as 
             return $block['l'];
-        } else { //sometimes $block is a script which in fact is an array of blocks
-            $string = '';
-            foreach ($block[0] as $key => $block_in_array) {
-                //print_r($this->blocksToPhp($block_in_array));
-                $string .= '  ' . $this->blocksToPhp($block_in_array);
-            }
-            return $string;
         }
     }
 
@@ -329,14 +332,11 @@ class Rules {
         foreach ($operator[0] as $key => $element) {
             array_push($parameters, ['type_of_block' => $key, 'block' => $operator[0]->$key]);
         }
-        $parameters[0] = $parameters[0]['type_of_block'] == 'l' ? $parameters[0]['block'] : // The parameter can be manually typed ('l') or a block (a variable or a command)
+        $parameters[0] = $parameters[0]['type_of_block'] == 'l' ? $parameters[0]['block'] : // The parameter can be a constant ('l') or a block (a variable or a command)
                 $this->blocksToPhp($parameters[0]['block']);
-        $parameters[1] = $parameters[1]['type_of_block'] == 'l' ? $parameters[0]['block'] : // The parameter can be manually typed ('l') or a block (a variable or a command)
+        $parameters[1] = $parameters[1]['type_of_block'] == 'l' ? $parameters[0]['block'] : // The parameter can be a constant ('l') or a block (a variable or a command)
                 $this->blocksToPhp($parameters[1]['block']);
         return $parameters;
-    }
-    public function addPendingAck($type, $ruleid,$next_stage,$timeout){
-        
     }
 
     /*  End blocksToPhp()  */

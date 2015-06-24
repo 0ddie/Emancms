@@ -52,6 +52,7 @@ The potential of the rules programmer is great. Tutorials about how to add new f
 		- set rule *xxxx* run on to *xxxx*
 		- set rule expiry date to *xxxx*
 		- wait *xxx* secs
+                - see_timeout()
 	- Operators
 		- Addition, times, subtraction, division
 	- Reporters

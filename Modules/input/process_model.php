@@ -26,7 +26,7 @@ class Process
     {
             $this->mysqli = $mysqli;
             $this->input = $input;
-            $this->feed = $feed;
+            $this->feed = $feed;            
             $this->log = new EmonLogger(__FILE__);
             
         // Load MQTT if enabled

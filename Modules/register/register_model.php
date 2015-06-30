@@ -91,8 +91,8 @@ class register {
         if ($result->num_rows === 1) {
             return 0;
         } else {
-            $thisError = "Wales!";
-            $this->$log->info($thisError);
+            //$thisError = "Wales!";
+            //$this->$log->info($thisError);
             return 1;
         }
     }
@@ -342,7 +342,7 @@ class register {
         if (strncmp($groupID, '0x0', 3) === 0) {
             preg_match('/^([a-fA-F0-9]){3}$/', substr($groupID, 3), $matches, PREG_OFFSET_CAPTURE);
             if (count($matches) > 1) {
-                $result = $mysqli->query("SELECT `ID` FROM `group_ids` WHERE `ID` = '$groupID'");
+                $result = $mysqli->query("SELECT `ID` FROM `groupids` WHERE `ID` = '$groupID'");
                 if ($result->num_rows < 1) {
 
                     return 3;
@@ -474,7 +474,7 @@ class register {
         $result = $mysqli->query("SELECT `groupid` FROM `attributes` WHERE `attributeUid` = '$attributeUid' ");
         $row = mysqli_fetch_row($result);
         $groupid = $row[0];
-        $result2 = $mysqli->query("SELECT `Name` FROM `group_ids` WHERE `ID` = '$groupid'");
+        $result2 = $mysqli->query("SELECT `Name` FROM `groupids` WHERE `ID` = '$groupid'");
         $row2 = mysqli_fetch_row($result2);
         $Description = $row2[0];
         return $Description;
@@ -561,7 +561,7 @@ class register {
     public function groupIdFiller() {
         global $mysqli;
         $mysqli->query("
-        INSERT INTO `group_ids` (`ID`, `Name`, `Description`, `UUID`) VALUES
+        INSERT INTO `groupids` (`ID`, `Name`, `Description`, `UUID`) VALUES
 ('0x0000', 'Basic', '\r\nAttributes for determining basic information about a device, setting user device information such as location, and enabling a device.\r\n', 1),
 ('0x0001', 'Power configuration', '\r\n\r\nAttributes for determining more detailed information about a device’s power source(s), and for configuring under/over voltage alarms.\r\n\r\n', 2),
 ('0x0002', 'Device Temperature Configuration', '\r\nAttributes for determining information about a device’s internal temperature, and for configuring under/over temperature alarms.\r\n', 3),
@@ -694,7 +694,7 @@ class register {
         global $mysqli;
         $result = $mysqli->query("SELECT * FROM `attribute_information` WHERE UUID = '1'");
         if ($result->num_rows === 1) {
-            $result2 = $mysqli->query("SELECT * FROM `group_ids` WHERE UUID = '1'");
+            $result2 = $mysqli->query("SELECT * FROM `groupids` WHERE UUID = '1'");
             if ($result2->num_rows === 1) {
                 return 0;
             } else {

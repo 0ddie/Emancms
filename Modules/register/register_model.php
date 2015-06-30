@@ -25,9 +25,9 @@ class register {
         $result = $mysqli->query("SELECT MacAddress FROM Node_reg WHERE `MacAddress` = '$nodeMAC'");
         if ($result->num_rows === 1) {
             $this->nodeMessage($nodeMAC);
-            return 0;
-        } else {
             return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -120,6 +120,7 @@ class register {
         $nodeid = $this->nodeIDIncrementer();
         $mysqli->query("INSERT INTO `Node_reg` (`NodeID`, `FromAddress`, `MACAddress`) VALUES ('$nodeid','$nodeIP','$nodeMAC')");
         $this->nodeMessage($nodeMAC);
+        return $nodeid;
     }
 
     /*
@@ -128,8 +129,8 @@ class register {
 
     public function nodeMessage($nodeMAC) {
         global $mysqli;
-        $result = $mysqli->query("SELECT NodeID FROM `Node_reg` WHERE `MacAddress` = '$nodeMAC' ");
-        $result2 = $mysqli->query("SELECT nodeIP FROM 'Node_reg' WHERE 'MacAddress' = '$nodeMAC'");
+        $result = $mysqli->query("SELECT `NodeID` FROM `Node_reg` WHERE `MACAddress` LIKE '$nodeMAC'");
+        //$result2 = $mysqli->query("SELECT `nodeIP` FROM 'Node_reg' WHERE `MacAddress` = '$nodeMAC'");
         $row = mysqli_fetch_row($result);
         $nodeid = $row[0];
         return $nodeid;

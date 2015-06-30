@@ -75,7 +75,7 @@ function register_controller() {
                 }
 
                 if ($verbose == TRUE) {
-                    $log->info(" Node MAC address: " . $nodeMAC . " Node IP address: " . $fromAddress . " Timeout: " . $timeout);
+                    $log->info("Node MAC address: " . $nodeMAC . " Node IP address: " . $nodeIP . " Timeout: " . $timeout);
                 }
 // $timeDiff = timeoutChecker($timeStart);
 
@@ -102,14 +102,19 @@ function register_controller() {
 
 
                 if ($register->exists($nodeMAC) === 0) {
-//$register->nodeIDIncrementer();
-                    $register->addNode($nodeMAC, $nodeIP);
-                } elseif ($verbose == TRUE) {
-                    $nodeid = nodeMessage($nodeMAC);
-                    return array('content' => $nodeid);
-                    $log->info("Already Registered Node, ID: " . $nodeid);
+                    $nodeid = $register->addNode($nodeMAC, $nodeIP);
+                
+                if ($verbose == TRUE) {
+                    //$nodeid = $register->nodeMessage($nodeMAC);
+                    $log->info("Node ID assigned to this node: ".$nodeid);
                 }
-
+                
+                }else{
+                    $nodeid = $register->nodeMessage($nodeMAC);
+                    $log->warn("Already Registered Node, ID: " . $nodeid);
+                    return array('content' => $nodeid);
+                }
+//                $log->info("The Node ID assigned to this node is: ".$nodeid);
 
 //returns the nodeid
 //start timer 1

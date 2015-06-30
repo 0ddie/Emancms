@@ -20,11 +20,12 @@ class register {
      * Querys the db to see if the node you're trying to register exists
      */
 
-    public function exists($nodeMAC) {
+    public function exists($nodeMAC,$userid) {
         global $mysqli;
-        $result = $mysqli->query("SELECT MacAddress FROM Node_reg WHERE `MacAddress` = '$nodeMAC'");
+        
+        $result = $mysqli->query("SELECT `MacAddress` FROM `Node_reg` WHERE `MacAddress` = '$nodeMAC'AND `userid` = '$userid'");
         if ($result->num_rows === 1) {
-            $this->nodeMessage($nodeMAC);
+            $this->nodeMessage($nodeMAC,$userid);
             return 1;
         } else {
             return 0;
@@ -37,7 +38,6 @@ class register {
 
     public function apikeycheck($apikey) {
         if (strlen($apikey) != 32) {
-            $this->misformedError();
 
             return 1;
         } elseif ($this->correctApiKey($apikey) === 0) {
@@ -56,7 +56,6 @@ class register {
         if ($result->num_rows === 1) {
             return 1;
         } else {
-            $this->misformedError();
             return 0;
         }
     }
@@ -67,7 +66,6 @@ class register {
 
     public function checkNodeIP($nodeIP) {
         if (!ip2long($nodeIP)) {
-            $this->misformedError();
             return 1;
         }
     }
@@ -87,7 +85,7 @@ class register {
      * checks the node ID is a correct node ID
      */
 
-    public function correctNodeID($nodeid) {
+    public function incorrectNodeID($nodeid) {
         global $mysqli;
         $result = $mysqli->query("SELECT NodeID FROM Node_reg WHERE `NodeID` = '$nodeid'");
         if ($result->num_rows === 1) {
@@ -95,7 +93,6 @@ class register {
         } else {
             $thisError = "Wales!";
             $this->$log->info($thisError);
-            $this->misformedError();
             return 1;
         }
     }
@@ -115,11 +112,11 @@ class register {
      * adds a node to the Node_Reg table
      */
 
-    public function addNode($nodeMAC, $nodeIP) {
+    public function addNode($nodeMAC, $nodeIP, $userid) {
         global $mysqli;
         $nodeid = $this->nodeIDIncrementer();
-        $mysqli->query("INSERT INTO `Node_reg` (`NodeID`, `FromAddress`, `MACAddress`) VALUES ('$nodeid','$nodeIP','$nodeMAC')");
-        $this->nodeMessage($nodeMAC);
+        $mysqli->query("INSERT INTO `Node_reg` (`NodeID`, `FromAddress`, `MACAddress`, `userid`) VALUES ('$nodeid','$nodeIP','$nodeMAC','$userid')");
+        $this->nodeMessage($nodeMAC, $userid);
         return $nodeid;
     }
 
@@ -127,9 +124,9 @@ class register {
      * Function to pull node id from table Node_reg
      */
 
-    public function nodeMessage($nodeMAC) {
+    public function nodeMessage($nodeMAC, $userid) {
         global $mysqli;
-        $result = $mysqli->query("SELECT `NodeID` FROM `Node_reg` WHERE `MACAddress` LIKE '$nodeMAC'");
+        $result = $mysqli->query("SELECT `NodeID` FROM `Node_reg` WHERE `MACAddress` LIKE '$nodeMAC'AND `userid` = '$userid'");
         //$result2 = $mysqli->query("SELECT `nodeIP` FROM 'Node_reg' WHERE `MacAddress` = '$nodeMAC'");
         $row = mysqli_fetch_row($result);
         $nodeid = $row[0];
@@ -145,8 +142,13 @@ class register {
         $result = $mysqli->query("SELECT MAX(NodeID) FROM `Node_reg`");
         $row = mysqli_fetch_row($result);
         $query = $row[0];
+        if($query<33){
+            $nextnode = 32;
+        }else{
         $nextnode = $query + 1;
+        }
         return $nextnode;
+        //hh
     }
 
     /*
@@ -202,7 +204,6 @@ class register {
                 return 0;
             } else {
 
-                $this->misformedError();
                 return 7;
             }
         }
@@ -347,7 +348,6 @@ class register {
                     return 3;
                 } else {
 
-                    //$this->misformedError();
                     return 0;
                 }
             } else {
@@ -413,7 +413,6 @@ class register {
             return 1;
         } else {
 
-            //$this->misformedError();
             return 0;
         }
     }
@@ -429,7 +428,7 @@ class register {
         $query = $row[0];
         return $query;
     }
-
+/*
     public function startTimer() {
         $startTime = time();
         return $startTime;
@@ -691,7 +690,7 @@ class register {
      * checks the tables to see if they're populated
      */
 
-    public function tablesChecker() {
+    public function tablesEmpty() {
         global $mysqli;
         $result = $mysqli->query("SELECT * FROM `attribute_information` WHERE UUID = '1'");
         if ($result->num_rows === 1) {

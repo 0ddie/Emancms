@@ -18,6 +18,12 @@ function register_controller() {
 
     include_once "Modules/log/EmonLogger.php";
     $log = new EmonLogger();
+    
+    /*
+     * some form of apikey checker will have to be implemented here
+     */
+    $userid = $session['userid'];
+    //$log->set_logfile(__DIR__ . '/register'.$userid.'.log');
     $log->set_logfile(__DIR__ . '/register.log');
 
 
@@ -33,23 +39,7 @@ function register_controller() {
 //require "Modules/log/EmonLogger.php";
 //$process->set_timezone_offset($user->get_timezmone($session['userid']));
 
-
-
-    if ($route->format == 'json') {
-//$fTime = time();
-        if ($verbose == TRUE) {
-            $log->info("json route");
-            if ($route->action == 'test') {
-                // print_r($registerLogVerbose);
-                $log->warn("Wales");
-            }
-            if ($route->action == 'create') {
-                if ($verbose == TRUE) {
-                    $log->info("create route");
-                }
-
-
-                if ($register->tablesChecker() === 1) {
+    if ($register->tablesEmpty() === 1) {
                     $register->groupIdFiller();
                     $register->attributeIdFiller();
                     if ($verbose == TRUE) {
@@ -58,6 +48,22 @@ function register_controller() {
                 } elseif ($verbose == TRUE) {
                     $log->info("group id and attribute id tables unchanged");
                 }
+
+    if ($route->format == 'json') {
+//$fTime = time();
+        if ($verbose == TRUE) {
+            $log->info("json string recieved");
+            if ($route->action == 'test') {
+                // print_r($registerLogVerbose);
+                $log->warn("Wales");
+            }
+            if ($route->action == 'create') {
+                if ($verbose == TRUE) {
+                    $log->info("creating node");
+                }
+
+
+                
                 /*
                  * Decode the Json string to find the values for Apikey, Nodeip and the timeout from the starter packet
                  */
@@ -77,6 +83,10 @@ function register_controller() {
                 if ($verbose == TRUE) {
                     $log->info("Node MAC address: " . $nodeMAC . " Node IP address: " . $nodeIP . " Timeout: " . $timeout);
                 }
+                
+                $userid = $session['userid'];
+                
+                
 // $timeDiff = timeoutChecker($timeStart);
 
                 if ($register->apikeycheck($apikey) === 1) {
@@ -101,16 +111,17 @@ function register_controller() {
                  */
 
 
-                if ($register->exists($nodeMAC) === 0) {
-                    $nodeid = $register->addNode($nodeMAC, $nodeIP);
+                if ($register->exists($nodeMAC,$userid) === 0) {
+                    $nodeid = $register->addNode($nodeMAC, $nodeIP, $userid);
                 
                 if ($verbose == TRUE) {
                     //$nodeid = $register->nodeMessage($nodeMAC);
                     $log->info("Node ID assigned to this node: ".$nodeid);
+                    return array('content' => $nodeid);
                 }
                 
                 }else{
-                    $nodeid = $register->nodeMessage($nodeMAC);
+                    $nodeid = $register->nodeMessage($nodeMAC,$userid);
                     $log->warn("Already Registered Node, ID: " . $nodeid);
                     return array('content' => $nodeid);
                 }
@@ -124,7 +135,7 @@ function register_controller() {
             } elseif ($route->action == 'setup') {
 
                 if ($verbose == TRUE) {
-                    $log->info("setup route");
+                    $log->info("configuring node");
                 }
 
 //stop timer 1
@@ -160,13 +171,12 @@ function register_controller() {
                     return array('content' => "Apikey incorrect");
                 }
 
-                if ($register->correctNodeID($nodeid) == 1) {
+                if ($register->incorrectNodeID($nodeid) == 1) {
                     $log->warn("Node ID Mismatch");
                     return array('content' => "Node ID Mismatch");
                 }
 
                 /* if ($register->jsonStringError($json, $nodeid) === 1) {
-                  a     $register->misformedError();
                   return array('content' => "Json section wrong length");
                   }
                  * 
@@ -177,7 +187,6 @@ function register_controller() {
 
                 /* if ($register->nodeIDConstant($nodeid, $json, $nodeidL) === 1) {
 
-                  $register->misformedError();
                   return array('content' => "Node id's are different within String");
                   }
                  * 
@@ -311,10 +320,10 @@ function register_controller() {
             }
         } else {
 
-            $log->warn("Route string misformed");
+            $log->warn("Json string sent to server has not been correctly formatted");
         }
     } else {
-        $log->warn("Route string misformed");
+        $log->warn("Json string sent to server has not been correctly formatted");
     }
 }
 

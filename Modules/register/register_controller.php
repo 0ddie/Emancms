@@ -27,7 +27,7 @@ function register_controller() {
     $log->set_logfile(__DIR__ . '/register.log');
 
 
-    $verbose = TRUE;
+    //$verbose = TRUE;
 
     if (isset($registerLogMode) === false) {
         /* registerLogMode is defined in settings.php */
@@ -53,6 +53,7 @@ function register_controller() {
 //$fTime = time();
         if ($verbose == TRUE) {
             $log->info("json string recieved");
+        }
             if ($route->action == 'test') {
                 // print_r($registerLogVerbose);
                 $log->warn("Wales");
@@ -77,7 +78,7 @@ function register_controller() {
                     $nodeIP = $_GET ["fromAddress"];
                 }
                 if (isset($_GET["timeout"])) {
-                    $timeout = $_GET ["timeout"];
+                    $timeout = (int) $_GET ["timeout"];
                 }
 
                 if ($verbose == TRUE) {
@@ -86,6 +87,11 @@ function register_controller() {
                 
                 $userid = $session['userid'];
                 
+                $apikey = $mysqli->real_escape_string($apikey);
+                $nodeMAC = $mysqli->real_escape_string($nodeMAC);
+                $nodeIP = $mysqli->real_escape_string($nodeIP);
+                $timeout = $mysqli->real_escape_string($timeout);
+
                 
 // $timeDiff = timeoutChecker($timeStart);
 
@@ -117,8 +123,9 @@ function register_controller() {
                 if ($verbose == TRUE) {
                     //$nodeid = $register->nodeMessage($nodeMAC);
                     $log->info("Node ID assigned to this node: ".$nodeid);
-                    return array('content' => $nodeid);
                 }
+                return array('content' => $nodeid);
+
                 
                 }else{
                     $nodeid = $register->nodeMessage($nodeMAC,$userid);
@@ -147,7 +154,7 @@ function register_controller() {
                 }
 
                 if (isset($_GET["node"])) {
-                    $nodeid = $_GET ["node"];
+                    $nodeid = (int) $_GET ["node"];
                 }
 
                 if (isset($_GET["json"])) {
@@ -155,11 +162,17 @@ function register_controller() {
                 }
 
                 if (isset($_GET["timeout"])) {
-                    $timeout = $_GET ["timeout"];
+                    $timeout = (int) $_GET ["timeout"];
                 }
                 if ($verbose == TRUE) {
                     $log->info(" Node ID" . $nodeid . " Timeout: " . $timeout);
                 }
+                
+                $apikey = $mysqli->real_escape_string($apikey);
+                $nodeid = $mysqli->real_escape_string($nodeid);
+                $json = $mysqli->real_escape_string($json);
+                $timeout = $mysqli->real_escape_string($timeout);
+
 //$timeDiff2 =timeoutChecker($timeStart);
 //do{
 
@@ -284,6 +297,13 @@ function register_controller() {
                 if (isset($_GET["timeout"])) {
                     $timeout = $_GET ["timeout"];
                 }
+                
+                /*$apikey = $mysqli->real_escape_string($apikey);
+                $attributeUid = $mysqli->real_escape_string($attributeUid);
+                $value = $mysqli->real_escape_string($value);
+                $timeout = $mysqli->real_escape_string($timeout);
+
+                
                 /* if ($verbose == TRUE) {
                   $log->info("ID of the node of the value that needs to be changed: ".$nodeid." ID of the attribute that needs to be changed ".$attributeUid."Value to be changed too".$value);
                   } */
@@ -317,15 +337,16 @@ function register_controller() {
                  */
                 //$register->sendValueToNode($nodeIP, $message, $apikey, $nodeid, $timeout);
                 //$register->attributeValueSetter($attributeUid, $nodeid);
-            }
+            } else {
+        $log->warn("Json string sent to server has not been correctly formatted");
+    }
         } else {
 
             $log->warn("Json string sent to server has not been correctly formatted");
         }
-    } else {
-        $log->warn("Json string sent to server has not been correctly formatted");
     }
-}
+
+
 
 //Working Example of "Create" json string: http://localhost/OpenEMan/register/create.json?apikey=4903c8a630a99c63251b5a34ac043ba5&nodeMAC=01:23:45:67:89:ab&fromAddress=123.123.123.123&timeout=15
 //Working Example of "setup" json string: http://localhost/OpenEMan/register/setup.json?apikey=7c399b2a696c8e1d3efebb7767fba593&node=50&json=55555566666677777&timeout=225

@@ -20,14 +20,15 @@ class register {
      * Querys the db to see if the node you're trying to register exists
      */
 
-    public function exists($nodeMAC) {
+    public function exists($nodeMAC,$userid) {
         global $mysqli;
-        $result = $mysqli->query("SELECT MacAddress FROM Node_reg WHERE `MacAddress` = '$nodeMAC'");
+        
+        $result = $mysqli->query("SELECT `MacAddress` FROM `Node_reg` WHERE `MacAddress` = '$nodeMAC'AND `userid` = '$userid'");
         if ($result->num_rows === 1) {
-            $this->nodeMessage($nodeMAC);
-            return 0;
-        } else {
+            $this->nodeMessage($nodeMAC,$userid);
             return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -37,7 +38,6 @@ class register {
 
     public function apikeycheck($apikey) {
         if (strlen($apikey) != 32) {
-            $this->misformedError();
 
             return 1;
         } elseif ($this->correctApiKey($apikey) === 0) {
@@ -56,7 +56,6 @@ class register {
         if ($result->num_rows === 1) {
             return 1;
         } else {
-            $this->misformedError();
             return 0;
         }
     }
@@ -67,7 +66,6 @@ class register {
 
     public function checkNodeIP($nodeIP) {
         if (!ip2long($nodeIP)) {
-            $this->misformedError();
             return 1;
         }
     }
@@ -87,15 +85,14 @@ class register {
      * checks the node ID is a correct node ID
      */
 
-    public function correctNodeID($nodeid) {
+    public function incorrectNodeID($nodeid) {
         global $mysqli;
         $result = $mysqli->query("SELECT NodeID FROM Node_reg WHERE `NodeID` = '$nodeid'");
         if ($result->num_rows === 1) {
             return 0;
         } else {
-            $thisError = "Wales!";
-            $this->$log->info($thisError);
-            $this->misformedError();
+            //$thisError = "Wales!";
+            //$this->$log->info($thisError);
             return 1;
         }
     }
@@ -115,23 +112,22 @@ class register {
      * adds a node to the Node_Reg table
      */
 
-    public function addNode($nodeMAC, $nodeIP) {
+    public function addNode($nodeMAC, $nodeIP, $userid) {
         global $mysqli;
         $nodeid = $this->nodeIDIncrementer();
-        print_r('hola: <br/>');
-        $query = "INSERT INTO `Node_reg` (`NodeID`, `FromAddress`, `MACAddress`) VALUES ('$nodeid','$nodeIP','$nodeMAC')";
-        $result = $mysqli->query($query);
-        $this->nodeMessage($nodeMAC);
+        $mysqli->query("INSERT INTO `Node_reg` (`NodeID`, `FromAddress`, `MACAddress`, `userid`) VALUES ('$nodeid','$nodeIP','$nodeMAC','$userid')");
+        $this->nodeMessage($nodeMAC, $userid);
+        return $nodeid;
     }
 
     /*
      * Function to pull node id from table Node_reg
      */
 
-    public function nodeMessage($nodeMAC) {
+    public function nodeMessage($nodeMAC, $userid) {
         global $mysqli;
-        $result = $mysqli->query("SELECT NodeID FROM `Node_reg` WHERE `MacAddress` = '$nodeMAC' ");
-        $result2 = $mysqli->query("SELECT nodeIP FROM 'Node_reg' WHERE 'MacAddress' = '$nodeMAC'");
+        $result = $mysqli->query("SELECT `NodeID` FROM `Node_reg` WHERE `MACAddress` LIKE '$nodeMAC'AND `userid` = '$userid'");
+        //$result2 = $mysqli->query("SELECT `nodeIP` FROM 'Node_reg' WHERE `MacAddress` = '$nodeMAC'");
         $row = mysqli_fetch_row($result);
         $nodeid = $row[0];
         return $nodeid;
@@ -146,8 +142,13 @@ class register {
         $result = $mysqli->query("SELECT MAX(NodeID) FROM `Node_reg`");
         $row = mysqli_fetch_row($result);
         $query = $row[0];
+        if($query<33){
+            $nextnode = 32;
+        }else{
         $nextnode = $query + 1;
+        }
         return $nextnode;
+        //hh
     }
 
     /*
@@ -203,7 +204,6 @@ class register {
                 return 0;
             } else {
 
-                $this->misformedError();
                 return 7;
             }
         }
@@ -342,13 +342,12 @@ class register {
         if (strncmp($groupID, '0x0', 3) === 0) {
             preg_match('/^([a-fA-F0-9]){3}$/', substr($groupID, 3), $matches, PREG_OFFSET_CAPTURE);
             if (count($matches) > 1) {
-                $result = $mysqli->query("SELECT `ID` FROM `group_ids` WHERE `ID` = '$groupID'");
+                $result = $mysqli->query("SELECT `ID` FROM `groupids` WHERE `ID` = '$groupID'");
                 if ($result->num_rows < 1) {
 
                     return 3;
                 } else {
 
-                    //$this->misformedError();
                     return 0;
                 }
             } else {
@@ -414,7 +413,6 @@ class register {
             return 1;
         } else {
 
-            //$this->misformedError();
             return 0;
         }
     }
@@ -430,7 +428,7 @@ class register {
         $query = $row[0];
         return $query;
     }
-
+/*
     public function startTimer() {
         $startTime = time();
         return $startTime;
@@ -477,7 +475,7 @@ class register {
         $result = $mysqli->query("SELECT `groupid` FROM `attributes` WHERE `attributeUid` = '$attributeUid' ");
         $row = mysqli_fetch_row($result);
         $groupid = $row[0];
-        $result2 = $mysqli->query("SELECT `Name` FROM `group_ids` WHERE `ID` = '$groupid'");
+        $result2 = $mysqli->query("SELECT `Name` FROM `groupids` WHERE `ID` = '$groupid'");
         $row2 = mysqli_fetch_row($result2);
         $Description = $row2[0];
         return $Description;
@@ -562,7 +560,7 @@ class register {
     public function groupIdFiller() {
         global $mysqli;
         $mysqli->query("
-        INSERT INTO `group_ids` (`ID`, `Name`, `Description`, `UUID`) VALUES
+        INSERT INTO `groupids` (`ID`, `Name`, `Description`, `UUID`) VALUES
 ('0x0000', 'Basic', '\r\nAttributes for determining basic information about a device, setting user device information such as location, and enabling a device.\r\n', 1),
 ('0x0001', 'Power configuration', '\r\n\r\nAttributes for determining more detailed information about a device’s power source(s), and for configuring under/over voltage alarms.\r\n\r\n', 2),
 ('0x0002', 'Device Temperature Configuration', '\r\nAttributes for determining information about a device’s internal temperature, and for configuring under/over temperature alarms.\r\n', 3),
@@ -691,12 +689,12 @@ class register {
      * checks the tables to see if they're populated
      */
 
-    public function tablesChecker() {
+    public function tablesEmpty() {
         global $mysqli;
         $result = $mysqli->query("SELECT * FROM `attribute_information` WHERE UUID = '1'");
-        if ($result->num_rows > 0) {
-            $result2 = $mysqli->query("SELECT * FROM `group_ids` WHERE UUID = '1'");
-            if ($result2->num_rows > 0) {
+        if ($result->num_rows === 1) {
+            $result2 = $mysqli->query("SELECT * FROM `groupids` WHERE UUID = '1'");
+            if ($result2->num_rows === 1) {
                 return 0;
             } else {
                 return 1;

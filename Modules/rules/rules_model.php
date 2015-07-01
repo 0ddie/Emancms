@@ -202,6 +202,10 @@ class Rules {
         return $result;
     }
 
+    public function addPendingAck($type, $ruleid, $next_stage, $timeout) {
+        
+    }
+
     /* End of other methods  */
 
     /* stagesToPhp()  */
@@ -213,7 +217,7 @@ class Rules {
         $variables_string = $this->getBlocksString($blocks_string, 'variables');
         $variables = new SimpleXMLElement($variables_string);
         echo "/* Variables */<br/>";
-        echo '$timeout = 60;<br/>';/* default value for timeout when we wait for apndinng ack */
+        echo '$timeout = 60;<br/>'; /* default value for timeout when we wait for apndinng ack */
         foreach ($variables->script as $var) {
             //print_r($var->block);
             //echo '$' . $var->block['var'] . ';<br/>';
@@ -227,7 +231,7 @@ class Rules {
         echo "/* Feed ids */<br/>";
         foreach ($feeds_ids->script as $id) {
             //print_r($var->block);
-            echo $this->blocksToPhp($id->block) . ' =  ToDo getFeedIdFromDescription();<br/>';
+            echo $this->blocksToPhp($id->block) . ' = (int) ' . $this->getVariableIdFromBlock($id->block) . ';<br/>';
         }
         echo '<br/>';
 
@@ -237,7 +241,7 @@ class Rules {
         echo "/* Attributes ids */<br/>";
         foreach ($attributes_ids->script as $id) {
             //print_r($var->block);
-            echo $this->blocksToPhp($id->block) . ' =  ToDo getAttributeIdFromDescription();<br/>';
+            echo $this->blocksToPhp($id->block) . ' = (int) ' . $this->getVariableIdFromBlock($id->block) . ';<br/>';
         }
         echo '<br/>';
 
@@ -252,12 +256,12 @@ class Rules {
             if ($stage->block[0]['s'] == 'Stage' && $stage->block[0]->l != '') { // Check this block starts with a "Stage" block and that the number of the stage is not empty
                 echo ' case ' . (int) $stage->block[0]->l . ':<br/>';
                 for ($index = 1; $stage->block[$index]; $index++) {
-                    echo $this->blocksToPhp($stage->block[$index]);
+                    echo $this->blocksToPhp($stage->block[$index]) . ';';
                 }
                 echo '  break;<br/>';
             }
         }
-        echo ' default:<br/>  $log->warn("Wrong stage in rule $rule[\'ruleid\']");<br/> break;<br/>}';
+        echo ' default:<br/>  $ruleid = $rule["ruleid"];<br/>  $log->warn("Wrong stage in rule ' . '$ruleid' . ' - Stage: ' . $stage->block[0]->l . '");<br/> break;<br/>}';
 
         $php_code_for_web = ob_get_contents(); // $php_code_for_web uses <br/> for breaking lines
         return $php_code_for_web;
@@ -286,13 +290,14 @@ class Rules {
                     break;
                 case 'requestFeed':
                     //$this->addPendingAck();
-                    return 'requestFeed();<br/>';
+                    return '/* requestFeed() */<br/>';
                     break;
                 case 'setAttribute':
-                    return 'setAttribute();<br/>';
+                    return '/* setAttribute() */<br/>';
                     break;
                 case 'getLastFeed':
-                    return 'getLastFeed();<br/>';
+                    $feed_id = isset($block->l) ? (int) $block->l : $this->blocksToPhp($block->block);
+                    return '$feed->get(' . $feed_id . ') <br/>'; //$feed->get(id) .
                     break;
                 case 'reportLessThan': // This is an 'operator' command
                     $parameters = $this->getOperatorParameters($block);
@@ -311,9 +316,13 @@ class Rules {
                     break;
             }
         } else if ($block['var']) { //this returns the name of a variable
-            return '$' . preg_replace('/[^a-zA-Z0-9_]/', '', $block['var']);
-        } else if ($block['l']) { // 'l' are hand coded fields in a block, we sanitatize it as 
-            return $block['l'];
+            $var_name = '$' . preg_replace('/[^a-zA-Z0-9_]/', '', $block['var']);
+            if (is_numeric(substr($var_name, 1, 1))) //just in case the variable name starts with a number
+                return '$var' . substr($var_name, 1);
+            else
+                return $var_name;
+        } else if ($block['l']) { // 'l' are hand coded fields in a block, we sanitatize it
+            return $block['l']; //ToDo, how we sanitize this??
         } else { //sometimes $block is a script which in fact is an array of blocks
             $string = '';
             foreach ($block[0] as $key => $block_in_array) {
@@ -335,8 +344,34 @@ class Rules {
                 $this->blocksToPhp($parameters[1]['block']);
         return $parameters;
     }
-    public function addPendingAck($type, $ruleid,$next_stage,$timeout){
-        
+
+    public function getVariableIdFromBlock($variable) {
+        /* For feeds $variable['var'] is something like "F9 - Feed description"
+         * For attributes $variable['var'] is something like "A9 - Attribute description"
+         * This functions return the id which in the examples is 9
+         */
+        $end = stripos($variable['var'], ' ');
+        return substr($variable['var'], 1, $end - 1);
+    }
+
+    public function get_user_feeds_by_tag($userid) {
+        global $feed_settings;
+        include "Modules/feed/feed_model.php";
+
+        $feed = new Feed($this->mysqli, $this->redis, $feed_settings);
+
+        $array_of_feeds_by_tag = array();
+        $array_of_user_feeds = $feed->get_user_feeds($userid); // We use this one to get the name and tag of each feed
+
+        foreach ($array_of_user_feeds as $feedid => $feed_in_foreach) {
+            if ($feed_in_foreach['tag'] == '')
+                $feed_in_foreach['tag'] = 'No tag';
+            if (!isset($array_of_feeds_by_tag[$feed_in_foreach['tag']])) { // If this is the first time we find this node
+                $array_of_feeds_by_tag[$feed_in_foreach['tag']] = array();
+            }
+            array_push($array_of_feeds_by_tag[$feed_in_foreach['tag']], $feed_in_foreach);
+        }
+        return($array_of_feeds_by_tag);
     }
 
     /*  End blocksToPhp()  */

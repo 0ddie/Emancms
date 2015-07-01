@@ -26,13 +26,19 @@ define('EMONCMS_EXEC', 1);
   }
  * */
 
-
+// Report all PHP errors 
+ini_set('error_reporting', E_ALL); 
+  
+// Set the display_errors directive to On 
+ ini_set('display_errors', 1); 
+ 
 chdir("/opt/lampp/htdocs/OpenEMan"); // Ideally to be changed to something that autodetects the current directory
 
 $userid = 1;
 
 // 1) Load settings and core scripts
 require "process_settings.php";
+require 'settings.php';
 
 // 2) Database
 $mysqli = new mysqli($server, $username, $password, $database);
@@ -43,22 +49,28 @@ $redis = null;
 // 3) Include files
 include "Modules/rules/rules_model.php";
 $rules = new Rules($mysqli, $redis);
+
 include "Modules/log/EmonLogger.php";
 $log = new EmonLogger();
-$log->set_logfile(__DIR__ . '/rules.log'); // I think this may have problems when running on cgi
+var_dump($log->set_logfile(__DIR__ . '/rules5.log')); // I think this may have problems when running on cgi
+$test = $log->info("test");
+var_dump($test);
+
+include "Modules/feed/feed_model.php";
+$feed = new Feed($mysqli, $redis, $feed_settings);
 
 // 4) Run the "daemon", this is the "main" running in a loop
 //  while (true) {
 //run_acks_checker();
 run_schedule();
+
 // Script update rate
 //sleep(3);
-
 //}
 // 5) Local functions
 
 function run_schedule() {
-    global $rules;
+    global $rules, $log, $feed;
     $time = time();
 
     $schedule = $rules->get_schedule(); // Fetches rules that are enabled
@@ -72,6 +84,17 @@ function run_schedule() {
             $run_on_time = strtotime($rule['run_on']);
             if ($run_on_time < $time) { // we have gone beyond the time to run -> we need to run the rule now
                 $php_string_for_web = $rules->stagesToPhp($rule['blocks'], 1); // We run the stage 1 of the rule
+                $php_string = str_replace('<br/>', '', $php_string_for_web);
+                //print_r($php_string);
+                $checkResult = exec('echo \'<?php ' . $php_string . '\' | php -l >/dev/null 2>&1; echo $?');
+                if ($checkResult != 0) {
+                    $log->warn("Error parsing rule code. Rule: ". $rule['ruleid'] . " - Stage: 1");
+                    echo "Error parsing rule code. Rule: ". $rule['ruleid'] . " - Stage: 1";
+                    $result = eval($php_string);
+                } else {
+                    $result = eval($php_string);
+                    echo "Evaling";
+                }
                 $set_next_run_on = true;
                 echo "running<br>";
             } else {
@@ -79,14 +102,17 @@ function run_schedule() {
                 echo "not running <br>";
             }
         }
+        
         //************************************************************************
         //**  Disable the rule or set next time for the rule to be run 
         //************************************************************************
         if ($rule['frequency'] == 0) { // When frequency is "0" it means that the rule should only be run once
             $rules->disableRule($rule['ruleid']);
+            $log->info("Rule disabled because frequency. Rule id: " . $rule['ruleid']);
             echo "rule disabled because frequency <br>";
         } elseif ($expiry_time < $time && $expiry_time != -62169987600) { // expirytime is '0' when expirydate is '0000-0-0 ...' in this case there is no expiry date then we don't disable the rule
             $rules->disableRule($rule['ruleid']);
+            $log->info("Rule disabled because expiry date. Rule id: " . $rule['ruleid']);
             echo "rule disabled because expiry date <br>";
         } elseif ($set_next_run_on == true) {
             $new_run_on_time = $time + $rule['frequency'];
@@ -94,7 +120,6 @@ function run_schedule() {
             $rules->setRunOn($rule['ruleid'], $new_run_on_date);
         }
     }
-    
 }
 
 //Not sure if we need to remove the clisng tag when set up as cron

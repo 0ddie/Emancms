@@ -118,7 +118,9 @@ class register {
     public function addNode($nodeMAC, $nodeIP) {
         global $mysqli;
         $nodeid = $this->nodeIDIncrementer();
-        $mysqli->query("INSERT INTO `Node_reg` (`NodeID`, `FromAddress`, `MACAddress`) VALUES ('$nodeid','$nodeIP','$nodeMAC')");
+        print_r('hola: <br/>');
+        $query = "INSERT INTO `Node_reg` (`NodeID`, `FromAddress`, `MACAddress`) VALUES ('$nodeid','$nodeIP','$nodeMAC')";
+        $result = $mysqli->query($query);
         $this->nodeMessage($nodeMAC);
     }
 
@@ -439,6 +441,7 @@ class register {
             if (($startTime - time()) > $timeout) {
                 return array('content' => "Request timed out");
             }
+            echo 'Hola ';
         } while ($ender = 0);
     }
 
@@ -535,14 +538,14 @@ class register {
         return $name;
     }
 
-    public function sendValueToNode(/*$nodeIP,*/ $apikey, $nodeid, $message, $timeout, $status = NULL) {
+    public function sendValueToNode(/* $nodeIP, */ $apikey, $nodeid, $message, $timeout, $status = NULL) {
         $time = microtime(true);
         $expire = $time + $timeout;
         $nodeIP = "127.0.0.1";
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://" . $nodeIP . "/OpenEMan/test.php");/*/post.json?apikey=[" . $apikey . "]&node=[" . $nodeid . "]&json={$message}&timeout=[$timeout]");
-        */
+        curl_setopt($ch, CURLOPT_URL, "http://" . $nodeIP . "/OpenEMan/test.php"); /* /post.json?apikey=[" . $apikey . "]&node=[" . $nodeid . "]&json={$message}&timeout=[$timeout]");
+         */
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, TRUE);
@@ -551,8 +554,6 @@ class register {
         curl_close($ch);
         return $httpCode;
     }
-
-    
 
     /*
      * Fills the group ID table
@@ -693,9 +694,9 @@ class register {
     public function tablesChecker() {
         global $mysqli;
         $result = $mysqli->query("SELECT * FROM `attribute_information` WHERE UUID = '1'");
-        if ($result->num_rows === 1) {
+        if ($result->num_rows > 0) {
             $result2 = $mysqli->query("SELECT * FROM `group_ids` WHERE UUID = '1'");
-            if ($result2->num_rows === 1) {
+            if ($result2->num_rows > 0) {
                 return 0;
             } else {
                 return 1;

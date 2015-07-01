@@ -101,11 +101,11 @@ function register_controller() {
                  */
 
 
-                if ($register->exists($nodeMAC) === 0) {
+                if ($register->exists($nodeMAC) === 1) {
 //$register->nodeIDIncrementer();
                     $register->addNode($nodeMAC, $nodeIP);
                 } elseif ($verbose == TRUE) {
-                    $nodeid = nodeMessage($nodeMAC);
+                    $nodeid = $register->nodeMessage($nodeMAC);
                     return array('content' => $nodeid);
                     $log->info("Already Registered Node, ID: " . $nodeid);
                 }
@@ -291,7 +291,7 @@ function register_controller() {
                 //print_r($result);
 
                 if ($result !== 0) {
-                    $log->warn("HTTP Error code:".$result);
+                    $log->warn("HTTP Error code:" . $result);
                 }
 
                 /*

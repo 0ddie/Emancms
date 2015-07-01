@@ -1,6 +1,6 @@
 <?php
 
-$schema['Node_Reg'] = array(
+$schema['Node_reg'] = array(
     'NodeID' => array('type' => 'int(11)', 'Null'=>'NO',),
     'FromAddress' => array('type' => 'varchar(255)', 'Null'=>'YES',),
     'MACAddress' => array('type' => 'text'),
@@ -27,7 +27,7 @@ $schema['attribute_information'] = array(
     'Max' => array('type' => 'int(11)','Null'=>'NO',),
     'Default_Value' => array('type' => 'text','Null'=>'NO',),
     'Mandatory/Optional' => array('type' => 'tinyint(1)','Null'=>'NO',),
-    'UUID' => array('type' => 'int(11)', 'Null'=>'NO','Extra'=>'auto_increment',),
+    'UUID' => array('type' => 'int(11)', 'Null'=>'NO','Extra'=>'auto_increment','Key' => 'PRI',),
 );
 
 $schema['groupids'] = array(

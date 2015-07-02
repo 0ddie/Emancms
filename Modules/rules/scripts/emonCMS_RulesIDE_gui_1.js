@@ -12,11 +12,11 @@ emonCMS_RulesIDE_Morph.uber = Morph.prototype;
 
 // IDE_Morph instance creation:
 
-function emonCMS_RulesIDE_Morph(width, height, array_of_feeds_by_tag, array_of_attributes_by_node, blocks) {
-    this.init(width, height, array_of_feeds_by_tag, array_of_attributes_by_node, blocks);
+function emonCMS_RulesIDE_Morph(width, height, array_of_feeds_by_node, array_of_attributes_by_node, blocks) {
+    this.init(width, height, array_of_feeds_by_node, array_of_attributes_by_node, blocks);
 }
 
-emonCMS_RulesIDE_Morph.prototype.init = function (width, height, array_of_feeds_by_tag, array_of_attributes_by_node, blocks) {
+emonCMS_RulesIDE_Morph.prototype.init = function (width, height, array_of_feeds_by_node, array_of_attributes_by_node, blocks) {
     var myself = this;
 
     // initialize setting and properties
@@ -25,7 +25,7 @@ emonCMS_RulesIDE_Morph.prototype.init = function (width, height, array_of_feeds_
     emonCMS_RulesIDE_Morph.uber.init.call(this); // initialize inherited properties
     this.setWidth(width);
     this.setHeight(height);
-    this.array_of_feeds_by_tag = array_of_feeds_by_tag;
+    this.array_of_feeds_by_node = array_of_feeds_by_node;
     this.array_of_attributes_by_node = array_of_attributes_by_node;
     this.blocks_string = blocks;
     if (this.blocks_string !== null)
@@ -103,8 +103,8 @@ emonCMS_RulesIDE_Morph.prototype.init = function (width, height, array_of_feeds_
     //this.reportersPane.add(this.listOfRules); // Not implemented yet
 
     // Create Dialog for listing nodes
-    this.listOfTagsForFeedsDialog = this.createListOfTagsForFeedsDialog();
-    this.add(this.listOfTagsForFeedsDialog);
+    this.listOfNodesForFeedsDialog = this.createListOfNodesForFeedsDialog();
+    this.add(this.listOfNodesForFeedsDialog);
     this.listOfNodesForAttributesDialog = this.createListOfNodesForAttributesDialog();
     this.add(this.listOfNodesForAttributesDialog);
 
@@ -317,7 +317,7 @@ emonCMS_RulesIDE_Morph.prototype.addBlocksToAddReportersPane = function () {
     button = new PushButtonMorph(
             null,
             function () {
-                myself.listOfTagsForFeedsDialog.show();
+                myself.listOfNodesForFeedsDialog.show();
             },
             'Add feed'
             );
@@ -496,7 +496,7 @@ emonCMS_RulesIDE_Morph.prototype.reportersPaneFixLayout = function () {
     });
 };
 
-emonCMS_RulesIDE_Morph.prototype.createListOfTagsForFeedsDialog = function () {
+emonCMS_RulesIDE_Morph.prototype.createListOfNodesForFeedsDialog = function () {
     var myself = this;
     // Create the dialog where we display all the nodes
     var dialog = new Morph;
@@ -518,14 +518,14 @@ emonCMS_RulesIDE_Morph.prototype.createListOfTagsForFeedsDialog = function () {
     var top = dialog.top() + 35;
     var left = dialog.left() + 20;
 
-    for (var key in this.array_of_feeds_by_tag) {
-        var tag_key = key;
+    for (var key in this.array_of_feeds_by_node) {
+        var node_key = key;
         button = new PushButtonMorph(
                 function () {//function to be called when clicking the button
                     myself.showFeedsDialog(arguments[0]);
                 },
-                tag_key, //variable to pass to the function as "arguments[0]"
-                tag_key
+                node_key, //variable to pass to the function as "arguments[0]"
+                'Node ' + node_key
                 );
         // Check if there is enugh space in this row of buttons to add the button
         if ((left + button.width()) < dialog.right() - 20)
@@ -629,11 +629,9 @@ emonCMS_RulesIDE_Morph.prototype.showFeedsDialog = function (node_key) {
     this.arrayOfFeedsDialogs.forEach(function (dialog) {
         dialog.hide();
     });
-    this.listOfTagsForFeedsDialog.hide();
+    this.listOfNodesForFeedsDialog.hide();
     //show the target dialog     
     this.arrayOfFeedsDialogs[node_key].show();
-    console.log(this.arrayOfFeedsDialogs);
-    console.log(node_key);
 };
 
 emonCMS_RulesIDE_Morph.prototype.showAttributesDialog = function (node_key) {
@@ -651,7 +649,7 @@ emonCMS_RulesIDE_Morph.prototype.hideFeedsDialog = function () {
     this.arrayOfFeedsDialogs.forEach(function (dialog) {
         dialog.hide();
     });
-    this.listOfTagsForFeedsDialog.hide();
+    this.listOfNodesForFeedsDialog.hide();
 };
 
 emonCMS_RulesIDE_Morph.prototype.hideAttributesDialog = function () {
@@ -667,7 +665,7 @@ emonCMS_RulesIDE_Morph.prototype.createArrayOfFeedsDialogs = function () {
     var array_of_feeds_dialogs = [];
 
     // Create a Dialog displaying all the feeds for each node
-    for (var node_key in this.array_of_feeds_by_tag) {
+    for (var node_key in this.array_of_feeds_by_node) {
         var dialog = new Morph;
         dialog.setWidth(150);
         dialog.setColor(new Color(50, 60, 121));
@@ -685,8 +683,9 @@ emonCMS_RulesIDE_Morph.prototype.createArrayOfFeedsDialogs = function () {
         // Postion of the first button
         var top = dialog.top() + 35;
         var left = dialog.left() + 20;
-        for (var feed_key in this.array_of_feeds_by_tag) {
-            var feed = this.array_of_feeds_by_tag[feed_key];
+
+        for (var feed_key in this.array_of_feeds_by_node[node_key]['feeds']) {
+            var feed = this.array_of_feeds_by_node[node_key]['feeds'][feed_key];
             if (feed['tag'] != null && feed['tag'] != '') {
                 var button_label = 'F' + feed['feedid'] + ' - ' + feed['tag'];
             }
@@ -730,6 +729,7 @@ emonCMS_RulesIDE_Morph.prototype.createArrayOfFeedsDialogs = function () {
         dialog.setHeight(cancel_button.bottom() - dialog.top() + 15);
         array_of_feeds_dialogs[node_key] = dialog;
     }
+
     return array_of_feeds_dialogs;
 };
 
@@ -759,7 +759,7 @@ emonCMS_RulesIDE_Morph.prototype.createArrayOfAttributesDialogs = function () {
 
         for (var attribute_key in this.array_of_attributes_by_node[node_key]) {
             var attribute = this.array_of_attributes_by_node[node_key][attribute_key];
-            button_label = 'A' + attribute['attributeUid'] + ' - ' + attribute['groupid'] + attribute['attributeId'] + attribute['attributeNumber'] + attribute['nodeid'];
+            button_label = 'A' + attribute['attributeUid'] + ' - '+attribute['groupid'] + attribute['attributeId'] + attribute['attributeNumber'] + attribute['nodeid'];
             button = new PushButtonMorph(
                     function () {
                         myself.addElementToList(myself.listOfAttributes, arguments[0]);
@@ -818,7 +818,7 @@ emonCMS_RulesIDE_Morph.prototype.createGenerateXMLButton = function () {
 
 emonCMS_RulesIDE_Morph.prototype.generateXML = function () {
     var serializer = new XML_Serializer();
-    var xml_string = '<blocks>' + '<stages>' + serializer.serialize(this.stagesPane) + '</stages>' +
+    var xml_string = '<blocks>'+'<stages>' + serializer.serialize(this.stagesPane) + '</stages>' +
             '<variables>' + serializer.serialize(this.listOfVariables) + '</variables>' +
             '<feeds>' + serializer.serialize(this.listOfFeeds) + '</feeds>' +
             '<attributes>' + serializer.serialize(this.listOfAttributes) + '</attributes>' + '</blocks>';

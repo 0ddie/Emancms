@@ -325,7 +325,7 @@ function register_controller() {
                 //print_r($result);
 
                 if ($result !== 0) {
-                    $log->warn("HTTP Error code:".$result);
+                    $log->warn("HTTP Error code:" . $result);
                 }
 
                 /*

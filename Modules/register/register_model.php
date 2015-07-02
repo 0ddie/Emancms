@@ -441,6 +441,7 @@ class register {
             if (($startTime - time()) > $timeout) {
                 return array('content' => "Request timed out");
             }
+            echo 'Hola ';
         } while ($ender = 0);
     }
 
@@ -537,14 +538,14 @@ class register {
         return $name;
     }
 
-    public function sendValueToNode(/*$nodeIP,*/ $apikey, $nodeid, $message, $timeout, $status = NULL) {
+    public function sendValueToNode(/* $nodeIP, */ $apikey, $nodeid, $message, $timeout, $status = NULL) {
         $time = microtime(true);
         $expire = $time + $timeout;
         $nodeIP = "127.0.0.1";
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://" . $nodeIP . "/OpenEMan/test.php");/*/post.json?apikey=[" . $apikey . "]&node=[" . $nodeid . "]&json={$message}&timeout=[$timeout]");
-        */
+        curl_setopt($ch, CURLOPT_URL, "http://" . $nodeIP . "/OpenEMan/test.php"); /* /post.json?apikey=[" . $apikey . "]&node=[" . $nodeid . "]&json={$message}&timeout=[$timeout]");
+         */
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, TRUE);
@@ -553,8 +554,6 @@ class register {
         curl_close($ch);
         return $httpCode;
     }
-
-    
 
     /*
      * Fills the group ID table

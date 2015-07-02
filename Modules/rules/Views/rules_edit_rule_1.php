@@ -1,38 +1,29 @@
 <?php
-/*** Global variables  ***/
-global $path, $mysqli, $redis, $session, $route;
+global $path;
 
-/*** Includes  ***/
+// we set the header text according to the mode
+if ($args['mode'] == 'add')
+    $header = 'New Rule';
+else
+    $header = 'Edit Rule';
+
+global $mysqli, $redis, $session, $route;
+
 include_once "Modules/rules/rules_model.php";
 $rules = new Rules($mysqli, $redis);
 // ToDo - check if Register Module is installed, if it is: Attributes will be added as Reporters. This is done to make the Rules module not dependant on the Register Module
 include_once "Modules/register/register_model.php";
 $register = new Register($mysqli);
 
-/***  We set the header text according to the mode  ***/
-if ($args['mode'] == 'add')
-    $header = 'New Rule';
-else
-    $header = 'Edit Rule';
-
-/*** Arrays containing the attributes and feeds (sorted by node or tag) to be used in the visual programmer  ***/
+//arrays containing the attributes and feeds (sorted by node) to be used in the visual programmer
 $array_of_attributes_by_node = $register->getAttributesByNode($session['userid']);
-//$array_of_feeds_by_node = $rules->get_user_feeds_by_node($session['userid']); // array like: Array ( [0] => Array ( [id] => 6 [name] => Power [userid] => 1 [tag] => [time] => 1430748375 [value] => 100 [datatype] => 1 [public] => 0 [size] => [engine] => 5 ) [1] => Array ( [id] => 7 [name] => Poadasdawer [userid] => 1 [tag] => [time] => [value] => [datatype] => 1 [public] => 0 [size] => [engine] => 5 ) [2] => Array ( [id] => 8 [name] => Poaeeedasdawer [userid] => 1 [tag] => [time] => [value] => [datatype] => 1 [public] => 0 [size] => [engine] => 5 ));
-$array_of_feeds_by_tag = $rules->get_user_feeds_by_tag($session['userid']); // array like: Array ( [0] => Array ( [id] => 6 [name] => Power [userid] => 1 [tag] => [time] => 1430748375 [value] => 100 [datatype] => 1 [public] => 0 [size] => [engine] => 5 ) [1] => Array ( [id] => 7 [name] => Poadasdawer [userid] => 1 [tag] => [time] => [value] => [datatype] => 1 [public] => 0 [size] => [engine] => 5 ) [2] => Array ( [id] => 8 [name] => Poaeeedasdawer [userid] => 1 [tag] => [time] => [value] => [datatype] => 1 [public] => 0 [size] => [engine] => 5 ));
-
-
-/*** Are we in developer mode, $rules_developer_mode should be declared in settings.php, the default value is false  ***/
-include "settings.php";
-if (!isset($rules_developer_mode))
-    $isDev = false;
-else
-    $isDev = $rules_developer_mode;
-
+$array_of_feeds_by_node = $rules->get_user_feeds_by_node($session['userid']); // array like: Array ( [0] => Array ( [id] => 6 [name] => Power [userid] => 1 [tag] => [time] => 1430748375 [value] => 100 [datatype] => 1 [public] => 0 [size] => [engine] => 5 ) [1] => Array ( [id] => 7 [name] => Poadasdawer [userid] => 1 [tag] => [time] => [value] => [datatype] => 1 [public] => 0 [size] => [engine] => 5 ) [2] => Array ( [id] => 8 [name] => Poaeeedasdawer [userid] => 1 [tag] => [time] => [value] => [datatype] => 1 [public] => 0 [size] => [engine] => 5 ));
+//$array_of_feeds_by_tag = $rules->get_user_feeds_by_tag($session['userid']); // array like: Array ( [0] => Array ( [id] => 6 [name] => Power [userid] => 1 [tag] => [time] => 1430748375 [value] => 100 [datatype] => 1 [public] => 0 [size] => [engine] => 5 ) [1] => Array ( [id] => 7 [name] => Poadasdawer [userid] => 1 [tag] => [time] => [value] => [datatype] => 1 [public] => 0 [size] => [engine] => 5 ) [2] => Array ( [id] => 8 [name] => Poaeeedasdawer [userid] => 1 [tag] => [time] => [value] => [datatype] => 1 [public] => 0 [size] => [engine] => 5 ));
 /* echo '<pre>';
   print_r($array_of_attributes_by_node);
   echo '</pre>'; */
 ?>
-<!--<script type="text/javascript" src="<?php //echo $path;          ?>Lib/angularjs/angular.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo $path;         ?>Lib/angularjs/angular.min.js"></script>-->
 <script type="text/javascript" src="<?php echo $path; ?>Lib/angularjs/angular.js"></script>
 
 <!-- Visual programmer  -->
@@ -66,16 +57,15 @@ if (isset($args['rule'])) {
                 'run_on': '<?php echo $rule['run_on'] ?>',
                 'expiry_date': '<?php echo $rule['expiry_date'] ?>',
                 'frequency': Number('<?php echo $rule['frequency'] ?>'),
-                'enabled':<?php if ($rule['enabled'] == 1) echo 'true';
-    else echo 'false'; ?>
-                // we don't include the "blocks" here because they are not used in the angularjs scope, they are used in the Morphic world
+                'enabled':<?php if($rule['enabled'] == 1) echo 'true'; else echo 'false'; ?>
+                        // we don't include the "blocks" here because they are not used in the angularjs scope, they are used in the Morphic world
             };
             console.log($scope.rule_attributes);
             $scope.rule_saved = <?php echo isset($args['rule_saved']) ? json_encode($args['rule_saved']) : "null" ?>;
 
 <?php } else {
     ?>
-            $scope.rule_attributes = {'ruleid': '', 'name': '', 'description': '', 'run_on': '', 'expiry_date': '', 'frequency': '', 'blocks': '', 'enabled': false};
+            $scope.rule_attributes = {'ruleid': '', 'name': '', 'description': '', 'run_on': '', 'expiry_date': '', 'frequency': '', 'blocks': '','enabled': false};
             $scope.rule_saved = null;
 <?php } ?>
         /*  End Objects in the scope  */
@@ -116,21 +106,20 @@ if (isset($args['rule'])) {
         // Create World
         world = new WorldMorph(document.getElementById('world'));
         world.worldCanvas.focus();
-        world.isDevMode = Boolean(<?php echo $isDev; ?>);
-        console.log(world.isDevMode);
+        world.isDevMode = false;
         world.setWidth(1170);
         //world.setHeight(250);
 
         // Create IDE and add it to the world - Everything related to the IDE is in "emonCMS_RulesIDE_gui.js" 
-        var array_of_feeds_by_tag = <?php echo json_encode($array_of_feeds_by_tag) ?>;
+        var array_of_feeds_by_node = <?php echo json_encode($array_of_feeds_by_node) ?>;
         var array_of_attributes_by_node = <?php echo json_encode($array_of_attributes_by_node) ?>;
-<?php if (isset($rule)) {
+<?php if (isset($rule)) { 
     ?>
             var blocks = '<?php echo str_replace('</script>', "' + '</scr' + 'ipt>' + '", $rule['blocks']) ?>' // This replacement is to avoid echoing "</scrpt>" which would close the javascript scrpt
 <?php } else { ?>
             var blocks = null;
 <?php } ?>
-        rulesIDE = new emonCMS_RulesIDE_Morph(world.width(), world.height(), array_of_feeds_by_tag, array_of_attributes_by_node, blocks);
+        rulesIDE = new emonCMS_RulesIDE_Morph(world.width(), world.height(), array_of_feeds_by_node, array_of_attributes_by_node, blocks);
         world.add(rulesIDE);
 
 
@@ -169,7 +158,7 @@ if (isset($args['rule'])) {
                 <tr><td><?php echo _('Expiry date') ?>: </td><td><input type="datetime" ng-model="rule_attributes.expiry_date"/><span>&nbsp;&nbsp;<?php echo _('0 for no expiry date') ?></span></td></tr>
                 <tr><td><?php echo _('Frequency') ?>: </td><td><input type="number" ng-model="rule_attributes.frequency"/><span>&nbsp;&nbsp;<?php echo _('seconds (if \'0\' the rule will only be run once)') ?></span></td></tr>
                 <tr><td><?php echo _('Enabled') ?>: </td><td><input type="checkbox" ng-model="rule_attributes.enabled" /></span></td></tr>
-                <!-- <tr id="blocks-programmer"><td><?php //echo _('Blocks')                   ?>: </td><td><textarea ng-model="rule_attributes.blocks"/></td></tr>-->
+                <!-- <tr id="blocks-programmer"><td><?php //echo _('Blocks')                  ?>: </td><td><textarea ng-model="rule_attributes.blocks"/></td></tr>-->
             </table>
             <div id="blocks-programmer">
                 <canvas id="world" tabindex="1" style="position: absolute"/>

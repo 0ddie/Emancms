@@ -114,7 +114,7 @@ class register {
 
     public function addNode($nodeMAC, $nodeIP, $userid) {
         
-        $nodeid = $this->nodeIDIncrementer();
+        $nodeid = $this->nodeIDIncrementer($userid);
         $this->mysqli->query("INSERT INTO `Node_reg` (`NodeID`, `FromAddress`, `MACAddress`, `userid`) VALUES ('$nodeid','$nodeIP','$nodeMAC','$userid')");
         $this->nodeMessage($nodeMAC, $userid);
         return $nodeid;
@@ -137,16 +137,16 @@ class register {
      * Increments the nodeID 
      */
 
-    public function nodeIDIncrementer() {
-        
-        $result = $this->mysqli->query("SELECT MAX(NodeID) FROM `Node_reg`");
+    public function nodeIDIncrementer($userid) {
+
+        $result = $this->mysqli->query("SELECT MAX(NodeID) FROM `Node_reg` WHERE `userid` = '$userid'");
         $row = mysqli_fetch_row($result);
         $query = $row[0];
         
-        $result2 = $this->mysqli->query("SELECT MAX(nodeid) FROM `input`");
+        $result2 = $this->mysqli->query("SELECT MAX(nodeid) FROM `input` WHERE `userid` = '$userid'");
         $row2 = mysqli_fetch_row($result2);
         $query2 = $row2[0];
-       
+
         $lastNode = max($query, $query2);
         $nextNode = $lastNode + 1;
         return $nextNode;
@@ -202,14 +202,12 @@ class register {
          * Save's the attributes to the table
          */
         if ($this->checkEverything($groupID, $attributeID, $attributeNumber, $nodeid, $userid) != 0) {
-            if ($result->num_rows === 1) {
-                return 0;
-            } else {
-
                 return 7;
-            }
         }
-
+        
+        if ($this->checkUserID($userid)!=0){
+            return 8;
+        }
 
 
         if ($doing === 0) {
@@ -226,13 +224,22 @@ class register {
     /*
      * Checks if the attribute is already registered
      */
-
+    public function checkUserID($userid,$nodeid){
+        $result = $this->mysqli->query("SELECT `nodeid` FROM `Node_reg` WHERE `nodeid` = '$nodeid' AND userid = '$userid'");
+        if ($result->num_rows === 1) {
+                return 1;
+            }    
+            else {return array('content' => "Trying to register an Attribute for a node your user doesn't own");}
+                }
+    
     public function checkEverything($groupID, $attributeID, $attributeNumber, $nodeid, $userid) {
         
         $result = $this->mysqli->query("SELECT `attributeUid` FROM `attributes` WHERE `nodeid` = '$nodeid' AND `groupid` = '$groupID' AND `attributeId` = '$attributeID' AND `attributeNumber` LIKE '$attributeNumber' AND `userid` = '$userid'");
-        if ($result->num_rows === 1)
-            ;
-    }
+                if ($result->num_rows === 1) {
+                return 1;
+            }    
+            else {return 0;}
+                }
 
     /*
      * get's the attribute Uid based on all the known information
@@ -405,12 +412,12 @@ class register {
      * checks the input json is correctly formatted
      */
 
-    public function correctInputJson($json, $nodeid) {
+    public function correctInputJson($json, $nodeid, $userid) {
         
         $doing = 1;
         $reformattedJson = ($this->jsonParse($json, $nodeid, $doing));
 
-        $result = $this->mysqli->query("SELECT name FROM input WHERE `name` = '$reformattedJson' AND `nodeid` = '$nodeid' ");
+        $result = $this->mysqli->query("SELECT name FROM input WHERE `name` = '$reformattedJson' AND `nodeid` = '$nodeid' AND `userid` = '$userid'");
         if ($result->num_rows > 0) {
             return 1;
         } else {

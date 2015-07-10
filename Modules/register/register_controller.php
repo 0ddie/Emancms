@@ -124,13 +124,15 @@ function register_controller() {
                     //$nodeid = $register->nodeMessage($nodeMAC);
                     $log->info("Node ID assigned to this node: ".$nodeid);
                 }
-                return array('content' => $nodeid);
+                $nodeResponseY = ($nodeid."Y");
+                return array('content' => $nodeResponseY);
 
                 
                 }else{
                     $nodeid = $register->nodeMessage($nodeMAC,$userid);
                     $log->warn("Already Registered Node, ID: " . $nodeid);
-                    return array('content' => $nodeid);
+                    $nodeResponseN = ($nodeid."N");
+                    return array('content' => $nodeResponseN);
                 }
 //                $log->info("The Node ID assigned to this node is: ".$nodeid);
 
@@ -278,6 +280,9 @@ function register_controller() {
                 if ($verbose == TRUE) {
                     $log->info("Attribute added to attributes table. Attribute Uid: " . $attributeUid);
                 }
+                else {return array('content' => "Registered: ".$nodeid." ".$inputid." ".$attributeUid);}
+
+                
             } elseif ($route->action == 'controller') {
                 if ($verbose == TRUE) {
                     $log->info("Controller route taken");

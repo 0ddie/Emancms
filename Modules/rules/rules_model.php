@@ -202,8 +202,33 @@ class Rules {
         return $result;
     }
 
-    public function addPendingAck($type, $ruleid, $next_stage, $timeout) {
-        
+    public function addPendingAck($type, $ruleid, $next_stage, $args, $timeout) {
+        $time = time();
+        if ($this->redis) {
+//ToDo
+        } else {
+            $this->mysqli->query("INSERT INTO `rules` (`request_time`, `type`, `ruleid`, `next_stage`, `args`, `timeout`) VALUES ('$time',$type', '$ruleid', '$next_stage', '$args', '$timeout')");
+        }
+    }
+
+    public function get_user_feeds_by_tag($userid) {
+        global $feed_settings;
+        include "Modules/feed/feed_model.php";
+
+        $feed = new Feed($this->mysqli, $this->redis, $feed_settings);
+
+        $array_of_feeds_by_tag = array();
+        $array_of_user_feeds = $feed->get_user_feeds($userid); // We use this one to get the name and tag of each feed
+
+        foreach ($array_of_user_feeds as $feedid => $feed_in_foreach) {
+            if ($feed_in_foreach['tag'] == '')
+                $feed_in_foreach['tag'] = 'No tag';
+            if (!isset($array_of_feeds_by_tag[$feed_in_foreach['tag']])) { // If this is the first time we find this node
+                $array_of_feeds_by_tag[$feed_in_foreach['tag']] = array();
+            }
+            array_push($array_of_feeds_by_tag[$feed_in_foreach['tag']], $feed_in_foreach);
+        }
+        return($array_of_feeds_by_tag);
     }
 
     /* End of other methods  */
@@ -225,7 +250,7 @@ class Rules {
         }
         echo '<br/>';
 
-        // 2) Declare variables that hold feeds ids
+// 2) Declare variables that hold feeds ids
         $feeds_ids_string = $this->getBlocksString($blocks_string, 'feeds');
         $feeds_ids = new SimpleXMLElement($feeds_ids_string);
         echo "/* Feed ids */<br/>";
@@ -235,7 +260,7 @@ class Rules {
         }
         echo '<br/>';
 
-        // 3) Declare variables that hold attributes ids
+// 3) Declare variables that hold attributes ids
         $attributes_ids_string = $this->getBlocksString($blocks_string, 'attributes');
         $attributes_ids = new SimpleXMLElement($attributes_ids_string);
         echo "/* Attributes ids */<br/>";
@@ -245,7 +270,7 @@ class Rules {
         }
         echo '<br/>';
 
-        // 4) Switch for the Stages
+// 4) Switch for the Stages
         $stages_string = $this->getBlocksString($blocks_string, 'stages');
         $stages = new SimpleXMLElement($stages_string);
         echo '/* Run the current stage */<br/>';
@@ -275,8 +300,6 @@ class Rules {
     }
 
     public function blocksToPhp($block) {
-        // ToDo: if there are more than two commands in an if, we are only adding the first one
-        // in the 'doIfElse' command  we are always printing the firs script
         if ($block['s']) { // if the block is command
             switch ($block['s']) {
                 case 'doIf':
@@ -289,7 +312,7 @@ class Rules {
                     return $statement;
                     break;
                 case 'requestFeed':
-                    //$this->addPendingAck();
+                    //$this->addPendingAck('requestFeed', $ruleid, $next_stage, $args, $timeout);
                     return '/* requestFeed() */<br/>';
                     break;
                 case 'setAttribute':
@@ -300,15 +323,15 @@ class Rules {
                     return '$feed->get(' . $feed_id . ') <br/>'; //$feed->get(id) .
                     break;
                 case 'reportLessThan': // This is an 'operator' command
-                    $parameters = $this->getOperatorParameters($block);
+                    $parameters = $this->getOperatorArguments($block);
                     return "($parameters[0]) < ($parameters[1])";
                     break;
                 case 'reportEquals': // This is an 'operator' command
-                    $parameters = $this->getOperatorParameters($block);
+                    $parameters = $this->getOperatorArguments($block);
                     return "($parameters[0]) == ($parameters[1])";
                     break;
                 case 'reportGreaterThan': // This is an 'operator' command
-                    $parameters = $this->getOperatorParameters($block);
+                    $parameters = $this->getOperatorArguments($block);
                     return "($parameters[0]) > ($parameters[1])";
                     break;
                 default:
@@ -326,22 +349,38 @@ class Rules {
         } else { //sometimes $block is a script which in fact is an array of blocks
             $string = '';
             foreach ($block[0] as $key => $block_in_array) {
-                //print_r($this->blocksToPhp($block_in_array));
                 $string .= '  ' . $this->blocksToPhp($block_in_array);
             }
             return $string;
         }
     }
 
-    public function getOperatorParameters($operator) {// The way I do this may seem very complicated but i am finding incredibly difficult to access the different elements in the $block on the right order. Even if it seems silly, this is the only way
+    /*     * ***********************************************************************
+     *  getOperatorArguments: It may seem a bit commplicated the way that we fetch arguments,
+     *  but the simpleXMLElement is quite annoying and it is not very logical how the arguments 
+     *  get sorted depending if they are 'l', 'block', 'vars' etc. That's why we check ne by one 
+     *  all the possible coombinations
+     * ************************************************************************ */
+
+    public function getOperatorArguments($operator) {// The way I do this may seem very complicated but i am finding incredibly difficult to access the different elements in the $block on the right order. Even if it seems silly, this is the only way
+        $operator_args = [];
         $parameters = [];
         foreach ($operator[0] as $key => $element) {
-            array_push($parameters, ['type_of_block' => $key, 'block' => $operator[0]->$key]);
+            array_push($operator_args, ['type_of_block' => $key, 'block' => $operator[0]->$key]);
         }
-        $parameters[0] = $parameters[0]['type_of_block'] == 'l' ? $parameters[0]['block'] : // The parameter can be manually typed ('l') or a block (a variable or a command)
-                $this->blocksToPhp($parameters[0]['block']);
-        $parameters[1] = $parameters[1]['type_of_block'] == 'l' ? $parameters[0]['block'] : // The parameter can be manually typed ('l') or a block (a variable or a command)
-                $this->blocksToPhp($parameters[1]['block']);
+        if ($operator_args[0]['type_of_block'] == 'l' && $operator_args[1]['type_of_block'] == 'l') { // both aguments are 'l' (manually inserted by the user)
+            $parameters[0] = $operator_args[0]['block'][0];
+            $parameters[1] = $operator_args[1]['block'][1];
+        } elseif ($operator_args[0]['type_of_block'] == 'block' && $operator_args[1]['type_of_block'] == 'l') { // First argument is a command block second manually introduced
+            $parameters[0] = $this->blocksToPhp($operator_args[0]['block'][0]);
+            $parameters[1] = $operator_args[1]['block'];
+        } elseif ($operator_args[0]['type_of_block'] == 'l' && $operator_args[1]['type_of_block'] == 'block') { // First argument is 'l' (manually inntroduced) and second is a command block
+            $parameters[0] = $operator_args[0]['block'];
+            $parameters[1] = $this->blocksToPhp($operator_args[1]['block'][0]);
+        } elseif (sizeof($operator->block) == 2) { // Both arfuments are command block
+            $parameters[0] = $this->blocksToPhp($operator->block[0]);
+            $parameters[1] = $this->blocksToPhp($operator->block[1]);
+        }
         return $parameters;
     }
 
@@ -352,26 +391,6 @@ class Rules {
          */
         $end = stripos($variable['var'], ' ');
         return substr($variable['var'], 1, $end - 1);
-    }
-
-    public function get_user_feeds_by_tag($userid) {
-        global $feed_settings;
-        include "Modules/feed/feed_model.php";
-
-        $feed = new Feed($this->mysqli, $this->redis, $feed_settings);
-
-        $array_of_feeds_by_tag = array();
-        $array_of_user_feeds = $feed->get_user_feeds($userid); // We use this one to get the name and tag of each feed
-
-        foreach ($array_of_user_feeds as $feedid => $feed_in_foreach) {
-            if ($feed_in_foreach['tag'] == '')
-                $feed_in_foreach['tag'] = 'No tag';
-            if (!isset($array_of_feeds_by_tag[$feed_in_foreach['tag']])) { // If this is the first time we find this node
-                $array_of_feeds_by_tag[$feed_in_foreach['tag']] = array();
-            }
-            array_push($array_of_feeds_by_tag[$feed_in_foreach['tag']], $feed_in_foreach);
-        }
-        return($array_of_feeds_by_tag);
     }
 
     /*  End blocksToPhp()  */
@@ -435,7 +454,7 @@ class Rules {
     /*  End get user feeds by node    */
 
     /*     * ************************************************************* */
-    /* Get schedule (all the rules)
+    /* Get schedule (all the enabled rules)
       /*************************************************************** */
 
     public function get_schedule() {

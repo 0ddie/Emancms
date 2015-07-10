@@ -32,7 +32,7 @@ ini_set('error_reporting', E_ALL);
 // Set the display_errors directive to On 
  ini_set('display_errors', 1); 
  
-chdir("/opt/lampp/htdocs/OpenEMan"); // Ideally to be changed to something that autodetects the current directory
+chdir("/var/www/OpenEMan"); // Ideally to be changed to something that autodetects the current directory
 
 $userid = 1;
 
@@ -52,9 +52,7 @@ $rules = new Rules($mysqli, $redis);
 
 include "Modules/log/EmonLogger.php";
 $log = new EmonLogger();
-var_dump($log->set_logfile(__DIR__ . '/rules5.log')); // I think this may have problems when running on cgi
-$test = $log->info("test");
-var_dump($test);
+var_dump($log->set_logfile(__DIR__ . '/rules.log')); // I think this may have problems when running on cgi
 
 include "Modules/feed/feed_model.php";
 $feed = new Feed($mysqli, $redis, $feed_settings);

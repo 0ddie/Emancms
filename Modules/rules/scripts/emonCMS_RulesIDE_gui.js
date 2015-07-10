@@ -102,18 +102,25 @@ emonCMS_RulesIDE_Morph.prototype.init = function (width, height, array_of_feeds_
     //this.listOfRules = this.createListOfRules(); // Not implemented yet
     //this.reportersPane.add(this.listOfRules); // Not implemented yet
 
-    // Create Dialog for listing nodes
+    // Create Dialog for listing nodes and feed tags
     this.listOfTagsForFeedsDialog = this.createListOfTagsForFeedsDialog();
     this.add(this.listOfTagsForFeedsDialog);
     this.listOfNodesForAttributesDialog = this.createListOfNodesForAttributesDialog();
     this.add(this.listOfNodesForAttributesDialog);
 
-    // Create array to hold all the feeds dialogs (each feed dialog will display all the feeds for a given node)
-    // Same for attributes
+    // Create array to hold all the feeds dialogs (each feed dialog will display all the feeds for a given tag)
+    // Same for attributes (display attribute by node)
     this.arrayOfFeedsDialogs = this.createArrayOfFeedsDialogs();
-    this.arrayOfFeedsDialogs.forEach(function (dialog, index) {
-        myself.add(dialog);
-    });
+    for (var key in this.arrayOfFeedsDialogs) {
+        // console.log(this.arrayOfFeedsDialogs[key]);
+        if (this.arrayOfFeedsDialogs[key].isMorph)
+            this.add(this.arrayOfFeedsDialogs[key]);
+    }
+    //console.log(this.arrayOfFeedsDialogs);
+    /*this.arrayOfFeedsDialogs.forEach(function (dialog, index) {
+     myself.add(dialog);
+     console.log('myself');
+     });*/
     this.arrayOfAttributesDialogs = this.createArrayOfAttributesDialogs();
     this.arrayOfAttributesDialogs.forEach(function (dialog, index) {
         myself.add(dialog);
@@ -498,7 +505,7 @@ emonCMS_RulesIDE_Morph.prototype.reportersPaneFixLayout = function () {
 
 emonCMS_RulesIDE_Morph.prototype.createListOfTagsForFeedsDialog = function () {
     var myself = this;
-    // Create the dialog where we display all the nodes
+    // Create the dialog where we display all the tags
     var dialog = new Morph;
     dialog.setWidth(150);
     dialog.setColor(new Color(50, 60, 121));
@@ -507,13 +514,16 @@ emonCMS_RulesIDE_Morph.prototype.createListOfTagsForFeedsDialog = function () {
     dialog.isDraggable = true;
     dialog.hide();
 
-    var title = new StringMorph('Choose a node');
+    var title = new StringMorph('Choose a feed tag');
     title.setColor(new Color(255, 255, 255, 1));
     title.setLeft(dialog.left() + 20);
     title.setTop(dialog.top() + 10);
     dialog.add(title);
 
-    //Create the one button per node and add to the dialog
+    if (title.width() > dialog.width())
+        dialog.setWidth(title.width() + 20);
+
+    //Create one button per tag and add to the dialog
     // Postion of the first button
     var top = dialog.top() + 35;
     var left = dialog.left() + 20;
@@ -632,8 +642,8 @@ emonCMS_RulesIDE_Morph.prototype.showFeedsDialog = function (node_key) {
     this.listOfTagsForFeedsDialog.hide();
     //show the target dialog     
     this.arrayOfFeedsDialogs[node_key].show();
-    console.log(this.arrayOfFeedsDialogs);
-    console.log(node_key);
+    //console.log(this.arrayOfFeedsDialogs);
+    //console.log(this.arrayOfFeedsDialogs[node_key]);
 };
 
 emonCMS_RulesIDE_Morph.prototype.showAttributesDialog = function (node_key) {
@@ -648,9 +658,10 @@ emonCMS_RulesIDE_Morph.prototype.showAttributesDialog = function (node_key) {
 
 emonCMS_RulesIDE_Morph.prototype.hideFeedsDialog = function () {
     //hide all the dialogs
-    this.arrayOfFeedsDialogs.forEach(function (dialog) {
-        dialog.hide();
-    });
+    for (var key in this.arrayOfFeedsDialogs) {
+        if (this.arrayOfFeedsDialogs[key].isMorph)
+            this.arrayOfFeedsDialogs[key].hide();
+    }
     this.listOfTagsForFeedsDialog.hide();
 };
 
@@ -666,8 +677,9 @@ emonCMS_RulesIDE_Morph.prototype.createArrayOfFeedsDialogs = function () {
     var myself = this;
     var array_of_feeds_dialogs = [];
 
-    // Create a Dialog displaying all the feeds for each node
-    for (var node_key in this.array_of_feeds_by_tag) {
+    // Create a Dialog displaying all the feeds for each tag
+    // console.log(this.array_of_feeds_by_tag);
+    for (var tag_key in this.array_of_feeds_by_tag) { // we create one dialog per feed tag
         var dialog = new Morph;
         dialog.setWidth(150);
         dialog.setColor(new Color(50, 60, 121));
@@ -676,41 +688,43 @@ emonCMS_RulesIDE_Morph.prototype.createArrayOfFeedsDialogs = function () {
         dialog.isDraggable = true;
         dialog.hide();
 
-        var title = new StringMorph('Node ' + node_key + ': choose a feed');
+        var title = new StringMorph('Tag ' + tag_key + ' - Choose a feed');
         title.setColor(new Color(255, 255, 255, 1));
         title.setLeft(dialog.left() + 20);
         title.setTop(dialog.top() + 10);
         dialog.add(title);
+        
+        if (title.width() + 20 > dialog.width()){
+            dialog.setWidth(title.width() + 40);
+        }
 
         // Postion of the first button
         var top = dialog.top() + 35;
         var left = dialog.left() + 20;
-        for (var feed_key in this.array_of_feeds_by_tag) {
-            var feed = this.array_of_feeds_by_tag[feed_key];
-            if (feed['tag'] != null && feed['tag'] != '') {
-                var button_label = 'F' + feed['feedid'] + ' - ' + feed['tag'];
+        for (var feed_key in this.array_of_feeds_by_tag[tag_key]) { // we add a button per each feed,
+            var feed = this.array_of_feeds_by_tag[tag_key][feed_key];
+            //console.log(feed);
+            if (typeof feed == 'object') {
+                var button_label = 'F' + feed['id'] + ' - ' + feed['name'];
+                button = new PushButtonMorph(
+                        function () {
+                            myself.addElementToList(myself.listOfFeeds, arguments[0]);
+                        },
+                        button_label, //variable to be used in the function above, accesed as "arguments[0]"
+                        button_label
+                        );
+                // Check if there is enugh space in this row of buttons to add the button
+                if ((left + button.width()) < dialog.right() - 20)
+                    button.setPosition(new Point(left, top));
+                else {
+                    left = dialog.left() + 20;
+                    top = top + 30;
+                    button.setPosition(new Point(left, top));
+                }
+                // calculate new position for next button
+                left = button.right() + 10;
+                dialog.add(button);
             }
-            else {
-                var button_label = 'F' + feed['feedid'] + ' - ' + feed['name'];
-            }
-            button = new PushButtonMorph(
-                    function () {
-                        myself.addElementToList(myself.listOfFeeds, arguments[0]);
-                    },
-                    button_label, //variable to be used in the function above, accesed as "arguments[0]"
-                    button_label
-                    );
-            // Check if there is enugh space in this row of buttons to add the button
-            if ((left + button.width()) < dialog.right() - 20)
-                button.setPosition(new Point(left, top));
-            else {
-                left = dialog.left() + 20;
-                top = top + 30;
-                button.setPosition(new Point(left, top));
-            }
-            // calculate new position for next button
-            left = button.right() + 10;
-            dialog.add(button);
         }
         //create a cancel button and add it 
         var cancel_button = new PushButtonMorph(null,
@@ -724,12 +738,11 @@ emonCMS_RulesIDE_Morph.prototype.createArrayOfFeedsDialogs = function () {
         cancel_button.fixLayout();
         dialog.add(cancel_button);
 
-
-
         // Set the height of the dialog according to the number of rows of buttons
         dialog.setHeight(cancel_button.bottom() - dialog.top() + 15);
-        array_of_feeds_dialogs[node_key] = dialog;
+        array_of_feeds_dialogs[tag_key] = dialog;
     }
+    //console.log(array_of_feeds_dialogs);
     return array_of_feeds_dialogs;
 };
 
@@ -796,6 +809,7 @@ emonCMS_RulesIDE_Morph.prototype.createArrayOfAttributesDialogs = function () {
         // Set the height of the dialog according to the number of rows of buttons
         dialog.setHeight(cancel_button.bottom() - dialog.top() + 15);
         array_of_attributes_dialogs[node_key] = dialog;
+        //console.log(array_of_attributes_dialogs);
     }
 
     return array_of_attributes_dialogs;

@@ -235,17 +235,19 @@ class Rules {
 
     /* stagesToPhp()  */
 
-    public function stagesToPhp($blocks_string, $stage_to_run) {
+    public function stagesToPhp($rule, $stage_to_run) {
+        $blocks_string = $rule['blocks'];
         ob_start();
 
-        // 1) Declare variables
+// 1) Declare variables
         $variables_string = $this->getBlocksString($blocks_string, 'variables');
         $variables = new SimpleXMLElement($variables_string);
         echo "/* Variables */<br/>";
-        echo '$timeout = 60;<br/>'; /* default value for timeout when we wait for apndinng ack */
+        echo '$timeout = 60; /* default value for timeout when we wait for apendinng acks */<br/>';
+        echo '$ruleid = ' . $rule['ruleid'] . ';<br/>';
         foreach ($variables->script as $var) {
-            //print_r($var->block);
-            //echo '$' . $var->block['var'] . ';<br/>';
+//print_r($var->block);
+//echo '$' . $var->block['var'] . ';<br/>';
             echo $this->blocksToPhp($var->block) . ';<br/>';
         }
         echo '<br/>';
@@ -255,7 +257,7 @@ class Rules {
         $feeds_ids = new SimpleXMLElement($feeds_ids_string);
         echo "/* Feed ids */<br/>";
         foreach ($feeds_ids->script as $id) {
-            //print_r($var->block);
+//print_r($var->block);
             echo $this->blocksToPhp($id->block) . ' = (int) ' . $this->getVariableIdFromBlock($id->block) . ';<br/>';
         }
         echo '<br/>';
@@ -265,7 +267,7 @@ class Rules {
         $attributes_ids = new SimpleXMLElement($attributes_ids_string);
         echo "/* Attributes ids */<br/>";
         foreach ($attributes_ids->script as $id) {
-            //print_r($var->block);
+//print_r($var->block);
             echo $this->blocksToPhp($id->block) . ' = (int) ' . $this->getVariableIdFromBlock($id->block) . ';<br/>';
         }
         echo '<br/>';
@@ -277,7 +279,7 @@ class Rules {
         echo '$stage = ' . (int) $stage_to_run . ';<br/>';
         echo ('switch($stage){ <br/>' );
         foreach ($stages->script as $stage) {
-            //print_r($stage);
+//print_r($stage);
             if ($stage->block[0]['s'] == 'Stage' && $stage->block[0]->l != '') { // Check this block starts with a "Stage" block and that the number of the stage is not empty
                 echo ' case ' . (int) $stage->block[0]->l . ':<br/>';
                 for ($index = 1; $stage->block[$index]; $index++) {
@@ -289,8 +291,8 @@ class Rules {
         echo ' default:<br/>  $ruleid = $rule["ruleid"];<br/>  $log->warn("Wrong stage in rule ' . '$ruleid' . ' - Stage: ' . $stage->block[0]->l . '");<br/> break;<br/>}';
 
         $php_code_for_web = ob_get_contents(); // $php_code_for_web uses <br/> for breaking lines
-        return $php_code_for_web;
         ob_clean();
+        return $php_code_for_web;
     }
 
     public function getBlocksString($blocks_string, $script_name) {
@@ -306,36 +308,46 @@ class Rules {
                     return '   if(' . $this->blocksToPhp($block->block) . '){<br/>   ' . $this->blocksToPhp($block->script) . '}<br/>';
                     break;
                 case 'doIfElse':
-                    //print_r($block->script);
+//print_r($block->script);
                     $statement = '   if(' . $this->blocksToPhp($block->block) . '){<br/>     ' . $this->blocksToPhp($block->script[0]) . '<br/>   }<br/>';
                     $statement .= '   else{<br/>     ' . $this->blocksToPhp($block->script[1]) . '   }<br/>';
                     return $statement;
                     break;
                 case 'requestFeed':
-                    //$this->addPendingAck('requestFeed', $ruleid, $next_stage, $args, $timeout);
-                    return '/* requestFeed() */<br/>';
+                    $feed_id = isset($block->l) ? (int) $block->l : $this->blocksToPhp($block->block);
+                    /* echo '<pre>';
+                      print_r($block);
+                      echo '</pre>'; */
+                    $statement = '/* $register->sendRequestToNode()*/</br>';
+                    $statement .= '$rules->addPendingAck("requestFeed", $ruleid, $stage + 1, ["feedid"=>' . $feed_id . '], $timeout);</br>';
+                    //$statement .= 
+                    return $statement;
                     break;
                 case 'setAttribute':
-                    return '/* setAttribute() */<br/>';
+                    $parameters = $this->getBlockArguments($block); // $parameters[0] is AttributeUid and $parameters[1] is the value
+                    $statement = '/* $register->sendValueToNode() */<br/>';
+                    $statement .= '$rules->addPendingAck("setAttribute", $ruleid, $stage + 1, ["attributeUid"=>' . $parameters[0] . '], $timeout);</br>';
+                    return $statement;
                     break;
                 case 'getLastFeed':
                     $feed_id = isset($block->l) ? (int) $block->l : $this->blocksToPhp($block->block);
-                    return '$feed->get(' . $feed_id . ') <br/>'; //$feed->get(id) .
+                    $statement = '$feed->get(' . $feed_id . ')</br>';
+                    return $statement;
                     break;
                 case 'reportLessThan': // This is an 'operator' command
-                    $parameters = $this->getOperatorArguments($block);
+                    $parameters = $this->getBlockArguments($block);
                     return "($parameters[0]) < ($parameters[1])";
                     break;
                 case 'reportEquals': // This is an 'operator' command
-                    $parameters = $this->getOperatorArguments($block);
+                    $parameters = $this->getBlockArguments($block);
                     return "($parameters[0]) == ($parameters[1])";
                     break;
                 case 'reportGreaterThan': // This is an 'operator' command
-                    $parameters = $this->getOperatorArguments($block);
+                    $parameters = $this->getBlockArguments($block);
                     return "($parameters[0]) > ($parameters[1])";
                     break;
                 default:
-                    return '   $log->warn("Command block not recognized: ' . $block['s'] . '");<br/>';
+                    return ' $log->warn("Command block not recognized: ' . $block['s'] . '");<br/>';
                     break;
             }
         } else if ($block['var']) { //this returns the name of a variable
@@ -349,20 +361,20 @@ class Rules {
         } else { //sometimes $block is a script which in fact is an array of blocks
             $string = '';
             foreach ($block[0] as $key => $block_in_array) {
-                $string .= '  ' . $this->blocksToPhp($block_in_array);
+                $string .= ' ' . $this->blocksToPhp($block_in_array);
             }
             return $string;
         }
     }
 
     /*     * ***********************************************************************
-     *  getOperatorArguments: It may seem a bit commplicated the way that we fetch arguments,
+     *  getBlockArguments: It may seem a bit commplicated the way that we fetch arguments,
      *  but the simpleXMLElement is quite annoying and it is not very logical how the arguments 
-     *  get sorted depending if they are 'l', 'block', 'vars' etc. That's why we check ne by one 
-     *  all the possible coombinations
+     *  get sorted depending if they are 'l', 'block', 'vars' etc. That's why we check ne by one
+     * all the possible coombinations
      * ************************************************************************ */
 
-    public function getOperatorArguments($operator) {// The way I do this may seem very complicated but i am finding incredibly difficult to access the different elements in the $block on the right order. Even if it seems silly, this is the only way
+    public function getBlockArguments($operator) {// The way I do this may seem very complicated but i am finding incredibly difficult to access the different elements in the $block on the right order. Even if it seems silly, this is the only way
         $operator_args = [];
         $parameters = [];
         foreach ($operator[0] as $key => $element) {

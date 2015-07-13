@@ -150,3 +150,92 @@
 2015-7-8 13:52:14 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
 2015-7-8 13:55:15 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
 2015-7-8 14:04:56 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 15:36:59 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 15:38:34 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 15:42:01 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 15:42:28 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 15:43:09 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 15:54:40 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 15:54:50 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 16:21:23 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 16:23:17 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 16:23:56 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 16:24:10 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 16:27:20 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 16:29:17 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 16:29:33 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 16:29:44 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 16:30:23 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 16:30:39 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 16:31:07 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 16:31:53 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 16:52:26 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 16:54:04 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:00:01 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:00:48 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:09:57 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:10:05 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:10:40 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:14:33 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:16:32 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:17:28 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:19:01 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:19:56 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:22:28 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:22:38 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:22:42 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:22:56 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:23:33 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:23:54 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:25:56 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:26:24 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:26:58 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:26:58 MAIN WARN /* Variables */
+$timeout = 60; /* default value for timeout when we wait for apendinng acks */
+$timedout;
+
+/* Feed ids */
+$F1ThisisaThermostatmeasuringLocalTemperature = (int) 1;
+
+/* Attributes ids */
+$A10x02010x00000x0191 = (int) 1;
+
+/* Run the current stage */
+$stage = 1;
+switch($stage){ 
+ case 1:
+   if(($feed->get(5)</br>) < ($F1ThisisaThermostatmeasuringLocalTemperature)){
+    /* $register->sendRequestToNode()*/</br>$rules->addPendingAck("requestFeed", $ruleid, $stage + 1, ["feedid"=>$F1ThisisaThermostatmeasuringLocalTemperature], $timeout);</br> /* $register->sendValueToNode() */
+$rules->addPendingAck("setAttribute", $ruleid, $stage + 1, ["attributeUid"=>$A10x02010x00000x0191], $timeout);</br>}
+;  break;
+ default:
+  $ruleid = $rule["ruleid"];
+  $log->warn("Wrong stage in rule $ruleid - Stage: 5");
+ break;
+}
+2015-7-13 17:27:42 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:28:57 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:29:27 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:30:13 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:30:23 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:32:44 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:33:03 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:34:07 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:35:05 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:35:12 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:36:39 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:37:06 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:37:19 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 17:44:17 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 21:33:34 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 21:35:13 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 21:36:17 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 21:37:32 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 21:38:52 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 21:39:19 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 21:40:35 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 21:41:33 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 21:41:52 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 21:42:22 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 21:42:42 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1
+2015-7-13 21:43:11 MAIN WARN Error parsing rule code. Rule: 3 - Stage: 1

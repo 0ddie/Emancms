@@ -61,72 +61,60 @@ $register = new register($mysqli);
 
 // 4) Run the "daemon", this is the "main" running in a loop
 //  while (true) {
-run_pendingAcks();
-//run_schedule();
+//run_acks_checker();
+run_schedule();
 
 // Script update rate
 //sleep(3);
 //}
 // 5) Local functions
 
-function run_pendingAcks() {
-    global $rules, $log, $rules_log_mode;
-    $time = time();
-    $array_of_pending_acks = $rules->getPendingAcks(); // Fetches all the pending acks
-
-    foreach ($array_of_pending_acks as $pending_ack) {
-        $ack_received = $rules->checkAck($pending_ack);
-        switch ($ack_received['success']) {
-            case 0: // Ack not received, we check timeout
-                $rules->printForDeveloper($pending_ack);
-                $request_time = strtotime($pending_ack['request_time']);
-                if (time() > $request_time + $pending_ack['timeout']) { // Timeout passed
-                    $rules->runRule($rules->getRuleByRuleId($pending_ack['ruleid']), $pending_ack['next_stage'],true);
-                    //remove all the pending acks for that ruleid
-                }
-                break;
-            case 1: // Ack received
-                echo '111111111111';
-                break;
-            default: // There has been an error
-                $log->warn("Rule: " . $pending_ack['ruleid'] . ": error checking ack. Message: " . $ack_received['message'] . "\n");
-                $rules->printForDeveloper("Rule: " . $pending_ack['ruleid'] . ": error checking ack. Message: " . $ack_received['message']);
-                break;
-        }
-    }
-}
-
 function run_schedule() {
-    global $rules, $log, $rules_developer_mode, $rules_log_mode;
+    global $rules, $log;
     $time = time();
-    $schedule = $rules->getSchedule(); // Fetches rules that are enabled
+
+    $schedule = $rules->get_schedule(); // Fetches rules that are enabled
 
     foreach ($schedule as $rule) {
-//************************************************************************
-//**  Run the rule if it hasn't expired and we have passed the run_on_time
-//************************************************************************
+        //************************************************************************
+        //**  Run the rule if it hasn't expired and we have passed the run_on_time
+        //************************************************************************
         $expiry_time = strtotime($rule['expiry_date']); //when expiry_date === 0-0-0 0:0:0 then expiry_time = -62169987600. In this case the rule has not got expiry date
         if ($expiry_time > $time || $expiry_time == -62169987600) { //rule has not expired
             $run_on_time = strtotime($rule['run_on']);
-            if ($run_on_time > $time) { // We haven't reached the time to run -> we don't run the rule now
-                $set_next_run_on = false;
-                $rules->printForDeveloper("Rule with ruleid: " . $rule['ruleid'] . ", run_on time no reached");
-            } else { // Run the rule
-                $rules->runRule($rule, 1);
+            if ($run_on_time < $time) { // we have gone beyond the time to run -> we need to run the rule now
+                $php_string_for_web = $rules->stagesToPhp($rule, 1); // We run the stage 1 of the rule
+                //$php_string = str_replace('<br/>', PHP_EOL, $php_string_for_web);
+                $php_string = strip_tags($php_string_for_web);
+                print_r($php_string_for_web);
+                $checkResult = exec('echo \'<?php ' . $php_string . '\' | php -l >/dev/null 2>&1; echo $?');
+                if ($checkResult != 0) {
+                    $log->warn("Error parsing rule code. Rule: " . $rule['ruleid'] . " - Stage: 1");
+                    echo "Error parsing rule code. Rule: " . $rule['ruleid'] . " - Stage: 1";
+                } else {
+                    $result = eval($php_string);
+                    echo "Evaling";
+                    print_r($result);
+                }
                 $set_next_run_on = true;
+                //echo "running<br>";
+            } else {
+                $set_next_run_on = false;
+                echo "not running <br>";
             }
         }
-//************************************************************************
-//**  Disable the rule or set next time for the rule to be run 
-//************************************************************************
+
+        //************************************************************************
+        //**  Disable the rule or set next time for the rule to be run 
+        //************************************************************************
         if ($rule['frequency'] == 0) { // When frequency is "0" it means that the rule should only be run once
             $rules->disableRule($rule['ruleid']);
-            $rules->logIfVerbose("Rule disabled because frequency. Rule id: " . $rule['ruleid']);
-            $rules->printForDeveloper("Rule disabled because frequency. Ruleid: " . $rule['ruleid']);
+            $log->info("Rule disabled because frequency. Rule id: " . $rule['ruleid']);
+            echo "rule disabled because frequency <br>";
         } elseif ($expiry_time < $time && $expiry_time != -62169987600) { // expirytime is '0' when expirydate is '0000-0-0 ...' in this case there is no expiry date then we don't disable the rule
             $rules->disableRule($rule['ruleid']);
-            $rules->logIfVerbose("Rule disabled because expiry date. Rule id: " . $rule['ruleid']);
-            $rules->printForDeveloper("Rule disabled because expiry date. Rule id: " . $rule['ruleid']);
+            $log->info("Rule disabled because expiry date. Rule id: " . $rule['ruleid']);
+            echo "rule disabled because expiry date <br>";
         } elseif ($set_next_run_on == true) {
             $new_run_on_time = $time + $rule['frequency'];
             $new_run_on_date = date("Y-m-d H:i:s", $new_run_on_time);
@@ -134,6 +122,5 @@ function run_schedule() {
         }
     }
 }
-
 //Not sure if we need to remove the clisng tag when set up as cron
 ?>

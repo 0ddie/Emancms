@@ -20,12 +20,12 @@ class register {
      * Querys the db to see if the node you're trying to register exists
      */
 
-    public function exists($nodeMAC, $userid) {
-
-
+    public function exists($nodeMAC,$userid) {
+        
+        
         $result = $this->mysqli->query("SELECT `MacAddress` FROM `Node_reg` WHERE `MacAddress` = '$nodeMAC'AND `userid` = '$userid'");
         if ($result->num_rows === 1) {
-            $this->nodeMessage($nodeMAC, $userid);
+            $this->nodeMessage($nodeMAC,$userid);
             return 1;
         } else {
             return 0;
@@ -51,7 +51,7 @@ class register {
      */
 
     function correctApiKey($apikey) {
-
+        
         $result = $this->mysqli->query("SELECT apikey_write FROM users WHERE `apikey_write` = '$apikey'");
         if ($result->num_rows === 1) {
             return 1;
@@ -86,7 +86,7 @@ class register {
      */
 
     public function incorrectNodeID($nodeid) {
-
+        
         $result = $this->mysqli->query("SELECT NodeID FROM Node_reg WHERE `NodeID` = '$nodeid'");
         if ($result->num_rows === 1) {
             return 0;
@@ -113,7 +113,7 @@ class register {
      */
 
     public function addNode($nodeMAC, $nodeIP, $userid) {
-
+        
         $nodeid = $this->nodeIDIncrementer($userid);
         $this->mysqli->query("INSERT INTO `Node_reg` (`NodeID`, `FromAddress`, `MACAddress`, `userid`) VALUES ('$nodeid','$nodeIP','$nodeMAC','$userid')");
         $this->nodeMessage($nodeMAC, $userid);
@@ -125,7 +125,7 @@ class register {
      */
 
     public function nodeMessage($nodeMAC, $userid) {
-
+        
         $result = $this->mysqli->query("SELECT `NodeID` FROM `Node_reg` WHERE `MACAddress` LIKE '$nodeMAC'AND `userid` = '$userid'");
         //$result2 = $this->mysqli->query("SELECT `nodeIP` FROM 'Node_reg' WHERE `MacAddress` = '$nodeMAC'");
         $row = mysqli_fetch_row($result);
@@ -142,7 +142,7 @@ class register {
         $result = $this->mysqli->query("SELECT MAX(NodeID) FROM `Node_reg` WHERE `userid` = '$userid'");
         $row = mysqli_fetch_row($result);
         $query = $row[0];
-
+        
         $result2 = $this->mysqli->query("SELECT MAX(nodeid) FROM `input` WHERE `userid` = '$userid'");
         $row2 = mysqli_fetch_row($result2);
         $query2 = $row2[0];
@@ -150,6 +150,7 @@ class register {
         $lastNode = max($query, $query2);
         $nextNode = $lastNode + 1;
         return $nextNode;
+
     }
 
     /*
@@ -201,10 +202,10 @@ class register {
          * Save's the attributes to the table
          */
         if ($this->checkEverything($groupID, $attributeID, $attributeNumber, $nodeid, $userid) != 0) {
-            return 7;
+                return 7;
         }
-
-        if ($this->checkUserID($userid) != 0) {
+        
+        if ($this->checkUserID($userid)!=0){
             return 8;
         }
 
@@ -223,32 +224,29 @@ class register {
     /*
      * Checks if the attribute is already registered
      */
-
-    public function checkUserID($userid, $nodeid) {
+    public function checkUserID($userid,$nodeid){
         $result = $this->mysqli->query("SELECT `nodeid` FROM `Node_reg` WHERE `nodeid` = '$nodeid' AND userid = '$userid'");
         if ($result->num_rows === 1) {
-            return 1;
-        } else {
-            return array('content' => "Trying to register an Attribute for a node your user doesn't own");
-        }
-    }
-
+                return 1;
+            }    
+            else {return array('content' => "Trying to register an Attribute for a node your user doesn't own");}
+                }
+    
     public function checkEverything($groupID, $attributeID, $attributeNumber, $nodeid, $userid) {
-
+        
         $result = $this->mysqli->query("SELECT `attributeUid` FROM `attributes` WHERE `nodeid` = '$nodeid' AND `groupid` = '$groupID' AND `attributeId` = '$attributeID' AND `attributeNumber` LIKE '$attributeNumber' AND `userid` = '$userid'");
-        if ($result->num_rows === 1) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
+                if ($result->num_rows === 1) {
+                return 1;
+            }    
+            else {return 0;}
+                }
 
     /*
      * get's the attribute Uid based on all the known information
      */
 
     public function getEverything($groupID, $attributeID, $attributeNumber, $nodeid, $userid) {
-
+        
         $result = $this->mysqli->query("SELECT `attributeUid` FROM `attributes` WHERE `nodeid` = '$nodeid' AND `groupid` = '$groupID' AND `attributeId` = '$attributeID' AND `attributeNumber` LIKE '$attributeNumber' AND `userid` = '$userid'");
         $row = mysqli_fetch_row($result);
         $query = $row[0];
@@ -260,7 +258,7 @@ class register {
      */
 
     public function saveToAttributes($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid, $userid) {
-
+        
         $this->mysqli->query("INSERT INTO attributes (groupid,attributeId,attributeNumber,attributeDefaultValue,nodeid,userid) VALUES ('$groupID','$attributeID','$attributeNumber','$attributeDefaultValue','$nodeid','$userid')");
     }
 
@@ -310,7 +308,7 @@ class register {
      */
 
     public function feed_id_getter() {
-
+        
 
         $result = $this->mysqli->query("SELECT MAX(id) FROM `feeds`");
         $row = mysqli_fetch_row($result);
@@ -323,7 +321,7 @@ class register {
      */
 
     public function set_feed_fields($id, $tag, $name) {
-
+        
         $this->mysqli->query("UPDATE `feeds` SET `tag` = '$tag' WHERE `id` = '$id'");
         $this->mysqli->query("UPDATE `feeds` SET `name` = '$name' WHERE `id` = '$id'");
     }
@@ -349,7 +347,7 @@ class register {
      */
 
     public function checkGroupID($groupID) {
-
+        
         if (strncmp($groupID, '0x0', 3) === 0) {
             preg_match('/^([a-fA-F0-9]){3}$/', substr($groupID, 3), $matches, PREG_OFFSET_CAPTURE);
             if (count($matches) > 1) {
@@ -374,7 +372,7 @@ class register {
      */
 
     public function checkAttributeID($attributeID) {
-
+        
         if (strncmp($attributeID, '0x0', 3) === 0) {
             preg_match('/^([a-fA-F0-9]){3}$/', substr($attributeID, 3), $matches2, PREG_OFFSET_CAPTURE);
             if (count($matches2) > 1) {
@@ -415,7 +413,7 @@ class register {
      */
 
     public function correctInputJson($json, $nodeid, $userid) {
-
+        
         $doing = 1;
         $reformattedJson = ($this->jsonParse($json, $nodeid, $doing));
 
@@ -433,29 +431,28 @@ class register {
      */
 
     public function inputIdGetter($reformattedJson) {
-
+        
         $result = $this->mysqli->query("SELECT `id` FROM input WHERE `name` = '$reformattedJson'");
         $row = mysqli_fetch_row($result);
         $query = $row[0];
         return $query;
     }
+/*
+    public function startTimer() {
+        $startTime = time();
+        return $startTime;
+    }
+
+    public function timedOut($startTime, $ender, $timeout) {
+        do {
+            if (($startTime - time()) > $timeout) {
+                return array('content' => "Request timed out");
+            }
+            echo 'Hola ';
+        } while ($ender = 0);
+    }
 
     /*
-      public function startTimer() {
-      $startTime = time();
-      return $startTime;
-      }
-
-      public function timedOut($startTime, $ender, $timeout) {
-      do {
-      if (($startTime - time()) > $timeout) {
-      return array('content' => "Request timed out");
-      }
-      echo 'Hola ';
-      } while ($ender = 0);
-      }
-
-      /*
      * returns an associative array of associative arrays of nodes
      */
 
@@ -483,7 +480,7 @@ class register {
      */
 
     public function groupIDDescGetter($attributeUid) {
-
+        
         $result = $this->mysqli->query("SELECT `groupid` FROM `attributes` WHERE `attributeUid` = '$attributeUid' ");
         $row = mysqli_fetch_row($result);
         $groupid = $row[0];
@@ -498,7 +495,7 @@ class register {
      */
 
     public function attributeIDDescGetter($attributeUid) {
-
+        
         $result = $this->mysqli->query("SELECT `attributeId` FROM `attributes` WHERE `attributeUid` = '$attributeUid' ");
         $row = mysqli_fetch_row($result);
         $attributeid = $row[0];
@@ -513,19 +510,19 @@ class register {
      */
 
     public function updateAttributesTableForFeed($id, $attributeUid) {
-
+        
 
         $this->mysqli->query("UPDATE `attributes` SET `feedId` = '$id' WHERE `attributeUid` = '$attributeUid'");
     }
 
     public function updateAttributesTableForInput($inputid, $attributeUid) {
-
+        
 
         $this->mysqli->query("UPDATE `attributes` SET `inputId` = '$inputid' WHERE `attributeUid` = '$attributeUid'");
     }
 
     public function getNodeIP($nodeid) {
-
+        
         $result = $this->mysqli->query("SELECT `FromAddress` FROM `Node_reg` WHERE `NodeID` ='$nodeid' ");
         $row = mysqli_fetch_row($result);
         $nodeIP = $row[0];
@@ -533,7 +530,7 @@ class register {
     }
 
     public function getInputID($attributeUid) {
-
+        
         $result = $this->mysqli->query("SELECT `inputId` FROM `attributes` WHERE `attributeUid` = '$attributeUid'");
         $row = mysqli_fetch_row($result);
         $inputid = $row[0];
@@ -541,7 +538,7 @@ class register {
     }
 
     public function getName($inputid) {
-
+        
         $result = $this->mysqli->query("SELECT `name` FROM `input` WHERE `id` = '$inputid'");
         $row = mysqli_fetch_row($result);
         $name = $row[0];
@@ -570,7 +567,7 @@ class register {
      */
 
     public function groupIdFiller() {
-
+        
         $this->mysqli->query("
         INSERT INTO `groupids` (`ID`, `Name`, `Description`, `UUID`) VALUES
 ('0x0000', 'Basic', '\r\nAttributes for determining basic information about a device, setting user device information such as location, and enabling a device.\r\n', 1),
@@ -660,7 +657,7 @@ class register {
      */
 
     public function attributeIdFiller() {
-
+        
         $this->mysqli->query("
                 INSERT INTO `attribute_information` (`Identifier`, `GroupID`, `Name`, `Type`, `Min`, `Max`, `Default_Value`, `Mandatory/Optional`, `UUID`) VALUES
 ('0x0000', '0x0201', 'LocalTemperature', 'Signed 16-bit integer', 38221, 32767, '-', 1, 1),
@@ -702,7 +699,7 @@ class register {
      */
 
     public function tablesEmpty() {
-
+        
         $result = $this->mysqli->query("SELECT * FROM `attribute_information` WHERE UUID = '1'");
         if ($result->num_rows === 1) {
             $result2 = $this->mysqli->query("SELECT * FROM `groupids` WHERE UUID = '1'");
@@ -713,17 +710,6 @@ class register {
             }
         } else {
             return 1;
-        }
-    }
-
-    public function getNodes($userid) {
-        $array_of_nodes = [];
-        $result = $this->mysqli->query("SELECT * FROM `Node_reg` WHERE 'userid' = $userid");
-        if ($result->num_rows > 0) {
-            for ($i = 0; $row = (array) $result->fetch_object(); $i++) {
-                $array_of_nodes[$i] = $row;
-            }
-            return $array_of_nodes;
         }
     }
 

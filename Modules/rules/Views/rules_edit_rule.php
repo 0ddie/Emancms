@@ -32,7 +32,7 @@ else
   print_r($array_of_attributes_by_node);
   echo '</pre>'; */
 ?>
-<!--<script type="text/javascript" src="<?php //echo $path;           ?>Lib/angularjs/angular.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo $path;            ?>Lib/angularjs/angular.min.js"></script>-->
 <script type="text/javascript" src="<?php echo $path; ?>Lib/angularjs/angular.js"></script>
 
 <!-- Visual programmer  -->
@@ -66,7 +66,8 @@ if (isset($args['rule'])) {
                 'run_on': '<?php echo $rule['run_on'] ?>',
                 'expiry_date': '<?php echo $rule['expiry_date'] ?>',
                 'frequency': Number('<?php echo $rule['frequency'] ?>'),
-                'enabled':<?php if ($rule['enabled'] == 1)
+                'enabled':<?php
+    if ($rule['enabled'] == 1)
         echo 'true';
     else
         echo 'false';
@@ -84,7 +85,7 @@ if (isset($args['rule'])) {
         /*  End Objects in the scope  */
 
         /*  Functions in the scope  */
-        $scope.apply = function () {
+        $scope.save_apply = function (mode) {
             var href = 'rules/save-rule?name=' + $scope.rule_attributes.name
                     + "&description=" + $scope.rule_attributes.description
                     + "&run_on=" + $scope.rule_attributes.run_on
@@ -93,19 +94,7 @@ if (isset($args['rule'])) {
                     + "&blocks=" + rulesIDE.generateXML()
                     + "&ruleid=" + $scope.rule_attributes.ruleid
                     + "&enabled=" + $scope.rule_attributes.enabled
-                    + "&close=false";
-            $window.location.href = "<?php echo $path; ?>" + href;
-        };
-        $scope.save = function () {
-            var href = 'rules/save-rule?name=' + $scope.rule_attributes.name
-                    + "&description=" + $scope.rule_attributes.description
-                    + "&run_on=" + $scope.rule_attributes.run_on
-                    + "&expiry_date=" + $scope.rule_attributes.expiry_date
-                    + "&frequency=" + $scope.rule_attributes.frequency
-                    + "&blocks=" + rulesIDE.generateXML()
-                    + "&ruleid=" + $scope.rule_attributes.ruleid
-                    + "&enabled=" + $scope.rule_attributes.enabled
-                    + "&close=true";
+                    + "&mode=" + mode;
             $window.location.href = "<?php echo $path; ?>" + href;
         };
         /*  End Functions in the scope  */
@@ -155,8 +144,9 @@ if (isset($args['rule'])) {
 <div ng-app="moduleViewApp" ng-controller="moduleViewAppCtrl" id="edit-rule">
     <div id="apihelphead">
         <div style="float:right;">
-            <span class="like-link" ng-click="save()"><?php echo _('Save and close') ?></span>
-            <span class="like-link" ng-click="apply()"><?php echo _('Apply') ?></span>
+            <span class="like-link" ng-click="save_apply('save')"><?php echo _('Save and close') ?></span>
+            <span class="like-link" ng-click="save_apply('apply')"><?php echo _('Apply') ?></span>
+            <span class="like-link" ng-click="save_apply('apply_and_test')"><?php echo _('Apply and Test') ?></span>
             <a href="rules/list"><?php echo _('Cancel') ?></a>
         </div>
     </div>
@@ -171,7 +161,7 @@ if (isset($args['rule'])) {
                 <tr><td><?php echo _('Expiry date') ?>: </td><td><input type="datetime" ng-model="rule_attributes.expiry_date"/><span>&nbsp;&nbsp;<?php echo _('YYYY-MM-DD - 0 for no expiry date') ?></span></td></tr>
                 <tr><td><?php echo _('Frequency') ?>: </td><td><input type="number" ng-model="rule_attributes.frequency"/><span>&nbsp;&nbsp;<?php echo _('seconds (if \'0\' the rule will only be run once)') ?></span></td></tr>
                 <tr><td><?php echo _('Enabled') ?>: </td><td><input type="checkbox" ng-model="rule_attributes.enabled" /></span></td></tr>
-                <!-- <tr id="blocks-programmer"><td><?php //echo _('Blocks')                    ?>: </td><td><textarea ng-model="rule_attributes.blocks"/></td></tr>-->
+                <!-- <tr id="blocks-programmer"><td><?php //echo _('Blocks')                     ?>: </td><td><textarea ng-model="rule_attributes.blocks"/></td></tr>-->
             </table>
             <div id="blocks-programmer">
                 <canvas id="world" tabindex="1" style="position: absolute"/>

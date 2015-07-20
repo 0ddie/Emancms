@@ -408,3 +408,906 @@
 2015-6-26 13:10:43 MAIN INFO json route
 2015-6-26 13:10:43 MAIN INFO setup route
 2015-6-26 13:10:43 MAIN INFO  Node ID50 Timeout: 225
+2015-7-6 15:12:07 MAIN INFO group id and attribute id tables unchanged
+2015-7-6 15:12:07 MAIN INFO json string recieved
+2015-7-6 15:12:07 MAIN INFO creating node
+2015-7-6 15:12:07 MAIN INFO Node MAC address: 00:01:02:05:05:05 Node IP address: 127.1.1.1 Timeout: 15
+2015-7-6 15:12:07 MAIN WARN Already Registered Node, ID: 2
+2015-7-6 15:13:53 MAIN INFO group id and attribute id tables unchanged
+2015-7-6 15:13:53 MAIN INFO json string recieved
+2015-7-6 15:13:53 MAIN INFO creating node
+2015-7-6 15:13:53 MAIN INFO Node MAC address: 00:01:02:05:05:05 Node IP address: 127.1.1.1 Timeout: 15
+2015-7-6 15:13:53 MAIN INFO Node ID assigned to this node: 3
+2015-7-6 15:17:15 MAIN INFO group id and attribute id tables unchanged
+2015-7-6 15:17:15 MAIN INFO json string recieved
+2015-7-6 15:17:15 MAIN INFO creating node
+2015-7-6 15:17:15 MAIN INFO Node MAC address: 00:01:02:06:05:05 Node IP address: 127.1.1.1 Timeout: 15
+2015-7-6 15:17:15 MAIN INFO Node ID assigned to this node: 4
+2015-7-6 15:18:13 MAIN INFO group id and attribute id tables unchanged
+2015-7-6 15:18:13 MAIN INFO json string recieved
+2015-7-6 15:18:13 MAIN INFO creating node
+2015-7-6 15:18:13 MAIN INFO Node MAC address: 00:01:05:06:05:05 Node IP address: 127.1.2.1 Timeout: 15
+2015-7-6 15:18:13 MAIN INFO Node ID assigned to this node: 5
+2015-7-6 15:19:14 MAIN INFO group id and attribute id tables unchanged
+2015-7-6 15:19:14 MAIN INFO json string recieved
+2015-7-6 15:19:14 MAIN INFO creating node
+2015-7-6 15:19:14 MAIN INFO Node MAC address: 00:01:05:06:55:05 Node IP address: 127.1.2.1 Timeout: 15
+2015-7-6 15:19:14 MAIN INFO Node ID assigned to this node: 6
+2015-7-6 15:20:34 MAIN INFO group id and attribute id tables unchanged
+2015-7-6 15:20:34 MAIN INFO json string recieved
+2015-7-6 15:20:34 MAIN INFO creating node
+2015-7-6 15:20:34 MAIN INFO Node MAC address: 00:01:05:06:55:05 Node IP address: 127.1.2.1 Timeout: 15
+2015-7-6 15:20:34 MAIN WARN Already Registered Node, ID: 6
+2015-7-6 15:20:41 MAIN INFO group id and attribute id tables unchanged
+2015-7-6 15:20:41 MAIN INFO json string recieved
+2015-7-6 15:20:41 MAIN INFO creating node
+2015-7-6 15:20:41 MAIN INFO Node MAC address: 10:01:05:06:55:05 Node IP address: 127.1.2.1 Timeout: 15
+2015-7-6 15:20:41 MAIN INFO Node ID assigned to this node: 7
+2015-7-6 15:23:26 MAIN INFO group id and attribute id tables unchanged
+2015-7-6 15:23:26 MAIN INFO json string recieved
+2015-7-6 15:23:26 MAIN INFO creating node
+2015-7-6 15:23:26 MAIN INFO Node MAC address: 10:01:05:06:55:05 Node IP address: 127.1.2.1 Timeout: 15
+2015-7-6 15:23:26 MAIN INFO Node ID assigned to this node: 1
+2015-7-8 15:00:18 MAIN INFO group id and attribute id tables unchanged
+2015-7-8 15:00:18 MAIN INFO json string recieved
+2015-7-8 15:00:18 MAIN INFO creating node
+2015-7-8 15:00:18 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-8 15:00:18 MAIN INFO Node ID assigned to this node: 2
+2015-7-10 11:49:12 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 11:49:12 MAIN INFO json string recieved
+2015-7-10 11:49:12 MAIN INFO creating node
+2015-7-10 11:49:12 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 11:49:12 MAIN INFO Node ID assigned to this node: 1
+2015-7-10 11:50:15 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 11:50:15 MAIN INFO json string recieved
+2015-7-10 11:50:15 MAIN INFO creating node
+2015-7-10 11:50:15 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 11:50:15 MAIN WARN Already Registered Node, ID: 1
+2015-7-10 11:52:05 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 11:52:05 MAIN INFO json string recieved
+2015-7-10 11:52:05 MAIN INFO creating node
+2015-7-10 11:52:05 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 11:52:05 MAIN WARN Already Registered Node, ID: 1
+2015-7-10 12:01:32 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:01:32 MAIN INFO json string recieved
+2015-7-10 12:01:32 MAIN INFO creating node
+2015-7-10 12:01:32 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 12:01:32 MAIN WARN Already Registered Node, ID: 1
+2015-7-10 12:06:54 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:06:54 MAIN INFO json string recieved
+2015-7-10 12:06:54 MAIN INFO creating node
+2015-7-10 12:06:54 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 12:06:54 MAIN WARN Already Registered Node, ID: 1
+2015-7-10 12:07:57 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:07:57 MAIN INFO json string recieved
+2015-7-10 12:07:57 MAIN INFO creating node
+2015-7-10 12:07:57 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 12:07:57 MAIN INFO Node ID assigned to this node: 1
+2015-7-10 12:11:21 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:11:21 MAIN INFO json string recieved
+2015-7-10 12:11:21 MAIN INFO creating node
+2015-7-10 12:11:21 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 12:11:21 MAIN WARN Already Registered Node, ID: 1
+2015-7-10 12:11:54 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:11:54 MAIN INFO json string recieved
+2015-7-10 12:11:54 MAIN INFO creating node
+2015-7-10 12:11:54 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 12:11:54 MAIN INFO Node ID assigned to this node: 1
+2015-7-10 12:13:25 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:13:25 MAIN INFO json string recieved
+2015-7-10 12:13:25 MAIN INFO creating node
+2015-7-10 12:13:25 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 12:13:25 MAIN WARN Already Registered Node, ID: 1
+2015-7-10 12:13:25 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:13:25 MAIN INFO json string recieved
+2015-7-10 12:13:25 MAIN INFO configuring node
+2015-7-10 12:13:25 MAIN INFO  Node ID Timeout: 15
+2015-7-10 12:13:25 MAIN WARN Apikey wrong length
+2015-7-10 12:21:52 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:21:52 MAIN INFO json string recieved
+2015-7-10 12:21:52 MAIN INFO creating node
+2015-7-10 12:21:52 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 12:21:52 MAIN INFO Node ID assigned to this node: 1
+2015-7-10 12:21:53 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:21:53 MAIN INFO json string recieved
+2015-7-10 12:21:53 MAIN INFO configuring node
+2015-7-10 12:21:53 MAIN INFO  Node ID Timeout: 15
+2015-7-10 12:21:53 MAIN WARN Apikey wrong length
+2015-7-10 12:25:22 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:25:22 MAIN INFO json string recieved
+2015-7-10 12:25:22 MAIN INFO creating node
+2015-7-10 12:25:22 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 12:25:22 MAIN INFO Node ID assigned to this node: 1
+2015-7-10 12:25:22 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:25:22 MAIN INFO json string recieved
+2015-7-10 12:25:22 MAIN INFO configuring node
+2015-7-10 12:25:22 MAIN INFO  Node ID Timeout: 15
+2015-7-10 12:25:22 MAIN WARN Apikey wrong length
+2015-7-10 12:26:45 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:26:45 MAIN INFO json string recieved
+2015-7-10 12:26:45 MAIN INFO creating node
+2015-7-10 12:26:45 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 12:26:45 MAIN INFO Node ID assigned to this node: 1
+2015-7-10 12:26:46 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:26:46 MAIN INFO json string recieved
+2015-7-10 12:26:46 MAIN INFO configuring node
+2015-7-10 12:26:46 MAIN INFO  Node ID Timeout: 15
+2015-7-10 12:26:46 MAIN WARN Apikey wrong length
+2015-7-10 12:30:00 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:30:00 MAIN INFO json string recieved
+2015-7-10 12:30:00 MAIN INFO creating node
+2015-7-10 12:30:00 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 12:30:00 MAIN WARN Already Registered Node, ID: 1
+2015-7-10 12:30:00 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:30:00 MAIN INFO json string recieved
+2015-7-10 12:30:00 MAIN INFO configuring node
+2015-7-10 12:30:00 MAIN INFO  Node ID0 Timeout: 15
+2015-7-10 12:30:00 MAIN WARN Apikey wrong length
+2015-7-10 12:30:45 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:30:45 MAIN INFO json string recieved
+2015-7-10 12:30:45 MAIN INFO creating node
+2015-7-10 12:30:45 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 12:30:45 MAIN INFO Node ID assigned to this node: 1
+2015-7-10 12:30:45 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 12:30:45 MAIN INFO json string recieved
+2015-7-10 12:30:45 MAIN INFO configuring node
+2015-7-10 12:30:45 MAIN INFO  Node ID0 Timeout: 15
+2015-7-10 12:30:45 MAIN WARN Apikey wrong length
+2015-7-10 13:13:52 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:13:52 MAIN INFO json string recieved
+2015-7-10 13:13:52 MAIN INFO configuring node
+2015-7-10 13:13:52 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:13:52 MAIN WARN   
+2015-7-10 13:13:52 MAIN WARN Incorrectly formatted group ID
+2015-7-10 13:15:07 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:15:07 MAIN INFO json string recieved
+2015-7-10 13:15:07 MAIN INFO configuring node
+2015-7-10 13:15:07 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:15:07 MAIN WARN   
+2015-7-10 13:15:07 MAIN WARN Incorrectly formatted group ID
+2015-7-10 13:15:26 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:15:26 MAIN INFO json string recieved
+2015-7-10 13:15:26 MAIN INFO configuring node
+2015-7-10 13:15:26 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:15:26 MAIN WARN   
+2015-7-10 13:15:26 MAIN WARN Incorrectly formatted group ID
+2015-7-10 13:16:52 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:16:52 MAIN INFO json string recieved
+2015-7-10 13:16:52 MAIN INFO creating node
+2015-7-10 13:16:52 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 13:16:52 MAIN WARN Already Registered Node, ID: 1
+2015-7-10 13:16:52 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:16:52 MAIN INFO json string recieved
+2015-7-10 13:16:52 MAIN INFO configuring node
+2015-7-10 13:16:52 MAIN INFO  Node ID0 Timeout: 15
+2015-7-10 13:16:52 MAIN WARN Apikey wrong length
+2015-7-10 13:18:32 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:18:32 MAIN INFO json string recieved
+2015-7-10 13:18:32 MAIN INFO configuring node
+2015-7-10 13:18:32 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:18:32 MAIN WARN   
+2015-7-10 13:18:32 MAIN INFO Node with an ID of: 1 Which is a :  Which is measuring : 
+2015-7-10 13:18:32 MAIN INFO Attribute added to attributes table. Attribute Uid: 
+2015-7-10 13:21:16 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:21:16 MAIN INFO json string recieved
+2015-7-10 13:21:16 MAIN INFO configuring node
+2015-7-10 13:21:16 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:21:16 MAIN WARN   
+2015-7-10 13:21:16 MAIN INFO Node with an ID of: 1 Which is a :  Which is measuring : 
+2015-7-10 13:21:16 MAIN INFO Attribute added to attributes table. Attribute Uid: 
+2015-7-10 13:25:23 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:25:23 MAIN INFO json string recieved
+2015-7-10 13:25:23 MAIN INFO creating node
+2015-7-10 13:25:23 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 13:25:23 MAIN INFO Node ID assigned to this node: 1
+2015-7-10 13:25:24 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:25:24 MAIN INFO json string recieved
+2015-7-10 13:25:24 MAIN INFO configuring node
+2015-7-10 13:25:24 MAIN INFO  Node ID0 Timeout: 15
+2015-7-10 13:25:24 MAIN WARN Apikey wrong length
+2015-7-10 13:26:57 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:26:57 MAIN INFO json string recieved
+2015-7-10 13:26:57 MAIN INFO configuring node
+2015-7-10 13:26:57 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:26:57 MAIN WARN   
+2015-7-10 13:26:57 MAIN INFO Node with an ID of: 1 Which is a :  Which is measuring : 
+2015-7-10 13:26:57 MAIN INFO Attribute added to attributes table. Attribute Uid: 
+2015-7-10 13:27:04 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:27:04 MAIN INFO json string recieved
+2015-7-10 13:27:04 MAIN INFO configuring node
+2015-7-10 13:27:04 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:27:04 MAIN WARN   
+2015-7-10 13:27:04 MAIN INFO Node with an ID of: 1 Which is a :  Which is measuring : 
+2015-7-10 13:27:04 MAIN INFO Attribute added to attributes table. Attribute Uid: 
+2015-7-10 13:29:39 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:29:39 MAIN INFO json string recieved
+2015-7-10 13:29:39 MAIN INFO configuring node
+2015-7-10 13:29:39 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:29:39 MAIN WARN   
+2015-7-10 13:29:39 MAIN INFO Node with an ID of: 1 Which is a :  Which is measuring : 
+2015-7-10 13:29:39 MAIN INFO Attribute added to attributes table. Attribute Uid: 
+2015-7-10 13:31:39 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:31:39 MAIN INFO json string recieved
+2015-7-10 13:31:39 MAIN INFO configuring node
+2015-7-10 13:31:39 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:31:39 MAIN WARN   
+2015-7-10 13:31:39 MAIN INFO Node with an ID of: 1 Which is a :  Which is measuring : 
+2015-7-10 13:31:39 MAIN INFO Attribute added to attributes table. Attribute Uid: 
+2015-7-10 13:36:12 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:36:12 MAIN INFO json string recieved
+2015-7-10 13:36:12 MAIN INFO configuring node
+2015-7-10 13:36:12 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:36:12 MAIN WARN   
+2015-7-10 13:36:12 MAIN INFO Node with an ID of: 1 Which is a :  Which is measuring : 
+2015-7-10 13:36:12 MAIN INFO Attribute added to attributes table. Attribute Uid: 
+2015-7-10 13:38:02 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:38:02 MAIN INFO json string recieved
+2015-7-10 13:38:02 MAIN INFO configuring node
+2015-7-10 13:38:02 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:38:02 MAIN WARN   
+2015-7-10 13:38:02 MAIN INFO Node with an ID of: 1 Which is a :  Which is measuring : 
+2015-7-10 13:38:02 MAIN INFO Attribute added to attributes table. Attribute Uid: 
+2015-7-10 13:47:37 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:47:37 MAIN INFO json string recieved
+2015-7-10 13:47:37 MAIN INFO configuring node
+2015-7-10 13:47:37 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:47:37 MAIN WARN   
+2015-7-10 13:47:37 MAIN INFO Node with an ID of: 1 Which is a :  Which is measuring : 
+2015-7-10 13:47:37 MAIN INFO Attribute added to attributes table. Attribute Uid: 
+2015-7-10 13:48:48 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:48:48 MAIN INFO json string recieved
+2015-7-10 13:48:48 MAIN INFO configuring node
+2015-7-10 13:48:48 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:48:48 MAIN WARN   
+2015-7-10 13:48:48 MAIN INFO Node with an ID of: 1 Which is a :  Which is measuring : 
+2015-7-10 13:48:48 MAIN INFO Attribute added to attributes table. Attribute Uid: 
+2015-7-10 13:50:35 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:50:35 MAIN INFO json string recieved
+2015-7-10 13:50:35 MAIN INFO configuring node
+2015-7-10 13:50:35 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:50:35 MAIN WARN   
+2015-7-10 13:50:35 MAIN INFO Node with an ID of: 1 Which is a :  Which is measuring : 
+2015-7-10 13:50:35 MAIN INFO Attribute added to attributes table. Attribute Uid: 
+2015-7-10 13:53:53 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:53:53 MAIN INFO json string recieved
+2015-7-10 13:53:53 MAIN INFO configuring node
+2015-7-10 13:53:53 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 13:53:53 MAIN INFO Node with an ID of: 1 Which is a : Thermostat Which is measuring : LocalTemperature
+2015-7-10 13:53:53 MAIN INFO Attribute added to attributes table. Attribute Uid: 1
+2015-7-10 13:57:17 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:57:17 MAIN INFO json string recieved
+2015-7-10 13:57:17 MAIN INFO creating node
+2015-7-10 13:57:17 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 13:57:17 MAIN INFO Node ID assigned to this node: 1
+2015-7-10 13:57:17 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 13:57:17 MAIN INFO json string recieved
+2015-7-10 13:57:17 MAIN INFO configuring node
+2015-7-10 13:57:17 MAIN INFO  Node ID0 Timeout: 15
+2015-7-10 13:57:17 MAIN WARN Apikey wrong length
+2015-7-10 14:00:08 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 14:00:08 MAIN INFO json string recieved
+2015-7-10 14:00:08 MAIN INFO creating node
+2015-7-10 14:00:08 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 14:00:08 MAIN WARN Already Registered Node, ID: 1
+2015-7-10 14:00:09 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 14:00:09 MAIN INFO json string recieved
+2015-7-10 14:00:09 MAIN INFO configuring node
+2015-7-10 14:00:09 MAIN INFO  Node ID0 Timeout: 15
+2015-7-10 14:00:09 MAIN WARN Apikey wrong length
+2015-7-10 14:00:58 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 14:00:58 MAIN INFO json string recieved
+2015-7-10 14:00:58 MAIN INFO creating node
+2015-7-10 14:00:58 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 14:00:58 MAIN WARN Already Registered Node, ID: 1
+2015-7-10 14:00:58 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 14:00:58 MAIN INFO json string recieved
+2015-7-10 14:00:58 MAIN INFO configuring node
+2015-7-10 14:00:58 MAIN INFO  Node ID0 Timeout: 15
+2015-7-10 14:00:58 MAIN WARN Node ID Mismatch
+2015-7-10 14:14:02 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 14:14:02 MAIN INFO json string recieved
+2015-7-10 14:14:02 MAIN INFO configuring node
+2015-7-10 14:14:02 MAIN INFO  Node ID1 Timeout: 15
+2015-7-10 14:14:02 MAIN INFO Node with an ID of: 1 Which is a : Thermostat Which is measuring : LocalTemperature
+2015-7-10 14:14:02 MAIN INFO Attribute added to attributes table. Attribute Uid: 1
+2015-7-10 14:15:39 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 14:15:39 MAIN INFO json string recieved
+2015-7-10 14:15:39 MAIN INFO creating node
+2015-7-10 14:15:39 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 14:15:39 MAIN INFO Node ID assigned to this node: 1
+2015-7-10 14:15:40 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 14:15:40 MAIN INFO json string recieved
+2015-7-10 14:15:40 MAIN INFO configuring node
+2015-7-10 14:15:40 MAIN INFO  Node ID0 Timeout: 15
+2015-7-10 14:15:40 MAIN WARN Node ID Mismatch
+2015-7-10 15:08:53 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 15:08:53 MAIN INFO json string recieved
+2015-7-10 15:08:53 MAIN INFO creating node
+2015-7-10 15:08:53 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 15:08:53 MAIN WARN Already Registered Node, ID: 1
+2015-7-10 15:08:53 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 15:08:53 MAIN INFO json string recieved
+2015-7-10 15:08:53 MAIN INFO configuring node
+2015-7-10 15:08:53 MAIN INFO  Node ID0 Timeout: 15
+2015-7-10 15:08:53 MAIN WARN Node ID Mismatch
+2015-7-10 15:09:03 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 15:09:03 MAIN INFO json string recieved
+2015-7-10 15:09:03 MAIN INFO creating node
+2015-7-10 15:09:03 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 15:09:03 MAIN WARN Already Registered Node, ID: 1
+2015-7-10 15:09:04 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 15:09:04 MAIN INFO json string recieved
+2015-7-10 15:09:04 MAIN INFO configuring node
+2015-7-10 15:09:04 MAIN INFO  Node ID0 Timeout: 15
+2015-7-10 15:09:04 MAIN WARN Node ID Mismatch
+2015-7-10 15:09:20 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 15:09:20 MAIN INFO json string recieved
+2015-7-10 15:09:20 MAIN INFO creating node
+2015-7-10 15:09:20 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-10 15:09:20 MAIN WARN Already Registered Node, ID: 1
+2015-7-10 15:09:20 MAIN INFO group id and attribute id tables unchanged
+2015-7-10 15:09:20 MAIN INFO json string recieved
+2015-7-10 15:09:20 MAIN INFO configuring node
+2015-7-10 15:09:20 MAIN INFO  Node ID0 Timeout: 15
+2015-7-10 15:09:20 MAIN WARN Node ID Mismatch
+2015-7-13 16:03:06 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:03:06 MAIN INFO json string recieved
+2015-7-13 16:03:06 MAIN INFO creating node
+2015-7-13 16:03:06 MAIN INFO Node MAC address: 00:01:02:03:04:05 Node IP address: 127.1.1.1 Timeout: 15
+2015-7-13 16:03:06 MAIN INFO Node ID assigned to this node: 1
+2015-7-13 16:04:07 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:04:07 MAIN INFO json string recieved
+2015-7-13 16:04:07 MAIN INFO configuring node
+2015-7-13 16:04:07 MAIN INFO  Node ID32 Timeout: 15
+2015-7-13 16:04:07 MAIN WARN Node ID Mismatch
+2015-7-13 16:04:11 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:04:11 MAIN INFO json string recieved
+2015-7-13 16:04:11 MAIN INFO configuring node
+2015-7-13 16:04:11 MAIN INFO  Node ID1 Timeout: 15
+2015-7-13 16:04:11 MAIN WARN Node ID Mismatch
+2015-7-13 16:04:28 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:04:28 MAIN INFO json string recieved
+2015-7-13 16:04:28 MAIN INFO configuring node
+2015-7-13 16:04:28 MAIN INFO  Node ID1 Timeout: 15
+2015-7-13 16:04:28 MAIN WARN Node ID Mismatch
+2015-7-13 16:09:22 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:09:22 MAIN INFO json string recieved
+2015-7-13 16:09:22 MAIN INFO configuring node
+2015-7-13 16:09:22 MAIN INFO  Node ID1 Timeout: 15
+2015-7-13 16:09:22 MAIN WARN Node ID Mismatch
+2015-7-13 16:10:31 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:10:31 MAIN INFO json string recieved
+2015-7-13 16:10:31 MAIN INFO configuring node
+2015-7-13 16:10:31 MAIN INFO  Node ID1 Timeout: 15
+2015-7-13 16:10:31 MAIN WARN Node ID Mismatch
+2015-7-13 16:13:14 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:13:14 MAIN INFO json string recieved
+2015-7-13 16:13:14 MAIN INFO configuring node
+2015-7-13 16:13:14 MAIN INFO  Node ID1 Timeout: 15
+2015-7-13 16:13:14 MAIN WARN Node ID Mismatch
+2015-7-13 16:13:56 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:13:56 MAIN INFO json string recieved
+2015-7-13 16:13:56 MAIN INFO creating node
+2015-7-13 16:13:56 MAIN INFO Node MAC address: 00:01:02:03:04:05 Node IP address: 127.1.1.1 Timeout: 15
+2015-7-13 16:13:56 MAIN WARN Apikey wrong length
+2015-7-13 16:14:07 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:14:07 MAIN INFO json string recieved
+2015-7-13 16:14:07 MAIN INFO creating node
+2015-7-13 16:14:07 MAIN INFO Node MAC address: 00:01:02:04:04:05 Node IP address: 127.1.1.1 Timeout: 15
+2015-7-13 16:14:07 MAIN INFO Node ID assigned to this node: 2
+2015-7-13 16:14:14 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:14:14 MAIN INFO json string recieved
+2015-7-13 16:14:14 MAIN INFO configuring node
+2015-7-13 16:14:14 MAIN INFO  Node ID2 Timeout: 15
+2015-7-13 16:14:14 MAIN INFO Node with an ID of: 2 Which is a : Thermostat Which is measuring : LocalTemperature
+2015-7-13 16:14:14 MAIN INFO Attribute added to attributes table. Attribute Uid: 1
+2015-7-13 16:17:38 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:17:38 MAIN INFO json string recieved
+2015-7-13 16:17:38 MAIN INFO configuring node
+2015-7-13 16:17:38 MAIN INFO  Node ID1 Timeout: 15
+2015-7-13 16:17:38 MAIN WARN Node ID Mismatch
+2015-7-13 16:21:25 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:21:25 MAIN INFO json string recieved
+2015-7-13 16:21:25 MAIN INFO configuring node
+2015-7-13 16:21:25 MAIN INFO  Node ID1 Timeout: 15
+2015-7-13 16:21:25 MAIN WARN Node ID Mismatch
+2015-7-13 16:21:32 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:21:32 MAIN INFO json string recieved
+2015-7-13 16:21:32 MAIN INFO configuring node
+2015-7-13 16:21:32 MAIN INFO  Node ID2 Timeout: 15
+2015-7-13 16:21:32 MAIN WARN   
+2015-7-13 16:21:32 MAIN WARN Incorrectly formatted group ID
+2015-7-13 16:21:41 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:21:41 MAIN INFO json string recieved
+2015-7-13 16:21:41 MAIN INFO creating node
+2015-7-13 16:21:41 MAIN INFO Node MAC address: 01:01:02:04:04:05 Node IP address: 127.1.1.1 Timeout: 15
+2015-7-13 16:21:41 MAIN INFO Node ID assigned to this node: 3
+2015-7-13 16:21:46 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:21:46 MAIN INFO json string recieved
+2015-7-13 16:21:46 MAIN INFO configuring node
+2015-7-13 16:21:46 MAIN INFO  Node ID3 Timeout: 15
+2015-7-13 16:21:46 MAIN INFO Node with an ID of: 3 Which is a : Thermostat Which is measuring : LocalTemperature
+2015-7-13 16:21:46 MAIN INFO Attribute added to attributes table. Attribute Uid: 2
+2015-7-13 16:21:50 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:21:50 MAIN INFO json string recieved
+2015-7-13 16:21:50 MAIN INFO configuring node
+2015-7-13 16:21:50 MAIN INFO  Node ID1 Timeout: 15
+2015-7-13 16:21:50 MAIN WARN Node ID Mismatch
+2015-7-13 16:33:14 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:33:14 MAIN INFO json string recieved
+2015-7-13 16:33:14 MAIN INFO configuring node
+2015-7-13 16:33:14 MAIN INFO  Node ID1 Timeout: 15
+2015-7-13 16:33:14 MAIN INFO Node with an ID of: 1 Which is a : Thermostat Which is measuring : LocalTemperature
+2015-7-13 16:33:14 MAIN INFO Attribute added to attributes table. Attribute Uid: 3
+2015-7-13 16:33:45 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:33:45 MAIN INFO json string recieved
+2015-7-13 16:33:45 MAIN INFO configuring node
+2015-7-13 16:33:45 MAIN INFO  Node ID1 Timeout: 15
+2015-7-13 16:33:45 MAIN WARN   
+2015-7-13 16:33:45 MAIN WARN Already added to attributes table
+2015-7-13 16:35:11 MAIN INFO group id and attribute id tables unchanged
+2015-7-13 16:35:11 MAIN INFO json string recieved
+2015-7-13 16:35:11 MAIN INFO configuring node
+2015-7-13 16:35:11 MAIN INFO  Node ID1 Timeout: 15
+2015-7-13 16:35:11 MAIN INFO Node with an ID of: 1 Which is a : Thermostat Which is measuring : LocalTemperature
+2015-7-13 16:35:11 MAIN INFO Attribute added to attributes table. Attribute Uid: 4
+2015-7-14 11:26:08 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:26:08 MAIN INFO json string recieved
+2015-7-14 11:26:08 MAIN INFO creating node
+2015-7-14 11:26:08 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 11:26:08 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 11:26:08 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:26:08 MAIN INFO json string recieved
+2015-7-14 11:26:08 MAIN INFO configuring node
+2015-7-14 11:26:08 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 11:26:08 MAIN WARN Node ID Mismatch
+2015-7-14 11:26:30 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:26:30 MAIN INFO json string recieved
+2015-7-14 11:26:30 MAIN INFO creating node
+2015-7-14 11:26:30 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 11:26:30 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 11:26:30 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:26:30 MAIN INFO json string recieved
+2015-7-14 11:26:30 MAIN INFO configuring node
+2015-7-14 11:26:30 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 11:26:30 MAIN WARN Node ID Mismatch
+2015-7-14 11:27:05 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:27:05 MAIN INFO json string recieved
+2015-7-14 11:27:05 MAIN INFO creating node
+2015-7-14 11:27:05 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 11:27:05 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 11:27:05 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:27:05 MAIN INFO json string recieved
+2015-7-14 11:27:05 MAIN INFO configuring node
+2015-7-14 11:27:05 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 11:27:05 MAIN WARN Node ID Mismatch
+2015-7-14 11:27:21 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:27:21 MAIN INFO json string recieved
+2015-7-14 11:27:21 MAIN INFO creating node
+2015-7-14 11:27:21 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 11:27:21 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 11:27:21 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:27:21 MAIN INFO json string recieved
+2015-7-14 11:27:21 MAIN INFO configuring node
+2015-7-14 11:27:21 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 11:27:21 MAIN WARN Node ID Mismatch
+2015-7-14 11:27:28 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:27:28 MAIN INFO json string recieved
+2015-7-14 11:27:28 MAIN INFO creating node
+2015-7-14 11:27:28 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 11:27:28 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 11:27:28 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:27:28 MAIN INFO json string recieved
+2015-7-14 11:27:28 MAIN INFO configuring node
+2015-7-14 11:27:28 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 11:27:28 MAIN WARN Node ID Mismatch
+2015-7-14 11:28:12 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:28:12 MAIN INFO json string recieved
+2015-7-14 11:28:12 MAIN INFO creating node
+2015-7-14 11:28:12 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 11:28:12 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 11:28:12 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:28:12 MAIN INFO json string recieved
+2015-7-14 11:28:12 MAIN INFO configuring node
+2015-7-14 11:28:12 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 11:28:12 MAIN WARN Node ID Mismatch
+2015-7-14 11:30:47 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:30:47 MAIN INFO json string recieved
+2015-7-14 11:30:47 MAIN INFO creating node
+2015-7-14 11:30:47 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 11:30:47 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 11:30:48 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:30:48 MAIN INFO json string recieved
+2015-7-14 11:30:48 MAIN INFO configuring node
+2015-7-14 11:30:48 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 11:30:48 MAIN WARN Node ID Mismatch
+2015-7-14 11:31:33 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:31:33 MAIN INFO json string recieved
+2015-7-14 11:31:33 MAIN INFO creating node
+2015-7-14 11:31:33 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 11:31:33 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 11:31:33 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:31:33 MAIN INFO json string recieved
+2015-7-14 11:31:33 MAIN INFO configuring node
+2015-7-14 11:31:33 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 11:31:33 MAIN WARN Node ID Mismatch
+2015-7-14 11:33:39 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 11:33:39 MAIN INFO json string recieved
+2015-7-14 11:33:39 MAIN INFO creating node
+2015-7-14 11:33:39 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 11:33:39 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:05:05 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:05:05 MAIN INFO json string recieved
+2015-7-14 12:05:05 MAIN INFO creating node
+2015-7-14 12:05:05 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:05:05 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:05:05 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:05:05 MAIN INFO json string recieved
+2015-7-14 12:05:05 MAIN INFO configuring node
+2015-7-14 12:05:05 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:05:05 MAIN WARN Node ID Mismatch
+2015-7-14 12:06:06 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:06:06 MAIN INFO json string recieved
+2015-7-14 12:06:06 MAIN INFO creating node
+2015-7-14 12:06:06 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:06:06 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:06:06 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:06:06 MAIN INFO json string recieved
+2015-7-14 12:06:06 MAIN INFO configuring node
+2015-7-14 12:06:06 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:06:06 MAIN WARN Node ID Mismatch
+2015-7-14 12:13:07 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:13:07 MAIN INFO json string recieved
+2015-7-14 12:13:07 MAIN INFO creating node
+2015-7-14 12:13:07 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:13:07 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:13:07 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:13:07 MAIN INFO json string recieved
+2015-7-14 12:13:07 MAIN INFO configuring node
+2015-7-14 12:13:07 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:13:07 MAIN WARN Node ID Mismatch
+2015-7-14 12:17:47 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:17:47 MAIN INFO json string recieved
+2015-7-14 12:17:47 MAIN INFO creating node
+2015-7-14 12:17:47 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:17:47 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:17:48 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:17:48 MAIN INFO json string recieved
+2015-7-14 12:17:48 MAIN INFO configuring node
+2015-7-14 12:17:48 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:17:48 MAIN WARN Node ID Mismatch
+2015-7-14 12:21:07 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:21:07 MAIN INFO json string recieved
+2015-7-14 12:21:07 MAIN INFO creating node
+2015-7-14 12:21:07 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:21:07 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:21:07 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:21:07 MAIN INFO json string recieved
+2015-7-14 12:21:07 MAIN INFO configuring node
+2015-7-14 12:21:07 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:21:07 MAIN WARN Node ID Mismatch
+2015-7-14 12:22:51 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:22:51 MAIN INFO json string recieved
+2015-7-14 12:22:51 MAIN INFO creating node
+2015-7-14 12:22:51 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:22:51 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:22:51 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:22:51 MAIN INFO json string recieved
+2015-7-14 12:22:51 MAIN INFO configuring node
+2015-7-14 12:22:51 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:22:51 MAIN WARN Node ID Mismatch
+2015-7-14 12:29:48 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:29:48 MAIN INFO json string recieved
+2015-7-14 12:29:48 MAIN INFO creating node
+2015-7-14 12:29:48 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:29:48 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:29:48 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:29:48 MAIN INFO json string recieved
+2015-7-14 12:29:48 MAIN INFO configuring node
+2015-7-14 12:29:48 MAIN INFO  Node ID0 Timeout: 
+2015-7-14 12:29:48 MAIN WARN Node ID Mismatch
+2015-7-14 12:30:19 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:30:19 MAIN INFO json string recieved
+2015-7-14 12:30:19 MAIN INFO creating node
+2015-7-14 12:30:19 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:30:19 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:30:19 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:30:19 MAIN INFO json string recieved
+2015-7-14 12:30:19 MAIN INFO configuring node
+2015-7-14 12:30:19 MAIN INFO  Node ID0 Timeout: 
+2015-7-14 12:30:19 MAIN WARN Node ID Mismatch
+2015-7-14 12:32:46 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:32:46 MAIN INFO json string recieved
+2015-7-14 12:32:46 MAIN INFO creating node
+2015-7-14 12:32:46 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:32:46 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:32:46 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:32:46 MAIN INFO json string recieved
+2015-7-14 12:32:46 MAIN INFO configuring node
+2015-7-14 12:32:46 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:32:46 MAIN WARN Node ID Mismatch
+2015-7-14 12:34:04 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:34:04 MAIN INFO json string recieved
+2015-7-14 12:34:04 MAIN INFO creating node
+2015-7-14 12:34:04 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:34:04 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:34:04 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:34:04 MAIN INFO json string recieved
+2015-7-14 12:34:04 MAIN INFO configuring node
+2015-7-14 12:34:04 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:34:04 MAIN WARN Node ID Mismatch
+2015-7-14 12:34:37 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:34:37 MAIN INFO json string recieved
+2015-7-14 12:34:37 MAIN INFO creating node
+2015-7-14 12:34:37 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:34:37 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:34:37 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:34:37 MAIN INFO json string recieved
+2015-7-14 12:34:37 MAIN INFO configuring node
+2015-7-14 12:34:37 MAIN INFO  Node ID0 Timeout: 
+2015-7-14 12:34:37 MAIN WARN Node ID Mismatch
+2015-7-14 12:36:06 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:36:06 MAIN INFO json string recieved
+2015-7-14 12:36:06 MAIN INFO creating node
+2015-7-14 12:36:06 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:36:06 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:36:06 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:36:06 MAIN INFO json string recieved
+2015-7-14 12:36:06 MAIN INFO configuring node
+2015-7-14 12:36:06 MAIN INFO  Node ID0 Timeout: 
+2015-7-14 12:36:06 MAIN WARN Node ID Mismatch
+2015-7-14 12:38:25 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:38:25 MAIN INFO json string recieved
+2015-7-14 12:38:25 MAIN INFO creating node
+2015-7-14 12:38:25 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:38:25 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:39:32 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:39:32 MAIN INFO json string recieved
+2015-7-14 12:39:32 MAIN INFO creating node
+2015-7-14 12:39:32 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:39:32 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:40:08 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:40:08 MAIN INFO json string recieved
+2015-7-14 12:40:08 MAIN INFO creating node
+2015-7-14 12:40:08 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:40:08 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:40:08 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:40:08 MAIN INFO json string recieved
+2015-7-14 12:40:08 MAIN INFO configuring node
+2015-7-14 12:40:08 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:40:08 MAIN WARN Node ID Mismatch
+2015-7-14 12:41:25 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:41:25 MAIN INFO json string recieved
+2015-7-14 12:41:25 MAIN INFO creating node
+2015-7-14 12:41:25 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:41:25 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:41:25 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:41:25 MAIN INFO json string recieved
+2015-7-14 12:41:25 MAIN INFO configuring node
+2015-7-14 12:41:25 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:41:25 MAIN WARN Node ID Mismatch
+2015-7-14 12:41:56 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:41:56 MAIN INFO json string recieved
+2015-7-14 12:41:56 MAIN INFO creating node
+2015-7-14 12:41:56 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:41:56 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:41:56 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:41:56 MAIN INFO json string recieved
+2015-7-14 12:41:56 MAIN INFO configuring node
+2015-7-14 12:41:56 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:41:56 MAIN WARN Node ID Mismatch
+2015-7-14 12:43:27 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:43:27 MAIN INFO json string recieved
+2015-7-14 12:43:27 MAIN INFO creating node
+2015-7-14 12:43:27 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:43:27 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:43:27 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:43:27 MAIN INFO json string recieved
+2015-7-14 12:43:27 MAIN INFO configuring node
+2015-7-14 12:43:27 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:43:27 MAIN WARN Node ID Mismatch
+2015-7-14 12:44:45 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:44:45 MAIN INFO json string recieved
+2015-7-14 12:44:45 MAIN INFO creating node
+2015-7-14 12:44:45 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:44:45 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:44:46 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:44:46 MAIN INFO json string recieved
+2015-7-14 12:44:46 MAIN INFO configuring node
+2015-7-14 12:44:46 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:44:46 MAIN WARN Node ID Mismatch
+2015-7-14 12:46:15 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:46:15 MAIN INFO json string recieved
+2015-7-14 12:46:15 MAIN INFO creating node
+2015-7-14 12:46:15 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:46:15 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:46:16 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:46:16 MAIN INFO json string recieved
+2015-7-14 12:46:16 MAIN INFO configuring node
+2015-7-14 12:46:16 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:46:16 MAIN WARN Node ID Mismatch
+2015-7-14 12:47:13 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:47:13 MAIN INFO json string recieved
+2015-7-14 12:47:13 MAIN INFO creating node
+2015-7-14 12:47:13 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:47:13 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:47:13 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:47:13 MAIN INFO json string recieved
+2015-7-14 12:47:13 MAIN INFO configuring node
+2015-7-14 12:47:13 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:47:13 MAIN WARN Node ID Mismatch
+2015-7-14 12:51:38 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:51:38 MAIN INFO json string recieved
+2015-7-14 12:51:38 MAIN INFO creating node
+2015-7-14 12:51:38 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:51:38 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:51:38 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:51:38 MAIN INFO json string recieved
+2015-7-14 12:51:38 MAIN INFO configuring node
+2015-7-14 12:51:38 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:51:38 MAIN WARN Node ID Mismatch
+2015-7-14 12:54:36 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:54:36 MAIN INFO json string recieved
+2015-7-14 12:54:36 MAIN INFO creating node
+2015-7-14 12:54:36 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:54:36 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:54:36 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:54:36 MAIN INFO json string recieved
+2015-7-14 12:54:36 MAIN INFO configuring node
+2015-7-14 12:54:36 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:54:36 MAIN WARN Node ID Mismatch
+2015-7-14 12:55:29 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:55:29 MAIN INFO json string recieved
+2015-7-14 12:55:29 MAIN INFO creating node
+2015-7-14 12:55:29 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:55:29 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:55:29 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:55:29 MAIN INFO json string recieved
+2015-7-14 12:55:29 MAIN INFO configuring node
+2015-7-14 12:55:29 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:55:29 MAIN WARN Node ID Mismatch
+2015-7-14 12:56:59 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:56:59 MAIN INFO json string recieved
+2015-7-14 12:56:59 MAIN INFO creating node
+2015-7-14 12:56:59 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:56:59 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:57:00 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:57:00 MAIN INFO json string recieved
+2015-7-14 12:57:00 MAIN INFO configuring node
+2015-7-14 12:57:00 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:57:00 MAIN WARN Node ID Mismatch
+2015-7-14 12:58:10 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:58:10 MAIN INFO json string recieved
+2015-7-14 12:58:10 MAIN INFO creating node
+2015-7-14 12:58:10 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:58:10 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:58:11 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:58:11 MAIN INFO json string recieved
+2015-7-14 12:58:11 MAIN INFO configuring node
+2015-7-14 12:58:11 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:58:11 MAIN WARN Node ID Mismatch
+2015-7-14 12:58:55 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:58:55 MAIN INFO json string recieved
+2015-7-14 12:58:55 MAIN INFO creating node
+2015-7-14 12:58:55 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 12:58:55 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 12:58:55 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 12:58:55 MAIN INFO json string recieved
+2015-7-14 12:58:55 MAIN INFO configuring node
+2015-7-14 12:58:55 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 12:58:55 MAIN WARN Node ID Mismatch
+2015-7-14 13:00:41 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:00:41 MAIN INFO json string recieved
+2015-7-14 13:00:41 MAIN INFO creating node
+2015-7-14 13:00:41 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 13:00:41 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 13:00:42 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:00:42 MAIN INFO json string recieved
+2015-7-14 13:00:42 MAIN INFO configuring node
+2015-7-14 13:00:42 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 13:00:42 MAIN WARN Node ID Mismatch
+2015-7-14 13:02:27 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:02:27 MAIN INFO json string recieved
+2015-7-14 13:02:27 MAIN INFO creating node
+2015-7-14 13:02:27 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 13:02:27 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 13:02:28 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:02:28 MAIN INFO json string recieved
+2015-7-14 13:02:28 MAIN INFO configuring node
+2015-7-14 13:02:28 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 13:02:28 MAIN WARN Node ID Mismatch
+2015-7-14 13:10:46 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:10:46 MAIN INFO json string recieved
+2015-7-14 13:10:46 MAIN INFO creating node
+2015-7-14 13:10:46 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 13:10:46 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 13:10:47 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:10:47 MAIN INFO json string recieved
+2015-7-14 13:10:47 MAIN INFO configuring node
+2015-7-14 13:10:47 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 13:10:47 MAIN WARN Node ID Mismatch
+2015-7-14 13:13:16 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:13:16 MAIN INFO json string recieved
+2015-7-14 13:13:16 MAIN INFO creating node
+2015-7-14 13:13:16 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 13:13:16 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 13:13:16 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:13:16 MAIN INFO json string recieved
+2015-7-14 13:13:16 MAIN INFO configuring node
+2015-7-14 13:13:16 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 13:13:16 MAIN WARN Node ID Mismatch
+2015-7-14 13:13:45 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:13:45 MAIN INFO json string recieved
+2015-7-14 13:13:45 MAIN INFO creating node
+2015-7-14 13:13:45 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 13:13:45 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 13:13:45 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:13:45 MAIN INFO json string recieved
+2015-7-14 13:13:45 MAIN INFO configuring node
+2015-7-14 13:13:45 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 13:13:45 MAIN WARN Node ID Mismatch
+2015-7-14 13:16:09 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:16:09 MAIN INFO json string recieved
+2015-7-14 13:16:09 MAIN INFO creating node
+2015-7-14 13:16:09 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 13:16:09 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 13:16:10 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:16:10 MAIN INFO json string recieved
+2015-7-14 13:16:10 MAIN INFO configuring node
+2015-7-14 13:16:10 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 13:16:10 MAIN WARN Node ID Mismatch
+2015-7-14 13:19:59 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:19:59 MAIN INFO json string recieved
+2015-7-14 13:19:59 MAIN INFO creating node
+2015-7-14 13:19:59 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 13:19:59 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 13:19:59 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:19:59 MAIN INFO json string recieved
+2015-7-14 13:19:59 MAIN INFO configuring node
+2015-7-14 13:19:59 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 13:19:59 MAIN WARN Node ID Mismatch
+2015-7-14 13:21:41 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:21:41 MAIN INFO json string recieved
+2015-7-14 13:21:41 MAIN INFO creating node
+2015-7-14 13:21:41 MAIN INFO Node MAC address: 00:14:32:01:23:45 Node IP address: 127.37.25.16 Timeout: 15
+2015-7-14 13:21:41 MAIN WARN Already Registered Node, ID: 1
+2015-7-14 13:21:41 MAIN INFO group id and attribute id tables unchanged
+2015-7-14 13:21:41 MAIN INFO json string recieved
+2015-7-14 13:21:41 MAIN INFO configuring node
+2015-7-14 13:21:41 MAIN INFO  Node ID0 Timeout: 15
+2015-7-14 13:21:41 MAIN WARN Node ID Mismatch
+2015-7-20 11:08:07 MAIN INFO group id and attribute id tables unchanged
+2015-7-20 11:08:07 MAIN INFO json string recieved
+2015-7-20 11:08:07 MAIN INFO creating node
+2015-7-20 11:08:07 MAIN INFO Node MAC address: 10:01:05:06:55:55 Node IP address: 127.1.2.1 Timeout: 15
+2015-7-20 11:08:07 MAIN INFO Node ID assigned to this node: 2
+2015-7-20 11:08:25 MAIN INFO group id and attribute id tables unchanged
+2015-7-20 11:08:25 MAIN INFO json string recieved
+2015-7-20 11:08:25 MAIN INFO configuring node
+2015-7-20 11:08:25 MAIN INFO  Node ID2 Timeout: 15
+2015-7-20 11:08:25 MAIN WARN   
+2015-7-20 11:08:25 MAIN WARN Incorrectly formatted group ID
+2015-7-20 11:08:54 MAIN INFO group id and attribute id tables unchanged
+2015-7-20 11:08:54 MAIN INFO json string recieved
+2015-7-20 11:08:54 MAIN INFO configuring node
+2015-7-20 11:08:54 MAIN INFO  Node ID2 Timeout: 15
+2015-7-20 11:08:54 MAIN INFO Node with an ID of: 2 Which is a : Thermostat Which is measuring : LocalTemperature
+2015-7-20 11:08:54 MAIN INFO Attribute added to attributes table. Attribute Uid: 5
+2015-7-20 11:10:15 MAIN INFO group id and attribute id tables unchanged
+2015-7-20 11:10:15 MAIN INFO json string recieved
+2015-7-20 11:10:15 MAIN INFO configuring node
+2015-7-20 11:10:15 MAIN INFO  Node ID2 Timeout: 15
+2015-7-20 11:10:15 MAIN WARN   
+2015-7-20 11:10:15 MAIN WARN Group Id not found in specification
+2015-7-20 11:10:24 MAIN INFO group id and attribute id tables unchanged
+2015-7-20 11:10:24 MAIN INFO json string recieved
+2015-7-20 11:10:24 MAIN INFO configuring node
+2015-7-20 11:10:24 MAIN INFO  Node ID2 Timeout: 15
+2015-7-20 11:10:24 MAIN INFO Node with an ID of: 2 Which is a : Basic Which is measuring : LocalTemperature
+2015-7-20 11:10:24 MAIN INFO Attribute added to attributes table. Attribute Uid: 6
+2015-7-20 11:12:26 MAIN INFO group id and attribute id tables unchanged
+2015-7-20 11:12:26 MAIN INFO json string recieved
+2015-7-20 11:12:26 MAIN INFO configuring node
+2015-7-20 11:12:26 MAIN INFO  Node ID2 Timeout: 15
+2015-7-20 11:12:26 MAIN INFO Node with an ID of: 2 Which is a : Basic Which is measuring : OutdoorTemperature
+2015-7-20 11:12:26 MAIN INFO Attribute added to attributes table. Attribute Uid: 7

@@ -1,27 +1,27 @@
 <?php
-/*** Global variables  ***/
+/* * * Global variables  ** */
 global $path, $mysqli, $redis, $session, $route;
 
-/*** Includes  ***/
+/* * * Includes  ** */
 include_once "Modules/rules/rules_model.php";
 $rules = new Rules($mysqli, $redis);
 // ToDo - check if Register Module is installed, if it is: Attributes will be added as Reporters. This is done to make the Rules module not dependant on the Register Module
 include_once "Modules/register/register_model.php";
 $register = new Register($mysqli);
 
-/***  We set the header text according to the mode  ***/
+/* * *  We set the header text according to the mode  ** */
 if ($args['mode'] == 'add')
     $header = 'New Rule';
 else
     $header = 'Edit Rule';
 
-/*** Arrays containing the attributes and feeds (sorted by node or tag) to be used in the visual programmer  ***/
+/* * * Arrays containing the attributes and feeds (sorted by node or tag) to be used in the visual programmer  ** */
 $array_of_attributes_by_node = $register->getAttributesByNode($session['userid']);
 //$array_of_feeds_by_node = $rules->get_user_feeds_by_node($session['userid']); // array like: Array ( [0] => Array ( [id] => 6 [name] => Power [userid] => 1 [tag] => [time] => 1430748375 [value] => 100 [datatype] => 1 [public] => 0 [size] => [engine] => 5 ) [1] => Array ( [id] => 7 [name] => Poadasdawer [userid] => 1 [tag] => [time] => [value] => [datatype] => 1 [public] => 0 [size] => [engine] => 5 ) [2] => Array ( [id] => 8 [name] => Poaeeedasdawer [userid] => 1 [tag] => [time] => [value] => [datatype] => 1 [public] => 0 [size] => [engine] => 5 ));
 $array_of_feeds_by_tag = $rules->get_user_feeds_by_tag($session['userid']); // array like: Array ( [0] => Array ( [id] => 6 [name] => Power [userid] => 1 [tag] => [time] => 1430748375 [value] => 100 [datatype] => 1 [public] => 0 [size] => [engine] => 5 ) [1] => Array ( [id] => 7 [name] => Poadasdawer [userid] => 1 [tag] => [time] => [value] => [datatype] => 1 [public] => 0 [size] => [engine] => 5 ) [2] => Array ( [id] => 8 [name] => Poaeeedasdawer [userid] => 1 [tag] => [time] => [value] => [datatype] => 1 [public] => 0 [size] => [engine] => 5 ));
 
 
-/*** Are we in developer mode, $rules_developer_mode should be declared in settings.php, the default value is false  ***/
+/* * * Are we in developer mode, $rules_developer_mode should be declared in settings.php, the default value is false  ** */
 include "settings.php";
 if (!isset($rules_developer_mode))
     $isDev = false;
@@ -32,7 +32,7 @@ else
   print_r($array_of_attributes_by_node);
   echo '</pre>'; */
 ?>
-<!--<script type="text/javascript" src="<?php //echo $path;          ?>Lib/angularjs/angular.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo $path;            ?>Lib/angularjs/angular.min.js"></script>-->
 <script type="text/javascript" src="<?php echo $path; ?>Lib/angularjs/angular.js"></script>
 
 <!-- Visual programmer  -->
@@ -66,11 +66,15 @@ if (isset($args['rule'])) {
                 'run_on': '<?php echo $rule['run_on'] ?>',
                 'expiry_date': '<?php echo $rule['expiry_date'] ?>',
                 'frequency': Number('<?php echo $rule['frequency'] ?>'),
-                'enabled':<?php if ($rule['enabled'] == 1) echo 'true';
-    else echo 'false'; ?>
+                'enabled':<?php
+    if ($rule['enabled'] == 1)
+        echo 'true';
+    else
+        echo 'false';
+    ?>
                 // we don't include the "blocks" here because they are not used in the angularjs scope, they are used in the Morphic world
             };
-            console.log($scope.rule_attributes);
+            //console.log($scope.rule_attributes);
             $scope.rule_saved = <?php echo isset($args['rule_saved']) ? json_encode($args['rule_saved']) : "null" ?>;
 
 <?php } else {
@@ -81,7 +85,7 @@ if (isset($args['rule'])) {
         /*  End Objects in the scope  */
 
         /*  Functions in the scope  */
-        $scope.apply = function () {
+        $scope.save_apply = function (mode) {
             var href = 'rules/save-rule?name=' + $scope.rule_attributes.name
                     + "&description=" + $scope.rule_attributes.description
                     + "&run_on=" + $scope.rule_attributes.run_on
@@ -90,19 +94,7 @@ if (isset($args['rule'])) {
                     + "&blocks=" + rulesIDE.generateXML()
                     + "&ruleid=" + $scope.rule_attributes.ruleid
                     + "&enabled=" + $scope.rule_attributes.enabled
-                    + "&close=false";
-            $window.location.href = "<?php echo $path; ?>" + href;
-        };
-        $scope.save = function () {
-            var href = 'rules/save-rule?name=' + $scope.rule_attributes.name
-                    + "&description=" + $scope.rule_attributes.description
-                    + "&run_on=" + $scope.rule_attributes.run_on
-                    + "&expiry_date=" + $scope.rule_attributes.expiry_date
-                    + "&frequency=" + $scope.rule_attributes.frequency
-                    + "&blocks=" + rulesIDE.generateXML()
-                    + "&ruleid=" + $scope.rule_attributes.ruleid
-                    + "&enabled=" + $scope.rule_attributes.enabled
-                    + "&close=true";
+                    + "&mode=" + mode;
             $window.location.href = "<?php echo $path; ?>" + href;
         };
         /*  End Functions in the scope  */
@@ -117,7 +109,6 @@ if (isset($args['rule'])) {
         world = new WorldMorph(document.getElementById('world'));
         world.worldCanvas.focus();
         world.isDevMode = Boolean(<?php echo $isDev; ?>);
-        console.log(world.isDevMode);
         world.setWidth(1170);
         //world.setHeight(250);
 
@@ -153,8 +144,9 @@ if (isset($args['rule'])) {
 <div ng-app="moduleViewApp" ng-controller="moduleViewAppCtrl" id="edit-rule">
     <div id="apihelphead">
         <div style="float:right;">
-            <span class="like-link" ng-click="save()"><?php echo _('Save and close') ?></span>
-            <span class="like-link" ng-click="apply()"><?php echo _('Apply') ?></span>
+            <span class="like-link" ng-click="save_apply('save')"><?php echo _('Save and close') ?></span>
+            <span class="like-link" ng-click="save_apply('apply')"><?php echo _('Apply') ?></span>
+            <span class="like-link" ng-click="save_apply('apply_and_test')"><?php echo _('Apply and Test') ?></span>
             <a href="rules/list"><?php echo _('Cancel') ?></a>
         </div>
     </div>
@@ -166,10 +158,10 @@ if (isset($args['rule'])) {
                 <tr><td><?php echo _('Name') ?>: </td><td><input type="text" ng-model="rule_attributes.name"/></td></tr>
                 <tr><td><?php echo _('Description') ?>: </td><td><input type="text" ng-model="rule_attributes.description"/></td></tr>
                 <tr><td><?php echo _('Run on') ?>: </td><td><input type="datetime" ng-model="rule_attributes.run_on"/></td></tr>
-                <tr><td><?php echo _('Expiry date') ?>: </td><td><input type="datetime" ng-model="rule_attributes.expiry_date"/><span>&nbsp;&nbsp;<?php echo _('0 for no expiry date') ?></span></td></tr>
+                <tr><td><?php echo _('Expiry date') ?>: </td><td><input type="datetime" ng-model="rule_attributes.expiry_date"/><span>&nbsp;&nbsp;<?php echo _('YYYY-MM-DD - 0 for no expiry date') ?></span></td></tr>
                 <tr><td><?php echo _('Frequency') ?>: </td><td><input type="number" ng-model="rule_attributes.frequency"/><span>&nbsp;&nbsp;<?php echo _('seconds (if \'0\' the rule will only be run once)') ?></span></td></tr>
                 <tr><td><?php echo _('Enabled') ?>: </td><td><input type="checkbox" ng-model="rule_attributes.enabled" /></span></td></tr>
-                <!-- <tr id="blocks-programmer"><td><?php //echo _('Blocks')                   ?>: </td><td><textarea ng-model="rule_attributes.blocks"/></td></tr>-->
+                <!-- <tr id="blocks-programmer"><td><?php //echo _('Blocks')                     ?>: </td><td><textarea ng-model="rule_attributes.blocks"/></td></tr>-->
             </table>
             <div id="blocks-programmer">
                 <canvas id="world" tabindex="1" style="position: absolute"/>

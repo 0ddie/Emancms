@@ -28,4 +28,11 @@
 }
 .like-link:hover, .like-link:focus{
     color:#005580;
-    text-decoration:underline}
+    text-decoration:underline
+}
+
+.test_rule table{
+    margin-top:25px;
+    width: 30%;
+    min-width:300px
+}

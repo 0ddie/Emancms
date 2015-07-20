@@ -1,1 +1,278 @@
-2015-6-30 16:37:11 MAIN WARN Error parsing rule code. Rule: 140 - Stage: 1
+2015-7-15 11:07:11 MAIN WARN Pending ack not added to database - Rule: 3 - Stage: 1 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '', '3', '2', 'Array', '60')' at line 1
+2015-7-15 11:07:11 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+( ! ) Notice: Array to string conversion in /var/www/OpenEMan/Modules/rules/rules_model.php on line 210
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000230600{main}(  ).../rules_run.php:0
+20.0036357680run_schedule(  ).../rules_run.php:65
+30.0324406008eval( '/* Variables */$timeout = 60; /* default value for timeout when we wait for apendinng acks */$ruleid = 3;$timedout;/* Feed ids */$F1ThisisaThermostatmeasuringLocalTemperature = (int) 1;/* Attributes ids */$A10x02010x00000x0191 = (int) 1;/* Run the current stage */$stage = 1;switch($stage){  case 1:   if((0) < (1)){    /* $register->sendValueToNode() */if (true !== $result = $rules->addPendingAck("setAttribute", $ruleid, $stage + 1, ["attributeUid"=>$A10x02010x00000x0191], $timeout))  $log->warn("Pending ack not added to database - Rule: $ruleid - Stage: $stage - Error: $result");};  break; default:  $ruleid = $rule["ruleid"];  $log->warn("Wrong stage in rule $ruleid - Stage: "); break;}' ).../rules_run.php:96
+40.0324407544Rules->addPendingAck(  )
+
+2015-7-15 11:08:29 MAIN WARN Pending ack not added to database - Rule: 3 - Stage: 1 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '', 3, 2, 'Array', 60)' at line 1
+2015-7-15 11:08:29 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+( ! ) Notice: Array to string conversion in /var/www/OpenEMan/Modules/rules/rules_model.php on line 210
+Call Stack
+#TimeMemoryFunctionLocation
+10.0001230600{main}(  ).../rules_run.php:0
+20.0039357696run_schedule(  ).../rules_run.php:65
+30.0263406024eval( '/* Variables */$timeout = 60; /* default value for timeout when we wait for apendinng acks */$ruleid = 3;$timedout;/* Feed ids */$F1ThisisaThermostatmeasuringLocalTemperature = (int) 1;/* Attributes ids */$A10x02010x00000x0191 = (int) 1;/* Run the current stage */$stage = 1;switch($stage){  case 1:   if((0) < (1)){    /* $register->sendValueToNode() */if (true !== $result = $rules->addPendingAck("setAttribute", $ruleid, $stage + 1, ["attributeUid"=>$A10x02010x00000x0191], $timeout))  $log->warn("Pending ack not added to database - Rule: $ruleid - Stage: $stage - Error: $result");};  break; default:  $ruleid = $rule["ruleid"];  $log->warn("Wrong stage in rule $ruleid - Stage: "); break;}' ).../rules_run.php:96
+40.0263407560Rules->addPendingAck(  )
+
+2015-7-15 11:08:41 MAIN WARN Pending ack not added to database - Rule: 3 - Stage: 1 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '', 3, 2, 'hola', 60)' at line 1
+2015-7-15 11:08:41 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '', 3, 2, 'hola', 60)' at line 1
+
+2015-7-15 11:09:15 MAIN WARN Pending ack not added to database - Rule: 3 - Stage: 1 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '', 3, 2, 'hola', 60)' at line 1
+2015-7-15 11:09:15 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '', 3, 2, 'hola', 60)' at line 1
+
+2015-7-15 11:09:54 MAIN WARN Pending ack not added to database - Rule: 3 - Stage: 1 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '', 3, 2, 'hola', 60)' at line 1
+2015-7-15 11:09:54 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '', 3, 2, 'hola', 60)' at line 1INSERT INTO `rules` (`request_time`, `type`, `ruleid`, `next_stage`, `args`, `timeout`) VALUES ('1436954994',setAttribute', 3, 2, 'hola', 60)
+
+2015-7-15 11:10:22 MAIN WARN Pending ack not added to database - Rule: 3 - Stage: 1 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '', 3, 2, 'hola', 60)' at line 1
+2015-7-15 11:10:22 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '', 3, 2, 'hola', 60)' at line 1INSERT INTO `rules` (`request_time`, `type`, `ruleid`, `next_stage`, `args`, `timeout`) VALUES ('1436955022',setAttribute', 3, 2, 'hola', 60)
+
+2015-7-15 11:21:15 MAIN WARN Pending ack not added to database - Rule: 3 - Stage: 1 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '', '3', '2', 'hola', '60')' at line 1
+2015-7-15 11:21:15 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '', '3', '2', 'hola', '60')' at line 1INSERT INTO `rules` (`request_time`, `type`, `ruleid`, `next_stage`, `args`, `timeout`) VALUES ('2015-07-15 11:21:15',setAttribute', '3', '2', 'hola', '60')
+
+2015-7-15 11:22:37 MAIN WARN Pending ack not added to database - Rule: 3 - Stage: 1 - Error: Unknown column 'request_time' in 'field list'
+2015-7-15 11:22:37 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: Unknown column 'request_time' in 'field list'INSERT INTO `rules` (`request_time`, `type`, `ruleid`, `next_stage`, `args`, `timeout`) VALUES ('2015-07-15 11:22:37',setAttribute', '3', '2', 'hola', '60')
+
+2015-7-15 11:23:49 MAIN WARN Pending ack not added to database - Rule: 3 - Stage: 1 - Error: Unknown column 'request_time' in 'field list'
+2015-7-15 11:23:49 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: Unknown column 'request_time' in 'field list'INSERT INTO `rules` (`request_time`, `type`, `ruleid`, `next_stage`, `args`, `timeout`) VALUES ('2015-07-15 11:23:49','setAttribute', '3', '2', 'hola', '60')
+
+2015-7-15 11:25:02 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+( ! ) Notice: Array to string conversion in /var/www/OpenEMan/Modules/rules/rules_model.php on line 210
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000230600{main}(  ).../rules_run.php:0
+20.0083357672run_schedule(  ).../rules_run.php:65
+30.0351406000eval( '/* Variables */$timeout = 60; /* default value for timeout when we wait for apendinng acks */$ruleid = 3;$timedout;/* Feed ids */$F1ThisisaThermostatmeasuringLocalTemperature = (int) 1;/* Attributes ids */$A10x02010x00000x0191 = (int) 1;/* Run the current stage */$stage = 1;switch($stage){  case 1:   if((0) < (1)){    /* $register->sendValueToNode() */if (true !== $result = $rules->addPendingAck("setAttribute", $ruleid, $stage + 1, ["attributeUid"=>$A10x02010x00000x0191], $timeout))  $log->warn("Pending ack not added to database - Rule: $ruleid - Stage: $stage - Error: $result");};  break; default:  $ruleid = $rule["ruleid"];  $log->warn("Wrong stage in rule $ruleid - Stage: "); break;}' ).../rules_run.php:96
+40.0351407552Rules->addPendingAck(  )
+
+2015-7-15 22:18:33 MAIN WARN Rule:  - Stage: 1 --- eval() output: 
+
+2015-7-15 22:18:33 MAIN WARN Rule:  - Stage: 1 --- eval() output: 
+
+2015-7-15 22:18:33 MAIN WARN Rule:  - Stage: 1 --- eval() output: 
+
+2015-7-15 22:18:33 MAIN WARN Rule:  - Stage: 1 --- eval() output: 
+
+2015-7-15 22:21:05 MAIN WARN Rule: : error checking ack. Message: 
+
+2015-7-15 22:21:05 MAIN WARN Rule: : error checking ack. Message: Ack not received
+
+2015-7-15 22:21:05 MAIN WARN Rule: : error checking ack. Message: Ack not received
+
+2015-7-15 22:21:05 MAIN WARN Rule: : error checking ack. Message: Ack not received
+
+2015-7-15 22:21:28 MAIN WARN Rule: : error checking ack. Message: 
+
+2015-7-15 22:21:28 MAIN WARN Rule: : error checking ack. Message: Ack not received
+
+2015-7-15 22:21:28 MAIN WARN Rule: : error checking ack. Message: Ack not received
+
+2015-7-15 22:21:28 MAIN WARN Rule: : error checking ack. Message: Ack not received
+
+2015-7-15 22:22:39 MAIN WARN Rule: : error checking ack. Message: 
+
+2015-7-15 22:23:11 MAIN WARN Rule: : error checking ack. Message: Feed does not exist
+
+2015-7-15 22:23:11 MAIN WARN Rule: : error checking ack. Message: Feed does not exist
+
+2015-7-15 22:23:11 MAIN WARN Rule: : error checking ack. Message: Feed does not exist
+
+2015-7-15 22:23:11 MAIN WARN Rule: : error checking ack. Message: Feed does not exist
+
+2015-7-15 22:27:10 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:27:10 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:27:10 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:27:10 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:33:14 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:33:14 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:33:14 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:33:14 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:33:31 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:33:31 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:33:31 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:33:31 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:33:34 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:33:34 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:33:34 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:33:34 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:36:34 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:36:34 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:36:34 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:36:34 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:42:48 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:42:48 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:42:48 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:42:48 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:42:49 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:42:49 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:42:49 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:42:49 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:43:23 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:43:23 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:43:23 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:43:23 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:43:33 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:43:33 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:43:33 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:43:33 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:53:45 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:53:45 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:53:45 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:53:45 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:53:45 MAIN INFO Rule disabled because frequency. Rule id: 
+2015-7-15 22:54:23 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:54:23 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:54:23 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:54:23 MAIN WARN Rule: 3: error checking ack. Message: Feed does not exist, the given feedid is 1
+
+2015-7-15 22:54:23 MAIN INFO lskdjasldj
+2015-7-15 23:02:54 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: Running eval()
+
+2015-7-15 23:04:15 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: Running eval()
+
+2015-7-15 23:33:55 MAIN WARN Rule: 3: error checking ack. Message: Ack received
+
+2015-7-15 23:33:55 MAIN WARN Rule: 3: error checking ack. Message: Ack not received
+
+2015-7-15 23:33:55 MAIN WARN Rule: 3: error checking ack. Message: Ack not received
+
+2015-7-15 23:33:55 MAIN WARN Rule: 3: error checking ack. Message: Ack not received
+
+2015-7-15 23:33:55 MAIN WARN Rule: 3: error checking ack. Message: Ack not received
+
+2015-7-15 23:33:55 MAIN WARN Rule: 3: error checking ack. Message: Ack not received
+
+2015-7-15 23:56:59 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+( ! ) Notice: Undefined variable: timedout in /var/www/OpenEMan/Modules/rules/rules_model.php(304) : eval()'d code on line 1
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000230968{main}(  ).../rules_run.php:0
+20.0007356968run_schedule(  ).../rules_run.php:66
+30.0010361160Rules->runRule(  ).../rules_run.php:115
+40.0328407864eval( '/* Variables */$timeout = 60; /* default value for timeout when we wait for apendinng acks */$ruleid = 3;$timedout;/* Feed ids */$F1ThisisaThermostatmeasuringLocalTemperature = (int) 1;/* Attributes ids */$A10x02010x00000x0191 = (int) 1;/* Run the current stage */$stage = 1;switch($stage){  case 1:   if(($timedout) < (1)){    /* $register->sendRequestToNode()*/if (true !== $result = $this->addPendingAck("requestFeed", $ruleid, $stage + 1, ["feedid"=>$F1ThisisaThermostatmeasuringLocalTemperature], $timeout))  $log->warn("Pending ack not added to database - Rule: $ruleid - Stage: $stage - Error: $result");};  break; default:  $ruleid = $rule["ruleid"];  $log->warn("Wrong stage in rule $ruleid - Stage: 2"); break;}' ).../rules_model.php:304
+
+
+
+2015-7-15 23:58:39 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+( ! ) Notice: Undefined variable: timedout in /var/www/OpenEMan/Modules/rules/rules_model.php(304) : eval()'d code on line 1
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000230968{main}(  ).../rules_run.php:0
+20.0033360776run_schedule(  ).../rules_run.php:66
+30.0040364968Rules->runRule(  ).../rules_run.php:115
+40.0289408896eval( '/* Variables */$timeout = 60; /* default value for timeout when we wait for apendinng acks */$ruleid = 3;$timedout;/* Feed ids */$F1ThisisaThermostatmeasuringLocalTemperature = (int) 1;/* Attributes ids */$A10x02010x00000x0191 = (int) 1;/* Run the current stage */$stage = 1;switch($stage){  case 1:   if(($timedout) < (1)){    /* $register->sendRequestToNode()*/if (true !== $result = $this->addPendingAck("requestFeed", $ruleid, $stage + 1, ["feedid"=>$F1ThisisaThermostatmeasuringLocalTemperature], $timeout))  $log->warn("Pending ack not added to database - Rule: $ruleid - Stage: $stage - Error: $result");};  break; default:  $ruleid = $rule["ruleid"];  $log->warn("Wrong stage in rule $ruleid - Stage: 2"); break;}' ).../rules_model.php:304
+
+
+
+2015-7-16 00:04:38 MAIN WARN Rule: 3 - Stage: 1 - Error parsing rule code.
+2015-7-16 00:16:54 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:54 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:54 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:54 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:54 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:54 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:54 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:54 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:54 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:54 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:55 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:55 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:55 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:55 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:55 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:55 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:16:55 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:12 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:12 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:12 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:12 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:12 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:12 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:12 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:12 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:13 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:13 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:13 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:13 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:13 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:13 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:13 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:13 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 00:17:13 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:43 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:43 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:43 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:43 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:43 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:43 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:44 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:44 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:44 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:44 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:44 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:44 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:44 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:44 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:44 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:44 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 15:34:44 MAIN WARN Wrong stage in rule 3 - Stage: 2
+2015-7-16 17:20:04 MAIN WARN Wrong stage in rule 4 - Stage: 
+2015-7-16 17:29:08 MAIN WARN Wrong stage in rule 4 - Stage: 
+2015-7-16 17:29:08 MAIN WARN Wrong stage in rule 4 - Stage: 
+2015-7-16 17:29:08 MAIN WARN Wrong stage in rule 3 - Stage: 
+2015-7-16 17:29:08 MAIN WARN Wrong stage in rule 3 - Stage: 
+2015-7-16 17:30:09 MAIN WARN Wrong stage in rule 4 - Stage: 
+2015-7-16 17:30:09 MAIN WARN Wrong stage in rule 3 - Stage: 
+2015-7-16 17:36:01 MAIN WARN Wrong stage in rule 3 - Stage: 
+2015-7-16 17:36:01 MAIN WARN Wrong stage in rule 4 - Stage: 

@@ -12,6 +12,7 @@ $schema['rules'] = array(
     'enabled' => array('type' => 'tinyint', 'default' => false)
 );
 $schema['rules_pending_acks'] = array(
+    'id' => array('type' => 'int(11)', 'Null' => 'NO', 'Key' => 'PRI', 'Extra' => 'auto_increment'),
     'request_time' => array('type' => 'datetime'),
     'type' => array('type' => 'text', 'Null' => 'NO'),
     'ruleid' => array('type' => 'int(11)'),

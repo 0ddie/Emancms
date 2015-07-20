@@ -85,12 +85,18 @@ class register {
      * checks the node ID is a correct node ID
      */
 
-    public function incorrectNodeID($nodeid) {
+    public function incorrectNodeID($nodeid, $userid) {
         
-        $result = $this->mysqli->query("SELECT NodeID FROM Node_reg WHERE `NodeID` = '$nodeid'");
+        $result = $this->mysqli->query("SELECT NodeID FROM Node_reg WHERE `NodeID` = '$nodeid' AND `userid` = '$userid'");
+        //$result2 = $this->mysqli->query("SELECT userid FROM Node_reg WHERE `userid` = '$userid'");
+
         if ($result->num_rows === 1) {
+        //if ($result2->num_rows === 1) {
+        
             return 0;
-        } else {
+        //}
+        }
+        else {
             //$thisError = "Wales!";
             //$this->$log->info($thisError);
             return 1;
@@ -173,7 +179,7 @@ class register {
         $attributeDefaultValue = substr($json, $thirdoffset);
 
 
-
+        print_r("here 1 ");
         if ($this->checkGroupID($groupID) === 1) {
             return 1;
         } elseif ($this->checkGroupID($groupID) === 2) {
@@ -181,6 +187,8 @@ class register {
         } elseif ($this->checkGroupID($groupID) === 3) {
             return 2;
         }
+                print_r("here 2 ");
+
 
         if ($this->checkAttributeID($attributeID) === 1) {
             return 3;
@@ -205,7 +213,7 @@ class register {
                 return 7;
         }
         
-        if ($this->checkUserID($userid)!=0){
+        if ($this->checkUserID($userid, $nodeid)!=0){
             return 8;
         }
 
@@ -227,11 +235,11 @@ class register {
     public function checkUserID($userid,$nodeid){
         $result = $this->mysqli->query("SELECT `nodeid` FROM `Node_reg` WHERE `nodeid` = '$nodeid' AND userid = '$userid'");
         if ($result->num_rows === 1) {
-                return 1;
+                return 0;
             }    
-            else {return array('content' => "Trying to register an Attribute for a node your user doesn't own");}
+            else {return 1;
                 }
-    
+    }
     public function checkEverything($groupID, $attributeID, $attributeNumber, $nodeid, $userid) {
         
         $result = $this->mysqli->query("SELECT `attributeUid` FROM `attributes` WHERE `nodeid` = '$nodeid' AND `groupid` = '$groupID' AND `attributeId` = '$attributeID' AND `attributeNumber` LIKE '$attributeNumber' AND `userid` = '$userid'");
@@ -258,7 +266,7 @@ class register {
      */
 
     public function saveToAttributes($groupID, $attributeID, $attributeNumber, $attributeDefaultValue, $nodeid, $userid) {
-        
+        print_r(" Attribute Values: Group Id:".$groupID." Attribute Id: ".$attributeID." Attribute Number: ".$attributeNumber." Attribute Default Value: ". $attributeDefaultValue." node id: ". $nodeid. " User id: ".$userid);
         $this->mysqli->query("INSERT INTO attributes (groupid,attributeId,attributeNumber,attributeDefaultValue,nodeid,userid) VALUES ('$groupID','$attributeID','$attributeNumber','$attributeDefaultValue','$nodeid','$userid')");
     }
 
@@ -271,7 +279,7 @@ class register {
         global $session;
 
         $userid = $session['userid'];
-        $name = $reformattedJson;
+        $name = ("N".$reformattedJson);
 
         $input->create_input($userid, $nodeid, $name);
     }
@@ -431,8 +439,8 @@ class register {
      */
 
     public function inputIdGetter($reformattedJson) {
-        
-        $result = $this->mysqli->query("SELECT `id` FROM input WHERE `name` = '$reformattedJson'");
+        $name = ("N".$reformattedJson);
+        $result = $this->mysqli->query("SELECT `id` FROM input WHERE `name` = '$name'");
         $row = mysqli_fetch_row($result);
         $query = $row[0];
         return $query;

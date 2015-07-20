@@ -186,7 +186,7 @@ function register_controller() {
                     return array('content' => "Apikey incorrect");
                 }
 
-                if ($register->incorrectNodeID($nodeid) == 1) {
+                if ($register->incorrectNodeID($nodeid, $userid) === 1) {
                     $log->warn("Node ID Mismatch");
                     return array('content' => "Node ID Mismatch");
                 }
@@ -207,12 +207,13 @@ function register_controller() {
                  * 
                  */
 
-                if ($register->correctInputJson($json, $nodeid) === 1) {
+                if ($register->correctInputJson($json, $nodeid, $userid) === 1) {
                     $log->warn("Already been inputted with this node ID");
                     return array('content' => "Already been inputted with this node ID");
                 }
                 $doing = 0;
                 $reformattedJson = $register->jsonParse($json, $nodeid, $doing);
+                print_r($reformattedJson);
                 if (is_int($reformattedJson)) {
                     $log->warn("  ");
                     switch ($reformattedJson) {
@@ -237,6 +238,10 @@ function register_controller() {
                         case 7:
                             $log->warn("Already added to attributes table");
                             return array('content' => "Already added to attributes table");
+                        case 8:
+                            $log->warn("Trying to register an Attribute for a node your user doesn't own");
+                        return array('content' => "Trying to register an Attribute for a node your user doesn't own");
+
                     }
 //return array('content' => "  ");
                 }
@@ -246,14 +251,13 @@ function register_controller() {
                 //$timeout = 15;
 
                 $trimmer = substr($reformattedJson, $space);
-
+                
                 $reformattedJson = trim($reformattedJson, $trimmer);
 
                 $groupIDDesc = $register->groupIDDescGetter($attributeUid);
                 $attributeIDDesc = $register->attributeIDDescGetter($attributeUid);
 //$id=($register->feed_id_getter());
                 $userid = $session['userid'];
-
 
 
 
@@ -280,9 +284,9 @@ function register_controller() {
                 if ($verbose == TRUE) {
                     $log->info("Attribute added to attributes table. Attribute Uid: " . $attributeUid);
                 }
-                else {return array('content' => "Registered: ".$nodeid." ".$inputid." ".$attributeUid);}
 
-                
+                return array('content' => "Registered: ".$nodeid." ".$inputid." ".$attributeUid);
+
             } elseif ($route->action == 'controller') {
                 if ($verbose == TRUE) {
                     $log->info("Controller route taken");

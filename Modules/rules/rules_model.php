@@ -22,10 +22,13 @@ class Rules {
 
     private $mysqli;
     private $redis;
+    private $log;
 
     public function __construct($mysqli, $redis) {
         $this->mysqli = $mysqli;
         $this->redis = $redis;
+        $this->log = new EmonLogger();
+        $this->log->set_logfile('Modules/rules/rules.log');
     }
 
     /*     * ************************************************* */
@@ -53,6 +56,7 @@ class Rules {
         } else {
             return $this->mysql_get_rules($userid);
         }
+        $this->printForDeveloper("Fetching rules for user $userid");
     }
 
     public function redis_get_rules($userid) {
@@ -242,17 +246,9 @@ class Rules {
         return($array_of_feeds_by_tag);
     }
 
-    /*     * ***************************************************
-     *    checkAck() returns an array ['success'=>  integer, 'message'=> string, 'args'=>[]]
-     *    The value of succes:
-     *      - 0: ack not received
-     *      - 1: ack received
-     *      - Any other integer: for errors  checking el ack
-     * **************************************************** */
-
     public function printForDeveloper($message) {
         global $rules_developer_mode;
-        if ($rules_developer_mode == true) {
+        if ($rules_developer_mode === true) {
             echo '<pre>';
             print_r($message);
             echo '</pre>';
@@ -260,9 +256,9 @@ class Rules {
     }
 
     public function logIfVerbose($message) {
-        global $rules_log_mode, $log;
+        global $rules_log_mode;
         if ($rules_log_mode == 'verbose')
-            $log->info($message);
+            $this->log->info($message);
     }
 
     /* End of other methods  */
@@ -270,70 +266,75 @@ class Rules {
     /* stagesToPhp()  */
 
     public function stagesToPhp($rule, $stage_to_run, $timedout) {
+        global $rules_default_timeout;
         $blocks_string = $rule['blocks'];
-        ob_start();
+        if (!isset($rules_default_timeout))
+            $rules_default_timeout = 60; // secs, defined in settings.php
 
+        ob_start();
 // 1) Declare variables
         $variables_string = $this->getBlocksString($blocks_string, 'variables');
+//$this->logIfVerbose($variables_string);
         $variables = new SimpleXMLElement($variables_string);
-        echo "/* Variables */<br/>";
-        echo '$timeout = 60; /* default value for timeout, if an ack has not been recieved in the timeout then $timedout will be true */<br/>';
-        echo '$timedout = ' . (($timedout) ? 'true' : 'false') . ';<br/>';
-        echo '$ruleid = ' . $rule['ruleid'] . ';<br/>';
+        echo "/* Variables */";
+        echo '$timeout = ' . $rules_default_timeout . '; /* default value for timeout, if an ack has not been recieved in the timeout then $timedout will be true */';
+        echo '$timedout = ' . (($timedout) ? 'true' : 'false') . ';';
+        echo '$ruleid = ' . $rule['ruleid'] . ';';
         foreach ($variables->script as $var) {
 //print_r($var->block);
-//echo '$' . $var->block['var'] . ';<br/>';
+//echo '$' . $var->block['var'] . ';';
             if ($this->blocksToPhp($var->block) != '$timedout')
-                echo $this->blocksToPhp($var->block) . ';<br/>';
+                echo $this->blocksToPhp($var->block) . ';';
         }
-        echo '<br/>';
+        echo '';
 
 // 2) Declare variables that hold feeds ids
         $feeds_ids_string = $this->getBlocksString($blocks_string, 'feeds');
         $feeds_ids = new SimpleXMLElement($feeds_ids_string);
-        echo "/** Feed ids */<br/>";
+        echo "/** Feed ids */";
         foreach ($feeds_ids->script as $id) {
 //print_r($var->block);
-            echo $this->blocksToPhp($id->block) . ' = (int) ' . $this->getVariableIdFromBlock($id->block) . ';<br/>';
+            echo $this->blocksToPhp($id->block) . ' = (int) ' . $this->getVariableIdFromBlock($id->block) . ';';
         }
-        echo '<br/>';
+        echo '';
 
 // 3) Declare variables that hold attributes ids
         $attributes_ids_string = $this->getBlocksString($blocks_string, 'attributes');
         $attributes_ids = new SimpleXMLElement($attributes_ids_string);
-        echo "/** Attributes ids */<br/>";
+        echo "/** Attributes ids */";
         foreach ($attributes_ids->script as $id) {
 //print_r($var->block);
-            echo $this->blocksToPhp($id->block) . ' = (int) ' . $this->getVariableIdFromBlock($id->block) . ';<br/>';
+            echo $this->blocksToPhp($id->block) . ' = (int) ' . $this->getVariableIdFromBlock($id->block) . ';';
         }
-        echo '<br/>';
+        echo '';
 
 // 4) Switch for the Stages
         $stages_string = $this->getBlocksString($blocks_string, 'stages');
         $stages = new SimpleXMLElement($stages_string);
-        echo '/** Run the current stage */<br/>';
-        echo '$stage = ' . (int) $stage_to_run . ';<br/>';
-        echo ('switch($stage){ <br/>' );
+        echo '/** Run the current stage */';
+        echo '$stage = ' . (int) $stage_to_run . ';';
+        echo ('switch($stage){ ' );
         foreach ($stages->script as $stage) {
 //print_r($stage);
             if ($stage->block[0]['s'] == 'Stage' && $stage->block[0]->l != '') { // Check this block starts with a "Stage" block and that the number of the stage is not empty
-                echo ' case ' . (int) $stage->block[0]->l . ':<br/>';
+                echo ' case ' . (int) $stage->block[0]->l . ':';
                 for ($index = 1; $stage->block[$index]; $index++) {
                     echo $this->blocksToPhp($stage->block[$index]) . ';';
                 }
-                echo '  break;<br/>';
+                echo '  break;';
             }
         }
-        echo ' default:<br/>  $ruleid = $rule["ruleid"];<br/>  $log->warn("Wrong stage in rule ' . '$ruleid' . ' - Stage: ' . $stage->block[0]->l . '");<br/> break;<br/>}';
+        echo ' default:  $ruleid = $rule["ruleid"];  $this->log->warn("Stage not found in the script - Rule: ' . '$ruleid' . ' - Stage: $stage"); break;}';
 
-        $php_code_for_web = ob_get_contents(); // $php_code_for_web uses <br/> for breaking lines
+        $php_code = ob_get_contents(); // $php_code uses  for breaking lines
         ob_clean();
-        return $php_code_for_web;
+        return $this->formatPhpCode($php_code); // $php_code is just one line of code, after formating the code it becomes readable with <pre></pre>
     }
 
     public function getBlocksString($blocks_string, $script_name) {
         $begining_of_slice = stripos($blocks_string, '<' . $script_name . '>');
         $end_of_slice = stripos($blocks_string, '</' . $script_name . '>') + strlen($script_name) + 3;
+//echo '<pre>'.substr($blocks_string, $begining_of_slice, $end_of_slice - $begining_of_slice).'</pre>';
         return substr($blocks_string, $begining_of_slice, $end_of_slice - $begining_of_slice); // returns something like: <attributes><script x="10" y="35"><block var="1212120"/></script><script x="72" y="35"><block var="0x06500x06500x065100"/></script></attributes>
     }
 
@@ -341,12 +342,12 @@ class Rules {
         if ($block['s']) { // if the block is command
             switch ($block['s']) {
                 case 'doIf':
-                    return '   if(' . $this->blocksToPhp($block->block) . '){<br/>   ' . $this->blocksToPhp($block->script) . '}<br/>';
+                    return '   if(' . $this->blocksToPhp($block->block) . '){   ' . $this->blocksToPhp($block->script) . '}';
                     break;
                 case 'doIfElse':
 //print_r($block->script);
-                    $statement = '   if(' . $this->blocksToPhp($block->block) . '){<br/>     ' . $this->blocksToPhp($block->script[0]) . '<br/>   }<br/>';
-                    $statement .= '   else{<br/>     ' . $this->blocksToPhp($block->script[1]) . '   }<br/>';
+                    $statement = '   if(' . $this->blocksToPhp($block->block) . '){     ' . $this->blocksToPhp($block->script[0]) . '   }';
+                    $statement .= '   else{     ' . $this->blocksToPhp($block->script[1]) . '   }';
                     return $statement;
                     break;
                 case 'requestFeed':
@@ -354,24 +355,19 @@ class Rules {
                     /* echo '<pre>';
                       print_r($block);
                       echo '</pre>'; */
-                    $statement = '/* $register->sendRequestToNode()*/</br>';
-                    $statement .= '$result = $this->addPendingAck("requestFeed", $ruleid, $stage + 1, ["feedid"=>' . $feed_id . '], $timeout);</br>';
-                    $statement .= 'if (true !== $result){'
-                            . '  $log->warn("Pending ack not added to database - Rule: $ruleid - Stage: $stage - Error: $result");}</br>';
-                    //$statement .= 
+                    $statement = '/** $register->sendRequestToNode()*/';
+                    $statement .= '$this->addPendingAck("requestFeed", $ruleid, $stage + 1, ["feedid"=>' . $feed_id . '], $timeout);';
                     return $statement;
                     break;
                 case 'setAttribute':
                     $parameters = $this->getBlockArguments($block); // $parameters[0] is AttributeUid and $parameters[1] is the value
-                    $statement = '/** $register->sendValueToNode() */<br/>';
-                    $statement .= '$result = $this->addPendingAck("setAttribute", $ruleid, $stage + 1, ["attributeUid"=>' . $parameters[0] . '], $timeout);</br>';
-                    $statement .= 'if (true !== $result){'
-                            . '  $log->warn("Pending ack not added to database - Rule: $ruleid - Stage: $stage - Error: $result");}</br>';
+                    $statement = '/** $register->sendValueToNode() */';
+                    $statement .= '$this->addPendingAck("setAttribute", $ruleid, $stage + 1, ["attributeUid"=>' . $parameters[0] . '], $timeout);';
                     return $statement;
                     break;
                 case 'getLastFeed':
                     $feed_id = isset($block->l) ? (int) $block->l : $this->blocksToPhp($block->block);
-                    $statement = '$feed->get(' . $feed_id . ')["value"]</br>';
+                    $statement = '$feed->get(' . $feed_id . ')["value"]';
                     return $statement;
                     break;
                 case 'reportLessThan': // This is an 'operator' command
@@ -387,7 +383,7 @@ class Rules {
                     return "($parameters[0]) > ($parameters[1])";
                     break;
                 default:
-                    return ' $log->warn("Command block not recognized: ' . $block['s'] . '");<br/>';
+                    return ' $this->log->warn("Command block not recognized: ' . $block['s'] . '");';
                     break;
             }
         } else if ($block['var']) { //this returns the name of a variable
@@ -534,20 +530,29 @@ class Rules {
       /*************************************************************** */
 
     public function getPendingAcks() {
+        global $testing_rule;
         if ($this->redis) {
-            return $this->redis_getPendingAcks();
+            return $this->redis_getPendingAcks($testing_rule);
         } else {
-            return $this->mysql_getPendingAcks();
+            return $this->mysql_getPendingAcks($testing_rule);
         }
     }
 
-    public function redis_getPendingAcks() {
+    public function redis_getPendingAcks($testing_rule) {
 //ToDo
     }
 
-    public function mysql_getPendingAcks() {
+    public function mysql_getPendingAcks($testing_rule) {
+        global $session;
         $array_of_rules = array();
-        $result = $this->mysqli->query("SELECT * FROM rules_pending_acks");
+        if ($testing_rule === true) {
+            $table = 'rules_pending_acks_testing_rule';
+            $query = "SELECT * FROM $table WHERE userid = '" . $session['userid'] . "'";
+        } else {
+            $table = 'rules_pending_acks';
+            $query = "SELECT * FROM $table";
+        }
+        $result = $this->mysqli->query($query);
         for ($i = 0; $row = (array) $result->fetch_object(); $i++) {
             $array_of_rules[$i] = $row;
         }
@@ -560,55 +565,75 @@ class Rules {
      */
 
     public function run_pendingAcks() {
-        global $log, $rules_log_mode;
+        global $rules_log_mode;
         $time = time();
         $array_of_pending_acks = $this->getPendingAcks(); // Fetches all the pending acks
+        $this->printForDeveloper("Fetching pending acks");
+        if (sizeof($array_of_pending_acks) === 0)
+            $this->printForDeveloper('There are no pending acks');
 
         foreach ($array_of_pending_acks as $pending_ack) {
+            $this->printForDeveloper("<b>Checking pending ack from rule: " . $pending_ack['ruleid'] . "</b> - Type: " . $pending_ack['type'] . "  -  Args: " . $pending_ack['args']);
             $ack_received = $this->checkAck($pending_ack);
             switch ($ack_received['success']) {
                 case 0: // Ack not received, we check timeout
-                    //$this->printForDeveloper($pending_ack);
+                    $time_left_for_timeout = strtotime($pending_ack['request_time']) + $pending_ack['timeout'] - time();
+                    $this->printForDeveloper("Ack not received - Time left before timing out: $time_left_for_timeout");
                     $request_time = strtotime($pending_ack['request_time']);
                     if (time() > $request_time + $pending_ack['timeout']) { // Timeout passed
+                        $this->printForDeveloper('Pending ack timedout');
                         $this->deleteAllPendingAcks($pending_ack['ruleid']);
                         $this->runRule($this->getRuleByRuleId($pending_ack['ruleid']), $pending_ack['next_stage'], $timedout = true);
-                        //remove all the pending acks for that ruleid
+                        break 2; // We exit from the switch and the foreach
                     }
                     break;
-                case 1: // Ack received, we delete this pending ack and if there are not more pending acks for this rule then we run the next stage of the rule
+                case 1: // Ack received .We delete this pending ack and if there are not more pending acks for this rule then we run the next stage of the rule
+                    $this->printForDeveloper("Ack received");
                     $this->deletePendingAck($pending_ack['id']);
-                    if (!$this->morePendingAcksForRule($pending_ack['ruleid']))
+                    if (!$this->morePendingAcksForRule($pending_ack['ruleid'])) {
+                        $this->printForDeveloper("There aren't anymore pending acks for this rule to wait for.");
                         $this->runRule($pending_ack['ruleid'], $pending_ack['next_stage']);
+                    } else
+                        $this->printForDeveloper("There are more pending acks for this rule. Wait for other acks to arrive before running next stage");
                     break;
                 default: // There has been an error
-                    $log->warn("Rule: " . $pending_ack['ruleid'] . ": error checking ack. Message: " . $ack_received['message'] . "\n");
+                    $this->log->warn("Rule: " . $pending_ack['ruleid'] . ": error checking ack. Message: " . $ack_received['message'] . "\n");
                     $this->printForDeveloper("Rule: " . $pending_ack['ruleid'] . ": error checking ack. Message: " . $ack_received['message']);
                     break;
             }
         }
     }
 
-    public function run_schedule() {
-        global $rules, $log, $rules_developer_mode, $rules_log_mode;
+    public function run_enabledRules() { // Only runs the enabled rules which "run_on" time has been reached
+        global $rules, $rules_developer_mode, $rules_log_mode;
         $time = time();
+        $this->printForDeveloper('Fetching enabled rules');
         $schedule = $this->getSchedule(); // Fetches rules that are enabled
+        $set_next_run_on = false;
 
         foreach ($schedule as $rule) {
 //************************************************************************
-//**  Run the rule if it hasn't expired and we have passed the run_on_time
+//**  Run the rule if there are not any pending ack for it, if there are it means we haven't finished running it since last time
+//**  Also run the rule if it hasn't expired and we have passed the run_on_time
 //************************************************************************
             $expiry_time = strtotime($rule['expiry_date']); //when expiry_date === 0-0-0 0:0:0 then expiry_time = -62169987600. In this case the rule has not got expiry date
-            if ($expiry_time > $time || $expiry_time == -62169987600) { //rule has not expired
-                $run_on_time = strtotime($rule['run_on']);
-                if ($run_on_time > $time) { // We haven't reached the time to run -> we don't run the rule now
-                    $set_next_run_on = false;
-                    $this->printForDeveloper("Rule with ruleid: " . $rule['ruleid'] . ", run_on time no reached");
-                } else { // Run the rule
-                    $this->runRule($rule, 1);
-                    $set_next_run_on = true;
+            $this->printForDeveloper("<b>Rule: " . $rule['ruleid'] . "</b>  -  Name: " . $rule['name'] . "  -  Description: " . $rule['description']);
+            $this->printForDeveloper("Checking if there are pending acks");
+            if ($rules->morePendingAcksForRule($rule['ruleid']) === false) { // There are not pending acks for this rule
+                $this->printForDeveloper('No pending acks. Run rule now');
+                if ($expiry_time > $time || $expiry_time == -62169987600) { //rule has not expired
+                    $run_on_time = strtotime($rule['run_on']);
+                    if ($run_on_time > $time) { // We haven't reached the time to run -> we don't run the rule now
+                        $set_next_run_on = false;
+                        $this->printForDeveloper("Rule with ruleid: " . $rule['ruleid'] . ", run_on time no reached");
+                    } else { // Run the rule
+                        $this->runRule($rule, 1);
+                        $set_next_run_on = true;
+                    }
                 }
-            }
+            } else
+                $this->printForDeveloper("There are pending acks for this rule. Rule will not be run.");
+
 //************************************************************************
 //**  Disable the rule or set next time for the rule to be run 
 //************************************************************************
@@ -628,16 +653,24 @@ class Rules {
         }
     }
 
+    /*     * ***************************************************
+     *    checkAck() returns an array ['success'=>  integer, 'message'=> string, 'args'=>[]]
+     *    The value of succes:
+     *      - 0: ack not received
+     *      - 1: ack received
+     *      - Any other integer: for errors  checking el ack
+     * **************************************************** */
+
     public function checkAck($pending_ack) {
-        global $feed;
         $args = json_decode($pending_ack['args'], true);
         $ack_received = false;
 
         switch ($pending_ack['type']) {
             case 'requestFeed':
+                global $feed;
                 /* We check when was the feed last update and if updated then ack received   */
                 $last_feed = $feed->get($args['feedid']);
-                //$last_feed = 0;
+//$last_feed = 0;
                 if (!$last_feed['id']) // If the feed doesn't exist
                     return ['success' => 2, 'message' => ('Feed does not exist, the given feedid is ' . $args['feedid'])];
                 else {
@@ -648,81 +681,115 @@ class Rules {
                 }
                 break;
             case 'setAttribute':
-                // ToDo when the register->setup works properly
+// ToDo when the register->setup works properly
                 break;
         }
     }
 
     public function runRule($rule, $stage, $timedout = false) {
-        global $log, $feed, $register;
+        global $feed, $register;
 
-        $php_string_for_web = $this->stagesToPhp($rule, $stage, $timedout); // We run the stage 1 of the rule
-        $php_string = str_replace('<br/>', PHP_EOL, $php_string_for_web);
-        $php_string = strip_tags($php_string);
-        $this->printForDeveloper("Running rule with ruleid:" . $rule['ruleid'] . ' - Stage: ' . $stage);
-        $this->printForDeveloper($php_string_for_web);
-        //$php_string = strip_tags($php_string_for_web);
-        $checkResult = exec('echo \'<?php ' . $php_string . '\' | php -l >/dev/null 2>&1; echo $?'); //check syntax
-        if ($checkResult != 0) {
-            $log->warn("Rule: " . $rule['ruleid'] . " - Stage: " . $stage . " - Error parsing rule code.");
-            $this->printForDeveloper("Rule: " . $rule['ruleid'] . " - Stage: " . $stage . " - Error parsing rule code.");
-        } else { // eval the code                    
-            $this->printForDeveloper("Running eval()");
-            ob_start(); // to get errors thrown by eval()
-            eval($php_string);
-            $error = ob_get_clean();
-            if ($error != '') {
-                $log->warn("Rule: " . $rule['ruleid'] . " - Stage: 1 --- eval() output: " . strip_tags($error) . "\n");
-                $this->printForDeveloper($error);
-            }
+        $php_string = $this->stagesToPhp($rule, $stage, $timedout); // We run the stage 1 of the rule;
+        $this->printForDeveloper("Running rule with ruleid: " . $rule['ruleid'] . ' - Stage: ' . $stage . ($timedout === true ? ' - Timedout: true' : ''));
+//$this->printForDeveloper($php_string);
+        $syntax_error = $this->checkCodeSyntax($php_string);
+        if ($syntax_error !== 'No syntax errors detected in -') {
+            $this->log->warn("Rule: " . $rule['ruleid'] . " - There is an error with the syntax of the rule - The error message: $syntax_error");
+            $this->printForDeveloper("Rule: " . $rule['ruleid'] . " - There is an error with the syntax of the rule - The error message: $syntax_error");
+        }
+// eval the code. We run the code even if there has been syntax error, running eval and catching the output will let us display more errrors
+        $this->printForDeveloper("eval()");
+        error_reporting(-1);
+        ob_start(); // to get errors thrown by eval()
+        eval($php_string);
+        $eval_output = ob_get_clean();
+        if ($eval_output != '') {
+            $this->log->warn("Rule: " . $rule['ruleid'] . " - Stage: 1 --- eval() output: \n" . strip_tags($eval_output) . "\n");
+            $this->printForDeveloper("Rule: " . $rule['ruleid'] . " - Stage: 1 --- eval() output: \n" . strip_tags($eval_output));
         }
     }
 
     public function addPendingAck($type, $ruleid, $next_stage, $args, $timeout) {
+        global $session, $testing_rule;
+
         $date = date("Y-m-d H:i:s", time());
+        $error = '';
+        if ($testing_rule === true) {
+            $table = 'rules_pending_acks_testing_rule';
+            $query = "INSERT INTO `$table` (`request_time`, `type`, `ruleid`, `next_stage`, `args`, `timeout`, `userid`) VALUES ('$date','$type', '$ruleid', '$next_stage', '" . json_encode($args) . "', '$timeout', '" . $session['userid'] . "')";
+        } else {
+            $table = 'rules_pending_acks';
+            $query = "INSERT INTO `$table` (`request_time`, `type`, `ruleid`, `next_stage`, `args`, `timeout`) VALUES ('$date','$type', '$ruleid', '$next_stage', '" . json_encode($args) . "', '$timeout')";
+        }
+
         if ($this->redis) {
 //ToDo
         } else {
-            $result = $this->mysqli->query("INSERT INTO `rules_pending_acks` (`request_time`, `type`, `ruleid`, `next_stage`, `args`, `timeout`) VALUES ('$date','$type', '$ruleid', '$next_stage', '" . json_encode($args) . "', '$timeout')");
+            $result = $this->mysqli->query($query);
             if ($result != true) {
-                echo $this->mysqli->error . '</br>';
-                print_r("INSERT INTO `rules` (`request_time`, `type`, `ruleid`, `next_stage`, `args`, `timeout`) VALUES ('$date','$type', '$ruleid', '$next_stage', 'hola', '$timeout')");
-                return $this->mysqli->error;
+                $error = $this->mysqli->error;
             } else
-                return $result;
+                $this->printForDeveloper("\nPending ack added to database. "
+                        . "\n   Type: $type \n   Next stage: $next_stage \n   Request time: $date \n   Timeout: $timeout \n   Args: " . json_encode($args) . "\n");
         }
+        if ($error != '') {
+            $this->printForDeveloper("Pending ack not added to database - Rule: $ruleid - Stage: $stage - Error: $error");
+            $this->printForDeveloper($query);
+            $this->log->warn("Pending ack not added to database - Rule: $ruleid - Stage: $stage - Error: $error");
+            $this->log->warn($query);
+        }
+        return $result;
     }
 
     public function deleteAllPendingAcks($ruleid) {
-        $pending_acks_deleted = $this->mysqli->query("DELETE FROM rules_pending_acks WHERE `ruleid` = '$ruleid'");
+        global $testing_rule;
+
+        if ($testing_rule === true) {
+            $query = "DELETE FROM rules_pending_acks_testing_rule WHERE `ruleid` = '$ruleid'";
+        } else {
+            $query = "DELETE FROM rules_pending_acks WHERE `ruleid` = '$ruleid'";
+        }
+        $pending_acks_deleted = $this->mysqli->query($query);
         if ($pending_acks_deleted && $this->redis) {
-            // Delete from redis;
+// Delete from redis;
         }
         if ($pending_acks_deleted === false) {
             $this->printForDeveloper("Pending acks for rule $ruleid could not be deleted deleted. Error: " . $this->mysqli->error);
             $this->logIfVerbose("Pending acks for rule $ruleid could not be deleted deleted. Error: " . $this->mysqli->error);
-        }
-
+        } else
+            $this->printForDeveloper("All pending acks deleted for rule with ruleid $ruleid");
         return $pending_acks_deleted;
     }
 
     public function deletePendingAck($id) {
-        $pending_ack_deleted = $this->mysqli->query("DELETE FROM rules_pending_acks WHERE `id` = '$id'");
+        global $testing_rule;
+        if ($testing_rule === true) {
+            $query = "DELETE FROM rules_pending_acks_testing_rule WHERE `id` = '$id'";
+        } else {
+            $query = "DELETE FROM rules_pending_acks WHERE `id` = '$id'";
+        }
+        $pending_ack_deleted = $this->mysqli->query($query);
         if ($pending_ack_deleted && $this->redis) {
-            // Delete from redis;
+// Delete from redis;
         }
         if ($pending_ack_deleted === false) {
             $this->printForDeveloper("Pending ack (id = $id) could not be deleted. Error: " . $this->mysqli->error);
             $this->logIfVerbose("Pending ack (id = $id) could not be deleted. Error: " . $this->mysqli->error);
-        }
+        } else
+            $this->printForDeveloper('Pending ack deleted');
         return $pending_ack_deleted;
     }
 
     public function morePendingAcksForRule($ruleid) {
+        global $testing_rule;
+        if ($testing_rule === true)
+            $query = "SELECT * FROM rules_pending_acks_testing_rule WHERE `ruleid` = '$ruleid'";
+        else
+            $query = "SELECT * FROM rules_pending_acks WHERE `ruleid` = '$ruleid'";
         if ($this->redis) {
-            // ToDo
+// ToDo
         } else {
-            $result = $this->mysqli->query("SELECT * FROM rules_pending_acks WHERE `ruleid` = '$ruleid'");
+            $result = $this->mysqli->query($query);
         }
         if ($result->num_rows > 0)
             return true;
@@ -741,12 +808,26 @@ class Rules {
         $oBeaut = new PHP_Beautifier();
         $oBatch = new PHP_Beautifier_Batch($oBeaut);
         $oBeaut->addFilter('ArrayNested');
-        $oBeaut->addFilter('NewLines', array('before' => 'T_DOC_COMMENT', 'after'=>''));
-        $oBeaut->setInputString('<?php ' . $code_string . ' ?>');
+        $oBeaut->addFilter('NewLines', array('before' => 'T_DOC_COMMENT', 'after' => ''));
+        $oBeaut->setInputString('<?php ' . $code_string . ' ?>'); // php tags are needed for the beautifier to work but we remove them later
         $oBeaut->process();
-        $formatted_code = '<pre>' . $oBeaut->get() . '</pre>';
-
+        $formatted_code = $oBeaut->get();
+        $formatted_code = str_replace(['<?php', '?>'], '', $formatted_code);
         return $formatted_code;
+    }
+
+    public function checkCodeSyntax($php_code) {
+//$result = exec('echo \'<?php ' . $php_code . '\' | php -l >/dev/null 2>&1; echo $?', $out, $ret);
+        $result = exec("echo '<?php $php_code' | php -l 2>/dev/null", $out, $ret);
+//var_dump($out);
+//var_dump($ret);
+        if ($result != 0) // If there has been error
+            $result = $out;
+        return $result;
+    }
+
+    public function EvalCode($php_code) {
+        return eval($php_code);
     }
 
 }

@@ -20,3 +20,5 @@ $schema['rules_pending_acks'] = array(
     'args' => array('type' => 'text'),
     'timeout' => array('type' => 'int(11)', 'default' => '0')
 );
+$schema['rules_pending_acks_testing_rule'] = $schema['rules_pending_acks'];
+$schema['rules_pending_acks_testing_rule']['userid'] = array('type' => 'int(11)', 'Null' => 'NO');

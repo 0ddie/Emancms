@@ -1,7 +1,7 @@
 #Rules programmer
 The **rules programmer** is a visual tool used in the view [rules_edit_rule.php](Views/rules_edit_rule.php) to define the actions of a rule. It is not straight to understand how it works so the aim of this documentation is to give an overview of its structure with the aim to help future developments. How to extend its functionality is explained in the document [readme_how_to_extend_rules_functionality.md](readme_how_to_extend_rules_functionality.md).
 ##Morphic.js
-The rules programmer is based on the marvellous library [Morphic.js](https://github.com/jmoenig/morphic.js) and also uses code from [Snap!](https://snap.berkeley.edu/) and amazing visual, drag-and-drop programming language. Both developed by [Jens Mönig](https://github.com/jmoeni). The rules programmer would have never been possible to implement without them.
+The rules programmer is based on the marvellous library [Morphic.js](https://github.com/jmoenig/morphic.js) and also reuses code from [Snap!](https://snap.berkeley.edu/) and amazing visual, drag-and-drop programming language that in fact has worked as a library. Both developed by [Jens Mönig](https://github.com/jmoeni). The rules programmer would have never been possible to implement without them.
 
 In order to introduce what Morphic.js is, I want to quote its [documentation](https://github.com/jmoenig/morphic.js/blob/master/morphic.txt):
 >**Morphic.js** provides a library for lively GUIs inside single HTML Canvas elements. Each such canvas element functions as a "world" in which other **visible shapes ("morphs")** can be positioned and manipulated, often directly and interactively by the user. **Morphs are tree nodes and may contain any number of submorphs ("children")**.
@@ -12,6 +12,7 @@ In order to introduce what Morphic.js is, I want to quote its [documentation](ht
 The rules programmer is a JavaScript object:  **rulesIDE**. It can be found in [rules_edit_rule.php](Views/rules_edit_rule.php). It is an instance of the class **emonCMS_RulesIDE_Morph** which is defined in [emonCMS_RulesIDE_gui.js](scripts/emonCMS_RulesIDE_gui.js).
 
 The rulesIDE is a Morph object when the **init** method is called we add to it every element (morph) you can find in the rules programmer. See the diagram below that shows the morph hierarchy:
+
 ![rulesIDE morph hierarchy](images/rulesIDE_tree_of_morphs.jpg)
 
 The following morphs are always visible:

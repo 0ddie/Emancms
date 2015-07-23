@@ -45,6 +45,16 @@ In order to fully understand how the Rules module works I want to add this notes
     - $rules_developer_mode: when set true will print usefuls messages in the view
     - $rules_log_mode: when set to *verbose*, the module will log into file basically warnings and info. When set to something different only errors (warns) will be logged.
 
+##This is it
+The weather is nice today and my day will be better if anybody takes this module and makes it better. The infrastructure is there, it's been a massive mission to build with not very much time available and plenty of other things to keep me busy at work and in life. But the infrastructure is not enough, it is incomplete until the Rules module allows us to do everything that energy  management requires to. The target is high but the open source community will always be able to get there and farther. 
+
+If you want to contribute and don't know how ask me (cagabi@lapiluka.org) or Adam the one who envisaged all of these (adam.tyler@cat.org.uk).
+
+And as a conclussion to this project I leave you with something I have learnt in parallel to the technical developments that keep my head busy but my soul empty:
+
+- If we don't look after the things we care about, they break.
+- When things are falling apart, they are falling into place [and Craig added] but you don't know where.
+
 ##ToDo list
 - Add time picker to "expiry_time" and "run_on"
 - Look and feel nicer

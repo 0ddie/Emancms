@@ -339,6 +339,7 @@ class Rules {
     }
 
     public function blocksToPhp($block) {
+        $this->printForDeveloper($block);
         if ($block['s']) { // if the block is command
             switch ($block['s']) {
                 case 'doIf':
@@ -690,14 +691,15 @@ class Rules {
         global $feed, $register;
 
         $php_string = $this->stagesToPhp($rule, $stage, $timedout); // We run the stage 1 of the rule;
-        $this->printForDeveloper("Running rule with ruleid: " . $rule['ruleid'] . ' - Stage: ' . $stage . ($timedout === true ? ' - Timedout: true' : ''));
-//$this->printForDeveloper($php_string);
+        //$this->printForDeveloper($php_string);
         $syntax_error = $this->checkCodeSyntax($php_string);
         if ($syntax_error !== 'No syntax errors detected in -') {
             $this->log->warn("Rule: " . $rule['ruleid'] . " - There is an error with the syntax of the rule - The error message: $syntax_error");
             $this->printForDeveloper("Rule: " . $rule['ruleid'] . " - There is an error with the syntax of the rule - The error message: $syntax_error");
+            $this->printForDeveloper("Rule will still be run to get more informatin about the errors.");
         }
 // eval the code. We run the code even if there has been syntax error, running eval and catching the output will let us display more errrors
+        $this->printForDeveloper("Running rule with ruleid: " . $rule['ruleid'] . ' - Stage: ' . $stage . ($timedout === true ? ' - Timedout: true' : ''));
         $this->printForDeveloper("eval()");
         error_reporting(-1);
         ob_start(); // to get errors thrown by eval()

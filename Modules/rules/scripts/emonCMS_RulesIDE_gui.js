@@ -251,7 +251,7 @@ emonCMS_RulesIDE_Morph.prototype.addBlocksToControlsTemplatesPane = function () 
         myself.controlsTemplatesPane.add(block);
     });
 
-    list_of_command_blocks = ['doIf', 'doIfElse', 'requestFeed', 'setAttribute']; //in this array we specify the "selector" for the each "command" block we want to add, the list of blocks can be found in "objects.js" in "SpriteMorph.prototype.initBlocks" and "emonCMS_RulesObjects"
+    list_of_command_blocks = ['doIf', 'doIfElse', 'requestFeed', 'setAttribute']; //in this array we specify the "selector" for each "command" block we want to add, the list of blocks can be found in "objects.js" in "SpriteMorph.prototype.initBlocks". If you are creating a new block, add it to "emonCMS_RulesObjects"
     list_of_command_blocks.forEach(function (value, index) {
         block = new CommandBlockMorph();
         block.setSelector(value);
@@ -281,7 +281,7 @@ emonCMS_RulesIDE_Morph.prototype.addBlocksToControlsTemplatesPane = function () 
 emonCMS_RulesIDE_Morph.prototype.addBlocksToOperatorsTemplatesPane = function () {
     var myself = this;
     var top = this.operatorsTemplatesPane.top() + 10;
-    list_of_reporter_blocks = ['reportLessThan', 'reportEquals', 'reportGreaterThan']; //in this array we specify the "selector" for the each block we want to add, the list of blocks can be found in "objects.js" in "SpriteMorph.prototype.initBlocks"
+    list_of_reporter_blocks = ['reportLessThan', 'reportEquals', 'reportGreaterThan']; //in this array we specify the "selector" for each block we want to add, the list of blocks can be found in "objects.js" in "SpriteMorph.prototype.initBlocks" and "emonCMS_RulesObjects". If you are creating a new block, add it to "emonCMS_RulesObjects"
     list_of_reporter_blocks.forEach(function (value, index) {
         block = new ReporterBlockMorph();
         block.setSelector(value);

@@ -24,11 +24,16 @@ The following morphs are always visible:
 
 The following morphs are only displayed when clicking on another morph:
 
+ - **controlsTemplatesPane**, **operatorsTemplatesPane** and **addReportersPane**: displayed when we click on one of the buttons in *categoriesPane*
  - **listOfTagsForFeedsDialog**: displayed when we click on *Add feed*
  - **listOfNodesForAttributesDialog**: displayed when we click on *Add attribute*
  - **Dialog showing all the feeds for a tag**: displayed when click on a tag on the *listOfTagsForFeedsDialog*
  - **Dialog showing all the attributes for a node**: displayed when click on a node on the *listOfNodesForAttributesDialog*
- - **controlsTemplatesPane**, **operatorsTemplatesPane** and **addReportersPane**: displayed when we click on one of the buttons in *categoriesPane*
+
+Below there is a picture of the rules programmer with the *always* visible morphs highlighted. I don't put another for the *not always* visible ones as i think it may make things more complicated ;-)
+
+![Rules programmer with always visible morphs highlighted](images/rules_programmer_screenshot_with_morphs.jpg)
+
 
 
 

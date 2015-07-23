@@ -5,28 +5,28 @@ This document is structured in three sections: *ToDo list*, *How to add new bloc
 
 
 ##ToDo list
-- How to add a bloc to add reporters like *Add feed*
-- Expand everything said in the document. So far it is a good guide because it tells where to add the code but it relies in the good willing of developer to check out the code that is there already in order to understand how everything works.
+- **How to add a block to add reporters** like *Add feed*
+- **Expand everything said in the document**. So far it is a good guide because it tells where to add the code but it relies in the good willing of developer to check out the code that is there already in order to understand how everything works.
 
 ##How to add new blocks to the rules programmer
 
 The new type of blocks we can add are:
 
- - Commands: blocks that *do* something but don't return anything. Example of commands are: if,  if/else, requestFeed.
- - Reporters: blocks that *do* something and return something. An example is getLastFeed.
- - Operators: like "=" or "<"
+ - **Commands**: blocks that *do* something but don't return anything. Example of commands are: if,  if/else, requestFeed.
+ - **Reporters**: blocks that *do* something and return something. An example is getLastFeed.
+ - **Operators**: like "=" or "<"
 
 The difference between a *command* and a *reporter* may not be obvious but this example will help:
 
- - requestFeed(feedid) does everything needed to send a request to a node so that it sends back the last value it meassured. The requestFeed block is a command because it is not returning anything itself.
- - getLastFeed(feedid) fetches from the database the last value of the feed and returns it.
+ - **requestFeed(feedid**) does everything needed to send a request to a node so that it sends back the last value it meassured. The requestFeed block is a command because it is not returning anything itself.
+ - **getLastFeed(feedid**) fetches from the database the last value of the feed and returns it.
 
 So the first thing you need to know is what kind of block you want then in in [scripts/emonCMS_RulesIDE_gui.js](scripts/emonCMS_RulesIDE_gui.js) add the name of your new block to:
 
-- For commands and reporters:  `addBlocksToControlsTemplatesPane` method 
-- For an operator: `addBlocksToOperatorsTemplatesPane` method
+- **For commands and reporters**:  `addBlocksToControlsTemplatesPane` method 
+- **For an operator**: `addBlocksToOperatorsTemplatesPane` method
 
-In this methods you will have to add the selector (name that identifies the block) to an array. If that block has already been defined somewhere else you are done but if not you will have to define it yourself.
+In this methods you will have to add the **selector** (name that identifies the block) to an array. If that block has already been defined somewhere else you are done but if not you will have to define it yourself.
 
 The list of blocks available in [Snap!](https://snap.berkeley.edu/) can be found in [scripts/objects.js](scripts/objects.js) in the `SpriteMorph.prototype.initBlocks` method. If you are creating a new block instead of reusing one from Snap!, add it to [emonCMS_RulesObjects.js](emonCMS_RulesObjects.js). You will hate me for saying this but the only way to understand how to define a new block is to have a look at the existing blocks in Snap! and what they do, then check out how they are defined in the files mentioned above. Sorry this is what i had to do and it is still not totally clear for me ;-)
 
@@ -54,7 +54,7 @@ You must return an associative array in the form `['success' => (int), 'message'
 
 Where succes can be:
 
-- 0: ack not received
-- 1: ack received
-- Any other number: there has been error, what you put in `message` will be logged to the log file and printed on the screen if you are testing the rule.
+- **0**: ack not received
+- **1**: ack received
+- **Any other number**: there has been error, what you put in `message` will be logged to the log file and printed on the screen if you are testing the rule.
 

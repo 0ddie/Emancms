@@ -50,7 +50,7 @@ The weather is nice today and my day will be better if anybody takes this module
 
 If you want to contribute and don't know how ask me (cagabi@lapiluka.org) or Adam the one who envisaged all of these (adam.tyler@cat.org.uk).
 
-And as a conclussion to this project I leave you with something I have learnt in parallel to the technical developments that keep my head busy but my soul empty:
+And as a humble gift to those interested in this module, I leave you with something I have learnt in parallel to the technical developments that kept my head busy while my soul was going empty:
 
 - If we don't look after the things we care about, they break.
 - When things are falling apart, they are falling into place [and Craig added] but you don't know where.

@@ -55,7 +55,23 @@ function register_controller() {
             $log->info("json string recieved");
         }
         if ($route->action == 'test') {
-            // print_r($registerLogVerbose);
+            /* print_r($registerLogVerbose);
+            $nodeid = 3;
+            $groupID = "0x0201";
+            $attributeID = "0x0002";
+            $attributeNumber = "0x019";
+            $attributeDefaultValue = "0x0";
+            $register->setAttribute( $nodeid, $groupID, $attributeID, $attributeNumber, $attributeDefaultValue);
+        */
+                        $nodeid = "101";
+            $value = "50";
+            $attributeUid = "3";
+            $timeout = 15;
+            global $mysqli;
+            $result = $mysqli->query("SELECT `groupid`, `attributeId`, `attributeNumber` FROM `attributes` WHERE `attributeUid` = '$attributeUid'");
+        $row = mysqli_fetch_row($result);
+      //  print_r($row);
+    }
             $log->warn("Wales");
         }
         if ($route->action == 'create') {
@@ -172,8 +188,6 @@ function register_controller() {
             $json = $mysqli->real_escape_string($json);
             $timeout = $mysqli->real_escape_string($timeout);
 
-//$timeDiff2 =timeoutChecker($timeStart);
-//do{
 
             if ($register->apikeycheck($apikey) === 1) {
                 $log->warn("Apikey wrong length");
@@ -210,7 +224,7 @@ function register_controller() {
                 }
                 $doing = 0;
                 $reformattedJson = $register->jsonParse($json, $nodeid, $doing);
-                print_r($reformattedJson);
+               // print_r($reformattedJson);
                 if (is_int($reformattedJson)) {
                     $log->warn("  ");
                     switch ($reformattedJson) {
@@ -282,12 +296,12 @@ function register_controller() {
             $register->updateAttributesTableForFeed($id, $attributeUid);
             if ($verbose == TRUE) {
                 $log->info("Attribute added to attributes table. Attribute Uid: " . $attributeUid);
-            } else {
-                return array('content' => "Registered: " . $nodeid . " " . $inputid . " " . $attributeUid);
-            }
-        } elseif ($route->action == 'controller') {
+            }                 
+            return array('content' => "Registered: A" .$attributeUid. "-F" .$id. "-I" .$inputid);
+
+        } elseif ($route->action == 'request') {
             if ($verbose == TRUE) {
-                $log->info("Controller route taken");
+                $log->info("Request route taken");
             }
 
             if (isset($_GET["nodeid"])) {
@@ -315,21 +329,19 @@ function register_controller() {
               $log->info("ID of the node of the value that needs to be changed: ".$nodeid." ID of the attribute that needs to be changed ".$attributeUid."Value to be changed too".$value);
               } */
             $apikey = "Blahhhhhhh";
-            $nodeid = "76";
+            $nodeid = "101";
             $value = "50";
-            $attributeUid = "136";
+            $attributeUid = "3";
             $timeout = 15;
 
             $nodeIP = $register->getNodeIP($nodeid);
             $inputid = $register->getInputID($attributeUid);
             $name = $register->getName($inputid);
             $message = ($name . "-" . $value);
-            //print_r($message);
             /* if ($register->http_response($nodeIP, '200', $timeout) == TRUE) { */// returns true if the response takes less than 3 seconds and the response code is 200 
 
 
-            $result = $register->sendValueToNode($nodeIP, $message, $apikey, $nodeid, $timeout);
-            //print_r($result);
+            $result = $register->sendValueToNode($nodeIP, $message, $apikey, $nodeid, $timeout, $attributeUid);
 
             if ($result !== 0) {
                 $log->warn("HTTP Error code:" . $result);
@@ -360,11 +372,8 @@ function register_controller() {
         } else {
             $log->warn("Json string sent to server has not been correctly formatted");
         }
-    } else {
+    } 
 
-        $log->warn("Json string sent to server has not been correctly formatted");
-    }
-}
 
 //Working Example of "Create" json string: http://localhost/OpenEMan/register/create.json?apikey=4903c8a630a99c63251b5a34ac043ba5&nodeMAC=01:23:45:67:89:ab&fromAddress=123.123.123.123&timeout=15
 //Working Example of "setup" json string: http://localhost/OpenEMan/register/setup.json?apikey=7c399b2a696c8e1d3efebb7767fba593&node=50&json=55555566666677777&timeout=225

@@ -37,6 +37,7 @@ else
 
 <!-- Visual programmer  -->
 <script type="text/javascript" src="<?php echo $path; ?>Modules/rules/scripts/morphic.js"></script>
+<script type="text/javascript" src="<?php echo $path; ?>Modules/rules/scripts/emonCMS_RulesMorphic.js"></script>
 <script type="text/javascript" src="<?php echo $path; ?>Modules/rules/scripts/emonCMS_RulesIDE_gui.js"></script>
 <script type="text/javascript" src="<?php echo $path; ?>Modules/rules/scripts/widgets.js"></script>
 <script type="text/javascript" src="<?php echo $path; ?>Modules/rules/scripts/objects.js"></script>
@@ -123,9 +124,6 @@ if (isset($args['rule'])) {
 <?php } ?>
         rulesIDE = new emonCMS_RulesIDE_Morph(world.width(), world.height(), array_of_feeds_by_tag, array_of_attributes_by_node, blocks);
         world.add(rulesIDE);
-
-
-
         setInterval(loop, 1);
     };
     function loop() {
@@ -163,6 +161,7 @@ if (isset($args['rule'])) {
                 <tr><td><?php echo _('Enabled') ?>: </td><td><input type="checkbox" ng-model="rule_attributes.enabled" /></span></td></tr>
                 <!-- <tr id="blocks-programmer"><td><?php //echo _('Blocks')                     ?>: </td><td><textarea ng-model="rule_attributes.blocks"/></td></tr>-->
             </table>
+            <h3><?php echo _('Script')?></h3>
             <div id="blocks-programmer">
                 <canvas id="world" tabindex="1" style="position: absolute"/>
             </div>

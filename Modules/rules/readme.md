@@ -15,9 +15,13 @@ A *rule* is a set of actions that are run according to a schedule. A rule is def
 
 The **script** is made with a visual programmer. No coding skills are required to be able to *build* a script, it is just a drag and drop application where functional blocks are added to each other.
 
-The **script** is organized in **stages**. A stage finishes when the script has to wait for *something* to happen (ie. wait for a feed to be updated). The next stage will be triggered when that *something* has hapenned or we have gone beyond the **timeout**.
+The **script** is organized in **stages**. A stage finishes when the script has to wait for *something* to happen like waiting for a feed to be updated, in this case a pending acknowledgement is generated and added to the database. The next stage will be triggered when that *something* has hapenned (we have received the ack) or we have gone beyond the **timeout**.
 
-The **Rules Schedule** cron task that runs on the backend is the one that controls when a rule is run and also when the next stage is triggered.
+##Rules Schedule
+
+The **Rules Schedule** is a cron job triggered every second. Its mission is to run the rules that are enabled and have reached their time to run. It also sets the next time the rule should be run according to the frecuency and expiry date defined by the user for the rule.
+
+Part of running a rule is checking if the pending acks have been received and trigger the next stage of the rule when it happens.
 
 ##Rules programmer
 
@@ -29,17 +33,40 @@ When a rule is saved, xml code representing the blocks in the script is generate
 
 The potential of the rules programmer is great. Tutorials about how to add new functionality will hopefully be written next time I implement anything from the ToDo list below.
 
+##Notes
+
+In order to fully understand how the Rules module works I want to add this notes hoping they are of any help:
+
+- When we do any kind of request a pending ack is added to the database
+- When the timeout of a pending ack is reached, all the other pending acks for that rule are deleted and the next stage is run with the $timedout variable set to true.
+- If at the time of running a rule there are still pending acks for it, the rule will not be run. This situation will happen when the frequency for the rule is less than the timeout. For example, if the rule's frequency is 5 secs but we allow 1 minute for the timeout of the pending acks, it may be the case that we are still waiting for the ack when try to run the rule again.
+- When testing a rule, the pending acks are added to a different table than the one we use when running rules normally.
+- We have included to variables in settings.php:
+    - $rules_developer_mode: when set true will print usefuls messages in the view
+    - $rules_log_mode: when set to *verbose*, the module will log into file basically warnings and info. When set to something different only errors (warns) will be logged.
+
+##This is it
+The weather is nice today and my day will be better if anybody takes this module and makes it better. The infrastructure is there, it's been a massive mission to build with not very much time available and plenty of other things to keep me busy at work and in life. But the infrastructure is not enough, it is incomplete until the Rules module allows us to do everything that energy  management requires to. The target is high but the open source community will always be able to get there and farther. 
+
+If you want to contribute and don't know how ask me (cagabi@lapiluka.org) or Adam the one who envisaged all of these (adam.tyler@cat.org.uk).
+
+And as a humble gift to those interested in this module, I leave you with something I have learnt in parallel to the technical developments that kept my head busy while my soul was going empty:
+
+> If we don't look after the things we care about, they break.
+
+>When things are falling apart, they are falling into place [and Craig added] but you don't know where.
+
 ##ToDo list
 - Add time picker to "expiry_time" and "run_on"
 - Look and feel nicer
 - Add license
-- Fix bugs: 
-	- Fundefined
-	- Superbig button when choosen attributes or feeds
-- Add feed: first dialog shows list of tags instead nodes (Michael should put the node number into the feed tag when the register module creates the feed for attribute) 
+- ~~Fix bugs:~~ 
+	- ~~Fundefined~~
+	- ~~Superbig button when choosen attributes or feeds~~
+- ~~Add feed: first dialog shows list of tags instead nodes (Michael should put the node number into the feed tag when the register module creates the feed for attribute) ~~
 - Add attribute: ideally Michael would implement tags for the Attributes, if this happens the first dialog to *add attribute* should display tags.
 - Make "comparators" blocks with corners instead of round borders
-- Add "want drop of" to blocks in order to avoiddropping the wrong blocks in a command
+- Add "want drop of" to blocks in order to avoid dropping the wrong blocks in a command
 - Stop displaying the dialog that pops everytime you want to leave the page
 - Not focus on the programmer when page loads
 - Tutorial *How to add functionality new functionality* (when implement any of the new functionality below)

@@ -197,10 +197,10 @@ function register_controller() {
                 return array('content' => "Apikey incorrect");
             }
 
-                if ($register->incorrectNodeID($nodeid, $userid) === 1) {
-                    $log->warn("Node ID Mismatch");
-                    return array('content' => "Node ID Mismatch");
-                }
+            if ($register->incorrectNodeID($nodeid, $userid) === 1) {
+                $log->warn("Node ID Mismatch");
+                return array('content' => "Node ID Mismatch");
+            }
 
             /* if ($register->jsonStringError($json, $nodeid) === 1) {
               return array('content' => "Json section wrong length");
@@ -218,42 +218,42 @@ function register_controller() {
              * 
              */
 
-                if ($register->correctInputJson($json, $nodeid, $userid) === 1) {
-                    $log->warn("Already been inputted with this node ID");
-                    return array('content' => "Already been inputted with this node ID");
-                }
-                $doing = 0;
-                $reformattedJson = $register->jsonParse($json, $nodeid, $doing);
-               // print_r($reformattedJson);
-                if (is_int($reformattedJson)) {
-                    $log->warn("  ");
-                    switch ($reformattedJson) {
-                        case 1:
-                            $log->warn("Incorrectly formatted group ID");
-                            return array('content' => "Incorrectly formatted group ID");
-                        case 2:
-                            $log->warn("Group Id not found in specification");
-                            return array('content' => "Group Id not found in specification");
-                        case 3:
-                            $log->warn("Incorrectly formatted attribute ID");
-                            return array('content' => "Incorrectly formatted attribute ID");
-                        case 4:
-                            $log->warn("Attribute Id not found in specification");
-                            return array('content' => "Attribute Id not found in specification");
-                        case 5:
-                            $log->warn("Not in Attribute Number range");
-                            return array('content' => "Not in Attribute Number range");
-                        case 6:
-                            $log->warn("Not a correctly formatted Attribute Number");
-                            return array('content' => "Not a correctly formatted Attribute Number");
-                        case 7:
-                            $log->warn("Already added to attributes table");
-                            return array('content' => "Already added to attributes table");
-                        case 8:
-                            $log->warn("Trying to register an Attribute for a node your user doesn't own");
-                        return array('content' => "Trying to register an Attribute for a node your user doesn't own");
 
-                    }
+            if ($register->correctInputJson($json, $nodeid, $userid) === 1) {
+                $log->warn("Already been inputted with this node ID");
+                return array('content' => "Already been inputted with this node ID");
+            }
+            $doing = 0;
+            $reformattedJson = $register->jsonParse($json, $nodeid, $doing);
+            print_r($reformattedJson);
+            if (is_int($reformattedJson)) {
+                $log->warn("  ");
+                switch ($reformattedJson) {
+                    case 1:
+                        $log->warn("Incorrectly formatted group ID");
+                        return array('content' => "Incorrectly formatted group ID");
+                    case 2:
+                        $log->warn("Group Id not found in specification");
+                        return array('content' => "Group Id not found in specification");
+                    case 3:
+                        $log->warn("Incorrectly formatted attribute ID");
+                        return array('content' => "Incorrectly formatted attribute ID");
+                    case 4:
+                        $log->warn("Attribute Id not found in specification");
+                        return array('content' => "Attribute Id not found in specification");
+                    case 5:
+                        $log->warn("Not in Attribute Number range");
+                        return array('content' => "Not in Attribute Number range");
+                    case 6:
+                        $log->warn("Not a correctly formatted Attribute Number");
+                        return array('content' => "Not a correctly formatted Attribute Number");
+                    case 7:
+                        $log->warn("Already added to attributes table");
+                        return array('content' => "Already added to attributes table");
+                    case 8:
+                        $log->warn("Trying to register an Attribute for a node your user doesn't own");
+                        return array('content' => "Trying to register an Attribute for a node your user doesn't own");
+                }
 //return array('content' => "  ");
             }
             $space = strpos($reformattedJson, '-', 0);
@@ -296,10 +296,12 @@ function register_controller() {
             $register->updateAttributesTableForFeed($id, $attributeUid);
             if ($verbose == TRUE) {
                 $log->info("Attribute added to attributes table. Attribute Uid: " . $attributeUid);
+
             }                 
             return array('content' => "Registered: A" .$attributeUid. "-F" .$id. "-I" .$inputid);
 
         } elseif ($route->action == 'request') {
+
             if ($verbose == TRUE) {
                 $log->info("Request route taken");
             }

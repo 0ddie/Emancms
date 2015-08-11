@@ -61,46 +61,53 @@ function rules_controller() {
 
             break;
         case 'add':
-            $result = view("Modules/rules/Views/rules_edit_rule.php", ['mode' => 'add']);
+            if ($session['write'] == 1)
+                $result = view("Modules/rules/Views/rules_edit_rule.php", ['mode' => 'add']);
             break;
         case 'edit':
-            $rule = $rules->get_rule((int) get('ruleid'), $session['userid']);
-            $result = view("Modules/rules/Views/rules_edit_rule.php", ['mode' => 'edit', 'rule' => $rule]);
+            if ($session['write'] == 1) {
+                $rule = $rules->get_rule((int) get('ruleid'), $session['userid']);
+                $result = view("Modules/rules/Views/rules_edit_rule.php", ['mode' => 'edit', 'rule' => $rule]);
+            }
             break;
         case 'save-rule':
-            $attributes = ['ruleid' => get('ruleid'),
-                'name' => get('name'),
-                'description' => get('description'),
-                'run_on' => get('run_on'),
-                'expiry_date' => get('expiry_date'),
-                'frequency' => get('frequency'),
-                'blocks' => get('blocks'),
-                'enabled' => get('enabled'),
-                'mode' => get('mode')];
-            $rule_id = $rules->save_rule($attributes); //returns the id of the rule or 0 if something went wrong
-            $rule_saved = $rule_id == 0 ? false : true;
-            switch ($attributes['mode']) {
-                case 'save': // Save and close
-                $list_of_rules = $rules->get_rules($session['userid']);
-                $result = view("Modules/rules/Views/rules_list.php", ['list_of_rules' => $list_of_rules, 'rule_saved' => $rule_saved]);
-                    break;
-                case 'apply': // Save and stay editting the rule
-                    $rule = $rules->get_rule($rule_id, $session['userid']);
-                    $result = view("Modules/rules/Views/rules_edit_rule.php", ['mode' => 'edit', 'rule' => $rule, 'rule_saved' => $rule_saved]);
-                    break;
-                case 'apply_and_test':
-                    $rule = $rules->get_rule($rule_id, $session['userid']);
-                    $result = view("Modules/rules/Views/rules_test_rule.php", ['rule' => $rule, 'rule_saved' => $rule_saved]);
-                    break;
+            if ($session['write'] == 1) {
+                $attributes = ['ruleid' => get('ruleid'),
+                    'name' => get('name'),
+                    'description' => get('description'),
+                    'run_on' => get('run_on'),
+                    'expiry_date' => get('expiry_date'),
+                    'frequency' => get('frequency'),
+                    'blocks' => get('blocks'),
+                    'enabled' => get('enabled'),
+                    'mode' => get('mode')];
+                $rule_id = $rules->save_rule($attributes); //returns the id of the rule or 0 if something went wrong
+                $rule_saved = $rule_id == 0 ? false : true;
+                switch ($attributes['mode']) {
+                    case 'save': // Save and close
+                        $list_of_rules = $rules->get_rules($session['userid']);
+                        $result = view("Modules/rules/Views/rules_list.php", ['list_of_rules' => $list_of_rules, 'rule_saved' => $rule_saved]);
+                        break;
+                    case 'apply': // Save and stay editting the rule
+                        $rule = $rules->get_rule($rule_id, $session['userid']);
+                        $result = view("Modules/rules/Views/rules_edit_rule.php", ['mode' => 'edit', 'rule' => $rule, 'rule_saved' => $rule_saved]);
+                        break;
+                    case 'apply_and_test':
+                        $rule = $rules->get_rule($rule_id, $session['userid']);
+                        $result = view("Modules/rules/Views/rules_test_rule.php", ['rule' => $rule, 'rule_saved' => $rule_saved]);
+                        break;
+                }
             }
             break;
         case 'api':
             $result = view("Modules/rules/Views/rules_api.php", array());
             break;
         case 'add-mock-rules':
-            $rules->add_mock_rules();
-            $list_of_rules = $rules->get_rules($session['userid']);
-            $result = view("Modules/rules/Views/rules_list.php", ['list_of_rules' => $list_of_rules]);
+            if ($session['write'] == 1) {
+                $rules->add_mock_rules();
+                $list_of_rules = $rules->get_rules($session['userid']);
+                $result = view("Modules/rules/Views/rules_list.php", ['list_of_rules' => $list_of_rules]);
+            }
             break;
         case 'delete':
             if ($session['write'] == 1) {

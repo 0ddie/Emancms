@@ -66,9 +66,9 @@ void setup() {
   Console.print("Create String:");
   Console.println(createHtmlString);
 
-  String nodeid;
+  //String nodeid = String("100");
   
-   //String nodeid = String ("100");
+   String nodeid = String ("100");
    nodeid=curlCreate(createHtmlString);
   
    Console.print("Nodeid: ");
@@ -217,7 +217,7 @@ String curlSetup(String b){
   Console.flush();
 
 HttpClient client;
-  client.get("http://172.16.0.158/OpenEMan/register/setup.json?apikey=11133d815882bc03a4a97789d983d189&node=100&json=0x0000,0x0000,0x002,0x0&timeout=15");
+  client.get(b);
   char setupResponse[100];
   int i = 0;
   Console.println("Here");

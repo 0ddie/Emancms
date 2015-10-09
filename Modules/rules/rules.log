@@ -21812,3 +21812,1389 @@ Pending ack added to database.
 
 2015-7-21 23:24:45 MAIN WARN Rule: 4: error checking ack. Message: Feed does not exist, the given feedid is 1
 
+2015-10-7 22:20:00 MAIN WARN Rule: 4 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:20:00 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(706) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000247488{main}(  ).../index.php:0
+20.0009294104controller(  ).../index.php:109
+30.0009295968rules_controller(  ).../core.php:66
+40.0351322008view(  ).../rules_controller.php:97
+50.0372344904include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.2649944728Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:20:00 MAIN WARN Rule: 4 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:20:00 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(706) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000247488{main}(  ).../index.php:0
+20.0009294104controller(  ).../index.php:109
+30.0009295968rules_controller(  ).../core.php:66
+40.0351322008view(  ).../rules_controller.php:97
+50.0372344904include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.35221583824Rules->run_pendingAcks(  ).../rules_test_rule.php:94
+70.36711591976Rules->runRule(  ).../rules_model.php:587
+
+
+
+2015-10-7 22:20:54 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:20:54 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(706) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000251928{main}(  ).../index.php:0
+20.0009298552controller(  ).../index.php:109
+30.0009300416rules_controller(  ).../core.php:66
+40.0024326864view(  ).../rules_controller.php:97
+50.0025347224include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.0425934512Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:25:47 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:25:47 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 1
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000252568{main}(  ).../index.php:0
+20.0011299200controller(  ).../index.php:109
+30.0012301064rules_controller(  ).../core.php:66
+40.0041560928view(  ).../rules_controller.php:97
+50.0041581288include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.0332680320Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:27:05 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:27:05 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000252568{main}(  ).../index.php:0
+20.0011299200controller(  ).../index.php:109
+30.0012301064rules_controller(  ).../core.php:66
+40.0052331104view(  ).../rules_controller.php:97
+50.0054351464include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.0469939264Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:28:04 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:28:04 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 5
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000252568{main}(  ).../index.php:0
+20.0010299200controller(  ).../index.php:109
+30.0011301064rules_controller(  ).../core.php:66
+40.0033561176view(  ).../rules_controller.php:97
+50.0035581544include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.04691168944Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:30:14 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:32:04 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Notice: Undefined property: Rules::$checkCodeSyntax in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+10.1044253328{main}(  ).../index.php:0
+20.1056299784controller( ??? ).../index.php:109
+30.1057301648rules_controller(  ).../core.php:66
+40.1094331680view( ???, ??? ).../rules_controller.php:97
+50.1095352040include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1636939944Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$printForDeveloper in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+10.1044253328{main}(  ).../index.php:0
+20.1056299784controller( ??? ).../index.php:109
+30.1057301648rules_controller(  ).../core.php:66
+40.1094331680view( ???, ??? ).../rules_controller.php:97
+50.1095352040include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1636939944Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$printForDeveloper in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+10.1044253328{main}(  ).../index.php:0
+20.1056299784controller( ??? ).../index.php:109
+30.1057301648rules_controller(  ).../core.php:66
+40.1094331680view( ???, ??? ).../rules_controller.php:97
+50.1095352040include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1636939944Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$printForDeveloper in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+10.1044253328{main}(  ).../index.php:0
+20.1056299784controller( ??? ).../index.php:109
+30.1057301648rules_controller(  ).../core.php:66
+40.1094331680view( ???, ??? ).../rules_controller.php:97
+50.1095352040include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1636939944Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$printForDeveloper in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+10.1044253328{main}(  ).../index.php:0
+20.1056299784controller( ??? ).../index.php:109
+30.1057301648rules_controller(  ).../core.php:66
+40.1094331680view( ???, ??? ).../rules_controller.php:97
+50.1095352040include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1636939944Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$printForDeveloper in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+10.1044253328{main}(  ).../index.php:0
+20.1056299784controller( ??? ).../index.php:109
+30.1057301648rules_controller(  ).../core.php:66
+40.1094331680view( ???, ??? ).../rules_controller.php:97
+50.1095352040include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1636939944Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$printForDeveloper in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+10.1044253328{main}(  ).../index.php:0
+20.1056299784controller( ??? ).../index.php:109
+30.1057301648rules_controller(  ).../core.php:66
+40.1094331680view( ???, ??? ).../rules_controller.php:97
+50.1095352040include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1636939944Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$printForDeveloper in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+10.1044253328{main}(  ).../index.php:0
+20.1056299784controller( ??? ).../index.php:109
+30.1057301648rules_controller(  ).../core.php:66
+40.1094331680view( ???, ??? ).../rules_controller.php:97
+50.1095352040include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1636939944Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1044253328{main}(  ).../index.php:0
+20.1056299784controller( ??? ).../index.php:109
+30.1057301648rules_controller(  ).../core.php:66
+40.1094331680view( ???, ??? ).../rules_controller.php:97
+50.1095352040include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1636939944Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:37:18 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:37:32 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Notice: Undefined property: Rules::$stagesToPhp in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+1398.7194253328{main}(  ).../index.php:0
+2398.7207299784controller( ??? ).../index.php:109
+3398.7207301648rules_controller(  ).../core.php:66
+4398.7267561720view( ???, ??? ).../rules_controller.php:97
+5398.7268582104include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+6398.78921169480Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+1398.7194253328{main}(  ).../index.php:0
+2398.7207299784controller( ??? ).../index.php:109
+3398.7207301648rules_controller(  ).../core.php:66
+4398.7267561720view( ???, ??? ).../rules_controller.php:97
+5398.7268582104include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+6398.78921169480Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:39:21 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:39:23 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1214253328{main}(  ).../index.php:0
+20.1234299784controller( ??? ).../index.php:109
+30.1234301648rules_controller(  ).../core.php:66
+40.1267331680view( ???, ??? ).../rules_controller.php:97
+50.1267352040include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+6104.65741054480Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:43:38 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:43:38 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1060253328{main}(  ).../index.php:0
+20.1077299784controller( ??? ).../index.php:109
+30.1078301648rules_controller(  ).../core.php:66
+40.1086328096view( ???, ??? ).../rules_controller.php:97
+50.1086348456include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+6249.5922972760Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:43:39 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:43:39 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 1
+Call Stack
+#TimeMemoryFunctionLocation
+15.5810253328{main}(  ).../index.php:0
+25.5871299784controller( ??? ).../index.php:109
+35.5873301648rules_controller(  ).../core.php:66
+45.5964331696view( ???, ??? ).../rules_controller.php:97
+55.5965352080include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+65.6252451232Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:44:10 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:44:10 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1034253328{main}(  ).../index.php:0
+20.1063299784controller( ??? ).../index.php:109
+30.1063301648rules_controller(  ).../core.php:66
+40.1084561720view( ???, ??? ).../rules_controller.php:97
+50.1085582104include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+66.80271207176Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:44:52 MAIN WARN Rule: 4 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:44:52 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1058248216{main}(  ).../index.php:0
+20.1068294664controller( ??? ).../index.php:109
+30.1068296528rules_controller(  ).../core.php:66
+40.1074322568view( ???, ??? ).../rules_controller.php:97
+50.1074342928include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1599935192Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:45:54 MAIN WARN Rule: 4 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:45:54 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 3
+Call Stack
+#TimeMemoryFunctionLocation
+10.1042248856{main}(  ).../index.php:0
+20.1076295304controller( ??? ).../index.php:109
+30.1077297168rules_controller(  ).../core.php:66
+40.1096556712view( ???, ??? ).../rules_controller.php:97
+50.1097577096include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.15821167552Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:46:07 MAIN WARN Rule: 4 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:46:07 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 2
+Call Stack
+#TimeMemoryFunctionLocation
+10.1035248856{main}(  ).../index.php:0
+20.1045295304controller( ??? ).../index.php:109
+30.1045297168rules_controller(  ).../core.php:66
+40.1076326800view( ???, ??? ).../rules_controller.php:97
+50.1076347176include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1517928096Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:46:25 MAIN WARN Rule: 4 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:46:25 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 1
+Call Stack
+#TimeMemoryFunctionLocation
+10.1047248856{main}(  ).../index.php:0
+20.1069295304controller( ??? ).../index.php:109
+30.1070297168rules_controller(  ).../core.php:66
+40.1140326800view( ???, ??? ).../rules_controller.php:97
+50.1140347184include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1592921536Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:46:36 MAIN WARN Rule: 4 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:46:36 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 1
+Call Stack
+#TimeMemoryFunctionLocation
+10.1049248856{main}(  ).../index.php:0
+20.1060295304controller( ??? ).../index.php:109
+30.1060297168rules_controller(  ).../core.php:66
+40.1083555280view( ???, ??? ).../rules_controller.php:97
+50.1083575656include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.14791142032Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:46:57 MAIN WARN Rule: 4 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:46:57 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 2
+Call Stack
+#TimeMemoryFunctionLocation
+10.1039248856{main}(  ).../index.php:0
+20.1083295304controller( ??? ).../index.php:109
+30.1084297168rules_controller(  ).../core.php:66
+40.1125553104view( ???, ??? ).../rules_controller.php:97
+50.1126573488include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.16251139792Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:47:32 MAIN WARN Rule: 4 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:47:32 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(706) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1049248856{main}(  ).../index.php:0
+20.1060295304controller( ??? ).../index.php:109
+30.1060297168rules_controller(  ).../core.php:66
+40.1086556712view( ???, ??? ).../rules_controller.php:97
+50.1086577096include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.15321169312Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:47:40 MAIN WARN Rule: 4 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:47:40 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1043248856{main}(  ).../index.php:0
+20.1068295304controller( ??? ).../index.php:109
+30.1068297168rules_controller(  ).../core.php:66
+40.1124556984view( ???, ??? ).../rules_controller.php:97
+50.1125577344include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.16941169600Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:48:01 MAIN WARN Rule: 4 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:48:01 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(706) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1035248856{main}(  ).../index.php:0
+20.1063295304controller( ??? ).../index.php:109
+30.1064297168rules_controller(  ).../core.php:66
+40.1104326776view( ???, ??? ).../rules_controller.php:97
+50.1104347136include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1629939992Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:49:06 MAIN WARN Rule: 4 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:49:06 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(706) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1023248856{main}(  ).../index.php:0
+20.1034295304controller( ??? ).../index.php:109
+30.1035297168rules_controller(  ).../core.php:66
+40.1039323208view( ???, ??? ).../rules_controller.php:97
+50.1042374664include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1486966928Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:94
+
+
+
+2015-10-7 22:52:08 MAIN WARN Rule: 4 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 22:52:27 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(706) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1062248856{main}(  ).../index.php:0
+20.1074295304controller( ??? ).../index.php:109
+30.1074297168rules_controller(  ).../core.php:66
+40.1080323208view( ???, ??? ).../rules_controller.php:97
+50.1085346104include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1590938200Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 22:55:17 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:01:38 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(706) : eval()'d code on line 1
+Call Stack
+#TimeMemoryFunctionLocation
+14.1011253328{main}(  ).../index.php:0
+24.1029299784controller( ??? ).../index.php:109
+34.1030301648rules_controller(  ).../core.php:66
+44.1071331672view( ???, ??? ).../rules_controller.php:97
+54.1071352032include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+64.1804939904Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$printForDeveloper in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+14.1011253328{main}(  ).../index.php:0
+24.1029299784controller( ??? ).../index.php:109
+34.1030301648rules_controller(  ).../core.php:66
+44.1071331672view( ???, ??? ).../rules_controller.php:97
+54.1071352032include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+64.1804939904Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$printForDeveloper in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+14.1011253328{main}(  ).../index.php:0
+24.1029299784controller( ??? ).../index.php:109
+34.1030301648rules_controller(  ).../core.php:66
+44.1071331672view( ???, ??? ).../rules_controller.php:97
+54.1071352032include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+64.1804939904Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$stagesToPhp in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+14.1011253328{main}(  ).../index.php:0
+24.1029299784controller( ??? ).../index.php:109
+34.1030301648rules_controller(  ).../core.php:66
+44.1071331672view( ???, ??? ).../rules_controller.php:97
+54.1071352032include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+64.1804939904Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$stagesToPhp in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+14.1011253328{main}(  ).../index.php:0
+24.1029299784controller( ??? ).../index.php:109
+34.1030301648rules_controller(  ).../core.php:66
+44.1071331672view( ???, ??? ).../rules_controller.php:97
+54.1071352032include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+64.1804939904Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$printForDeveloper in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+14.1011253328{main}(  ).../index.php:0
+24.1029299784controller( ??? ).../index.php:109
+34.1030301648rules_controller(  ).../core.php:66
+44.1071331672view( ???, ??? ).../rules_controller.php:97
+54.1071352032include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+64.1804939904Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$printForDeveloper in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+14.1011253328{main}(  ).../index.php:0
+24.1029299784controller( ??? ).../index.php:109
+34.1030301648rules_controller(  ).../core.php:66
+44.1071331672view( ???, ??? ).../rules_controller.php:97
+54.1071352032include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+64.1804939904Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$logIfVerbose in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+14.1011253328{main}(  ).../index.php:0
+24.1029299784controller( ??? ).../index.php:109
+34.1030301648rules_controller(  ).../core.php:66
+44.1071331672view( ???, ??? ).../rules_controller.php:97
+54.1071352032include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+64.1804939904Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+( ! ) Notice: Undefined property: Rules::$printForDeveloper in /var/www/OpenEMan/Modules/rules/rules_model.php on line 707
+Call Stack
+#TimeMemoryFunctionLocation
+14.1011253328{main}(  ).../index.php:0
+24.1029299784controller( ??? ).../index.php:109
+34.1030301648rules_controller(  ).../core.php:66
+44.1071331672view( ???, ??? ).../rules_controller.php:97
+54.1071352032include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+64.1804939904Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:01:38 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:01:47 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:05:04 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:05:07 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:06:51 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:06:51 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(706) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1052253328{main}(  ).../index.php:0
+20.1099299784controller( ??? ).../index.php:109
+30.1100301648rules_controller(  ).../core.php:66
+40.1139331680view( ???, ??? ).../rules_controller.php:97
+50.1143352304include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1636940200Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:08:33 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:08:33 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(708) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1064253328{main}(  ).../index.php:0
+20.1091299784controller( ??? ).../index.php:109
+30.1091301648rules_controller(  ).../core.php:66
+40.1118561896view( ???, ??? ).../rules_controller.php:97
+50.1118582280include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.16041169680Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:18:19 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:18:19 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1044253328{main}(  ).../index.php:0
+20.1094299784controller( ??? ).../index.php:109
+30.1094301648rules_controller(  ).../core.php:66
+40.1125331680view( ???, ??? ).../rules_controller.php:97
+50.1129352304include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1625940032Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:18:21 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:18:21 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1037253328{main}(  ).../index.php:0
+20.1062299784controller( ??? ).../index.php:109
+30.1063301648rules_controller(  ).../core.php:66
+40.1075328096view( ???, ??? ).../rules_controller.php:97
+50.1076348456include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1658935720Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:20:45 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:20:45 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1046253328{main}(  ).../index.php:0
+20.1057299784controller( ??? ).../index.php:109
+30.1058301648rules_controller(  ).../core.php:66
+40.1063328096view( ???, ??? ).../rules_controller.php:97
+50.1067350992include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+657.6637999808Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:20:49 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:20:49 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+14.4717253328{main}(  ).../index.php:0
+24.4728299784controller( ??? ).../index.php:109
+34.4729301648rules_controller(  ).../core.php:66
+44.4735328096view( ???, ??? ).../rules_controller.php:97
+54.4740350976include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+64.5025431168Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:20:53 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:20:53 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1060253328{main}(  ).../index.php:0
+20.1108299784controller( ??? ).../index.php:109
+30.1109301648rules_controller(  ).../core.php:66
+40.1115328096view( ???, ??? ).../rules_controller.php:97
+50.1116348440include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1378428704Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:24:28 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:24:28 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1061253328{main}(  ).../index.php:0
+20.1085299784controller( ??? ).../index.php:109
+30.1086301648rules_controller(  ).../core.php:66
+40.1123331680view( ???, ??? ).../rules_controller.php:97
+50.1127352304include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+67.9171978024Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:24:51 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:24:51 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1041253328{main}(  ).../index.php:0
+20.1053299784controller( ??? ).../index.php:109
+30.1053301648rules_controller(  ).../core.php:66
+40.1077331680view( ???, ??? ).../rules_controller.php:97
+50.1078352040include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+65.2977977696Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:26:19 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:26:19 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(707) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1037253328{main}(  ).../index.php:0
+20.1046299784controller( ??? ).../index.php:109
+30.1046301648rules_controller(  ).../core.php:66
+40.1052328096view( ???, ??? ).../rules_controller.php:97
+50.1052348456include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+61.8732941936Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:27:00 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:27:00 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1047253328{main}(  ).../index.php:0
+20.1057299784controller( ??? ).../index.php:109
+30.1057301648rules_controller(  ).../core.php:66
+40.1084331680view( ???, ??? ).../rules_controller.php:97
+50.1091379592include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1388460168Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:29:53 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:29:53 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1049253328{main}(  ).../index.php:0
+20.1085299784controller( ??? ).../index.php:109
+30.1086301648rules_controller(  ).../core.php:66
+40.1092328096view( ???, ??? ).../rules_controller.php:97
+50.1100350992include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+613.7819979504Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:30:01 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:30:01 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1046253328{main}(  ).../index.php:0
+20.1058299784controller( ??? ).../index.php:109
+30.1059301648rules_controller(  ).../core.php:66
+40.1096331704view( ???, ??? ).../rules_controller.php:97
+50.1096352064include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+63.1041961264Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:30:06 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:30:06 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0001252568{main}(  ).../index.php:0
+20.0042299200controller(  ).../index.php:109
+30.0043301064rules_controller(  ).../core.php:66
+40.0051327512view(  ).../rules_controller.php:97
+50.0052347872include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.0459918712Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:30:14 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:30:14 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000252568{main}(  ).../index.php:0
+20.0014299200controller(  ).../index.php:109
+30.0014301064rules_controller(  ).../core.php:66
+40.0022327512view(  ).../rules_controller.php:97
+50.0022347872include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.0439918712Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:30:26 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:30:26 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000252568{main}(  ).../index.php:0
+20.0011299200controller(  ).../index.php:109
+30.0011301064rules_controller(  ).../core.php:66
+40.0015327512view(  ).../rules_controller.php:97
+50.0015347872include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.0393918712Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:30:40 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:30:40 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000252568{main}(  ).../index.php:0
+20.0010299200controller(  ).../index.php:109
+30.0011301064rules_controller(  ).../core.php:66
+40.0015327512view(  ).../rules_controller.php:97
+50.0015347872include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.0452918712Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:31:00 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:31:00 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000252568{main}(  ).../index.php:0
+20.0020299200controller(  ).../index.php:109
+30.0021301064rules_controller(  ).../core.php:66
+40.0060560688view(  ).../rules_controller.php:97
+50.0060581064include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.04511168408Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:31:25 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:31:25 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0000252568{main}(  ).../index.php:0
+20.0010299200controller(  ).../index.php:109
+30.0010301064rules_controller(  ).../core.php:66
+40.0035331096view(  ).../rules_controller.php:97
+50.0035351480include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.0442939320Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:31:53 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:31:53 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0001252568{main}(  ).../index.php:0
+20.0023299200controller(  ).../index.php:109
+30.0024301064rules_controller(  ).../core.php:66
+40.0060561008view(  ).../rules_controller.php:97
+50.0060581368include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.04551168736Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:32:13 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:32:13 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0002252568{main}(  ).../index.php:0
+20.0044299200controller(  ).../index.php:109
+30.0045301064rules_controller(  ).../core.php:66
+40.0099331088view(  ).../rules_controller.php:97
+50.0100351472include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.0534939336Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:32:29 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:32:29 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0001252568{main}(  ).../index.php:0
+20.0023299200controller(  ).../index.php:109
+30.0024301064rules_controller(  ).../core.php:66
+40.0053560688view(  ).../rules_controller.php:97
+50.0054581064include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.04531168408Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:34:52 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:34:52 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1052253328{main}(  ).../index.php:0
+20.1077299784controller( ??? ).../index.php:109
+30.1078301648rules_controller(  ).../core.php:66
+40.1123331680view( ???, ??? ).../rules_controller.php:97
+50.1123352040include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+68.9047977744Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:35:15 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:35:15 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1051253328{main}(  ).../index.php:0
+20.1070299784controller( ??? ).../index.php:109
+30.1071301648rules_controller(  ).../core.php:66
+40.1123331680view( ???, ??? ).../rules_controller.php:97
+50.1123352040include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+64.3818961184Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:38:17 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:38:17 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(704) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0178254848{main}(  ).../index.php:0
+22.0592388072controller(  ).../index.php:109
+32.0831390328rules_controller(  ).../core.php:66
+42.1470417024view(  ).../rules_controller.php:97
+52.4923437672include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+68.29541018528Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:38:18 MAIN WARN Rule: 4 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:38:18 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(704) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0011247904{main}(  ).../index.php:0
+29.6184526680controller(  ).../index.php:109
+39.6186528544rules_controller(  ).../core.php:66
+49.6208554632view(  ).../rules_controller.php:97
+59.6209574992include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+69.84551150488Rules->runRule(  ).../rules_test_rule.php:93
+
+
+
+2015-10-7 23:43:12 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:43:26 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:43:53 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:43:53 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0009253016{main}(  ).../index.php:0
+20.0086299640controller(  ).../index.php:109
+30.0087301504rules_controller(  ).../core.php:66
+40.0181561400view(  ).../rules_controller.php:97
+50.0183581768include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.12941152552Rules->runRule(  ).../rules_test_rule.php:94
+
+
+
+2015-10-7 23:44:00 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:44:00 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.0011253016{main}(  ).../index.php:0
+20.0112299640controller(  ).../index.php:109
+30.0114301504rules_controller(  ).../core.php:66
+40.0257331552view(  ).../rules_controller.php:97
+50.0258351920include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.1433923312Rules->runRule(  ).../rules_test_rule.php:94
+
+
+
+2015-10-7 23:44:09 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:44:09 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1135253328{main}(  ).../index.php:0
+20.1160299784controller( ??? ).../index.php:109
+30.1161301648rules_controller(  ).../core.php:66
+40.1175328096view( ???, ??? ).../rules_controller.php:97
+50.1175348464include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.2652919288Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:94
+
+
+
+2015-10-7 23:44:21 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:44:21 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1127253328{main}(  ).../index.php:0
+20.1155299784controller( ??? ).../index.php:109
+30.1155301648rules_controller(  ).../core.php:66
+40.1170328096view( ???, ??? ).../rules_controller.php:97
+50.1171348464include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.2612919288Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:94
+
+
+
+2015-10-7 23:45:52 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:45:52 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.2274253328{main}(  ).../index.php:0
+20.2310299784controller( ??? ).../index.php:109
+30.2312301648rules_controller(  ).../core.php:66
+40.2342328096view( ???, ??? ).../rules_controller.php:97
+50.2343348464include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+65.0034957944Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:94
+
+
+
+2015-10-7 23:46:03 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:46:03 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1124253328{main}(  ).../index.php:0
+20.1153299784controller( ??? ).../index.php:109
+30.1154301648rules_controller(  ).../core.php:66
+40.1272331688view( ???, ??? ).../rules_controller.php:97
+50.1273352056include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+63.3502961320Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:94
+
+
+
+2015-10-7 23:47:02 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:47:02 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1137253328{main}(  ).../index.php:0
+20.1227299784controller( ??? ).../index.php:109
+30.1231301648rules_controller(  ).../core.php:66
+40.1366331680view( ???, ??? ).../rules_controller.php:97
+50.1380352328include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+69.31261220472Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:95
+
+
+
+2015-10-7 23:47:52 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:47:52 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(706) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1119253328{main}(  ).../index.php:0
+20.1144299784controller( ??? ).../index.php:109
+30.1145301648rules_controller(  ).../core.php:66
+40.1258331696view( ???, ??? ).../rules_controller.php:97
+50.1268352328include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+64.2312961536Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:94
+
+
+
+2015-10-7 23:50:49 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:50:49 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1128253328{main}(  ).../index.php:0
+20.1211299784controller( ??? ).../index.php:109
+30.1212301648rules_controller(  ).../core.php:66
+40.1323331688view( ???, ??? ).../rules_controller.php:97
+50.1324352056include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+62.8189961576Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:94
+
+
+
+2015-10-7 23:52:46 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:52:46 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1102253328{main}(  ).../index.php:0
+20.1129299784controller( ??? ).../index.php:109
+30.1130301648rules_controller(  ).../core.php:66
+40.1205562200view( ???, ??? ).../rules_controller.php:97
+50.1206582592include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+63.52431190992Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:94
+
+
+
+2015-10-7 23:53:35 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:53:35 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(705) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1123253328{main}(  ).../index.php:0
+20.1212299784controller( ??? ).../index.php:109
+30.1215301648rules_controller(  ).../core.php:66
+40.1297561984view( ???, ??? ).../rules_controller.php:97
+50.1298582376include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+63.41531190704Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:94
+
+
+
+2015-10-7 23:55:58 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:55:58 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(703) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1103253328{main}(  ).../index.php:0
+20.1131299784controller( ??? ).../index.php:109
+30.1132301648rules_controller(  ).../core.php:66
+40.1238331688view( ???, ??? ).../rules_controller.php:97
+50.1239352056include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+625.3657961568Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:94
+
+
+
+2015-10-7 23:58:00 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:58:00 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(701) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1079253328{main}(  ).../index.php:0
+20.1149299784controller( ??? ).../index.php:109
+30.1150301648rules_controller(  ).../core.php:66
+40.1267331688view( ???, ??? ).../rules_controller.php:97
+50.1268352056include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.2802923360Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:94
+
+
+
+2015-10-7 23:58:12 MAIN WARN Rule: 3 - There is an error with the syntax of the rule - The error message: Errors parsing -
+2015-10-7 23:58:12 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+
+( ! ) Parse error: syntax error, unexpected '&lt;' in /var/www/OpenEMan/Modules/rules/rules_model.php(700) : eval()'d code on line 4
+Call Stack
+#TimeMemoryFunctionLocation
+10.1104253328{main}(  ).../index.php:0
+20.1130299784controller( ??? ).../index.php:109
+30.1131301648rules_controller(  ).../core.php:66
+40.1213561984view( ???, ??? ).../rules_controller.php:97
+50.1214582376include( '/var/www/OpenEMan/Modules/rules/Views/rules_test_rule.php' ).../core.php:76
+60.32381153216Rules->runRule( ???, ???, ??? ).../rules_test_rule.php:94
+
+
+
+2015-10-7 23:58:30 MAIN WARN Rule: 3 - Stage: 1 --- eval() output: 
+
+Pending ack added to database. 
+   Type: requestFeed 
+   Next stage: 2 
+   Request time: 2015-10-07 23:58:30 
+   Timeout: 60 
+   Args: {"feedid":1}
+
+
+2015-10-8 13:21:49 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+Pending ack added to database. 
+   Type: requestFeed 
+   Next stage: 2 
+   Request time: 2015-10-08 13:21:49 
+   Timeout: 60 
+   Args: {"feedid":1}
+
+Pending ack added to database. 
+   Type: setAttribute 
+   Next stage: 2 
+   Request time: 2015-10-08 13:21:49 
+   Timeout: 60 
+   Args: {"attributeUid":1}
+
+
+2015-10-8 13:21:49 MAIN WARN Stage not found in the script - Rule: 3 - Stage: 2
+2015-10-8 13:23:42 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+Pending ack added to database. 
+   Type: requestFeed 
+   Next stage: 2 
+   Request time: 2015-10-08 13:23:42 
+   Timeout: 60 
+   Args: {"feedid":1}
+
+Pending ack added to database. 
+   Type: setAttribute 
+   Next stage: 2 
+   Request time: 2015-10-08 13:23:42 
+   Timeout: 60 
+   Args: {"attributeUid":1}
+
+
+2015-10-8 13:23:42 MAIN WARN Stage not found in the script - Rule: 4 - Stage: 2
+2015-10-8 15:38:07 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+Pending ack added to database. 
+   Type: requestFeed 
+   Next stage: 2 
+   Request time: 2015-10-08 15:38:07 
+   Timeout: 60 
+   Args: {"feedid":1}
+
+Pending ack added to database. 
+   Type: setAttribute 
+   Next stage: 2 
+   Request time: 2015-10-08 15:38:07 
+   Timeout: 60 
+   Args: {"attributeUid":1}
+
+
+2015-10-8 18:10:08 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+Pending ack added to database. 
+   Type: requestFeed 
+   Next stage: 2 
+   Request time: 2015-10-08 18:10:08 
+   Timeout: 60 
+   Args: {"feedid":1}
+
+Pending ack added to database. 
+   Type: setAttribute 
+   Next stage: 2 
+   Request time: 2015-10-08 18:10:08 
+   Timeout: 60 
+   Args: {"attributeUid":1}
+
+
+2015-10-8 18:10:08 MAIN WARN Stage not found in the script - Rule: 4 - Stage: 2
+2015-10-8 18:24:46 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+Pending ack added to database. 
+   Type: requestFeed 
+   Next stage: 2 
+   Request time: 2015-10-08 18:24:46 
+   Timeout: 60 
+   Args: {"feedid":1}
+
+Pending ack added to database. 
+   Type: setAttribute 
+   Next stage: 2 
+   Request time: 2015-10-08 18:24:46 
+   Timeout: 60 
+   Args: {"attributeUid":1}
+
+
+2015-10-9 14:17:08 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+Pending ack added to database. 
+   Type: requestFeed 
+   Next stage: 2 
+   Request time: 2015-10-09 14:17:08 
+   Timeout: 60 
+   Args: {"feedid":1}
+
+Pending ack added to database. 
+   Type: setAttribute 
+   Next stage: 2 
+   Request time: 2015-10-09 14:17:08 
+   Timeout: 60 
+   Args: {"attributeUid":1}
+
+
+2015-10-9 14:17:08 MAIN WARN Stage not found in the script - Rule: 4 - Stage: 2
+2015-10-9 14:18:53 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+Pending ack added to database. 
+   Type: requestFeed 
+   Next stage: 2 
+   Request time: 2015-10-09 14:18:53 
+   Timeout: 60 
+   Args: {"feedid":1}
+
+Pending ack added to database. 
+   Type: setAttribute 
+   Next stage: 2 
+   Request time: 2015-10-09 14:18:53 
+   Timeout: 60 
+   Args: {"attributeUid":1}
+
+
+2015-10-9 14:25:02 MAIN WARN Rule: 4 - Stage: 1 --- eval() output: 
+
+Pending ack added to database. 
+   Type: requestFeed 
+   Next stage: 2 
+   Request time: 2015-10-09 14:25:02 
+   Timeout: 60 
+   Args: {"feedid":1}
+
+Pending ack added to database. 
+   Type: setAttribute 
+   Next stage: 2 
+   Request time: 2015-10-09 14:25:02 
+   Timeout: 60 
+   Args: {"attributeUid":1}
+
+
+2015-10-9 14:25:02 MAIN WARN Stage not found in the script - Rule: 4 - Stage: 2

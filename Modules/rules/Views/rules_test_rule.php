@@ -80,7 +80,8 @@ $rules_developer_mode = true; // Force developer mode to allow print
                 error_reporting(-1);
                 ob_start(); // to get errors thrown by eval()
                 $rules->EvalCode($php_code);
-                $error = ob_get_clean();
+                $error = ob_get_contents();
+                ob_end_clean();
                 //echo $error;
                 $rules->printForDeveloper(strip_tags($error));
             } else {

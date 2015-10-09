@@ -32,7 +32,7 @@ else
   print_r($array_of_attributes_by_node);
   echo '</pre>'; */
 ?>
-<!--<script type="text/javascript" src="<?php //echo $path;                              ?>Lib/angularjs/angular.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo $path;            ?>Lib/angularjs/angular.min.js"></script>-->
 <script type="text/javascript" src="<?php echo $path; ?>Lib/angularjs/angular.js"></script>
 
 <!-- Visual programmer  -->
@@ -54,7 +54,7 @@ else
 <script>
     var moduleViewApp = angular.module('moduleViewApp', []);
 
-    moduleViewApp.controller('moduleViewAppCtrl', function ($scope, $window, $http) {
+    moduleViewApp.controller('moduleViewAppCtrl', function ($scope, $window) {
 
         /*  Objects in the scope  */
 <?php
@@ -77,6 +77,7 @@ if (isset($args['rule'])) {
             };
             //console.log($scope.rule_attributes);
             $scope.rule_saved = <?php echo isset($args['rule_saved']) ? json_encode($args['rule_saved']) : "null" ?>;
+
 <?php } else {
     ?>
             $scope.rule_attributes = {'ruleid': '', 'name': '', 'description': '', 'run_on': '', 'expiry_date': '', 'frequency': '', 'blocks': '', 'enabled': false};
@@ -97,42 +98,6 @@ if (isset($args['rule'])) {
                     + "&mode=" + mode;
             $window.location.href = "<?php echo $path; ?>" + href;
         };
-        $scope.test_rule = function () {
-            /*var req = {
-             method: 'POST',
-             url: 'rules/getPhpCode.json',
-             headers: {
-             'Content-Type': undefined
-             },
-             data: {test: 'test'}
-             }
-             
-             $http(req).then(function (data) {
-             $scope.xml_blocks = rulesIDE.generateXML();
-             $scope.php_code = data.php_code;
-             $scope.syntax_check = data.syntax_check;
-             $scope.show_php_code = true;
-             console.log(data);
-             });
-             */
-
-            /*$http.post("rules/getPhpCode.json", {'blocks': "'hola'"},{}).then(function (data) {
-             $scope.xml_blocks = rulesIDE.generateXML();
-             $scope.php_code = data.php_code;
-             $scope.syntax_check = data.syntax_check;
-             $scope.show_php_code = true;
-             console.log(data);
-             });
-             */
-            $http.get("rules/getAndCheckPhpCode.json?id=<?php echo $rule['ruleid'] ?>&blocks=" + rulesIDE.generateXML()).then(function (result) {
-                $scope.xml_blocks = rulesIDE.generateXML();
-                $scope.php_code = result.data.php_code;
-                $scope.syntax_check = result.data.syntax_check;
-                $scope.eval_result = result.data.eval_result;
-                $scope.show_php_code = true;
-                console.log(result);
-            });
-        };
         /*  End Functions in the scope  */
 
     })
@@ -146,7 +111,7 @@ if (isset($args['rule'])) {
         world.worldCanvas.focus();
         world.isDevMode = Boolean(<?php echo $isDev; ?>);
         world.setWidth(1170);
-        world.setHeight(450);
+        //world.setHeight(250);
 
         // Create IDE and add it to the world - Everything related to the IDE is in "emonCMS_RulesIDE_gui.js" 
         var array_of_feeds_by_tag = <?php echo json_encode($array_of_feeds_by_tag) ?>;
@@ -194,34 +159,11 @@ if (isset($args['rule'])) {
                 <tr><td><?php echo _('Expiry date') ?>: </td><td><input type="datetime" ng-model="rule_attributes.expiry_date"/><span>&nbsp;&nbsp;<?php echo _('YYYY-MM-DD - 0 for no expiry date') ?></span></td></tr>
                 <tr><td><?php echo _('Frequency') ?>: </td><td><input type="number" ng-model="rule_attributes.frequency"/><span>&nbsp;&nbsp;<?php echo _('seconds (if \'0\' the rule will only be run once)') ?></span></td></tr>
                 <tr><td><?php echo _('Enabled') ?>: </td><td><input type="checkbox" ng-model="rule_attributes.enabled" /></span></td></tr>
-                <!-- <tr id="blocks-programmer"><td><?php //echo _('Blocks')                                       ?>: </td><td><textarea ng-model="rule_attributes.blocks"/></td></tr>-->
+                <!-- <tr id="blocks-programmer"><td><?php //echo _('Blocks')                     ?>: </td><td><textarea ng-model="rule_attributes.blocks"/></td></tr>-->
             </table>
-            <h3><?php echo _('Script') ?></h3>
+            <h3><?php echo _('Script')?></h3>
             <div id="blocks-programmer">
                 <canvas id="world" tabindex="1" style="position: absolute"/>
-            </div>
-            <h3><?php echo _('Developer console') ?></h3>
-            <div id="developer-console">
-                <button ng-click="test_rule()"><?php echo _('Test rule') ?></button>
-
-                <p>ToDo if there is a syntax error in the php code the ajax crashes, i am not sure what the problem is but it seems that that the error when runing eval makes the server to send a 500 internal error message.</p>
-                <div ng-if="show_php_code">
-                    <h4><?php echo _('XML blocks') ?></h4>
-                    <pre>{{xml_blocks}}</pre>
-                    <h4><?php echo _('Php code') ?></h4>
-                    <p><?php echo _('Below is the php code generated for your rule') ?></p>
-                    <pre>{{php_code}}</pre>
-                    <h4><?php echo _('Sintax check') ?></h4>
-                    <p><?php echo _('This is the message we get when we run "php -l" with the generated code') ?></p>
-                    <pre>{{syntax_check}}</pre>
-                    <p ng-if="syntax_check !== 'No syntax errors detected in -'">
-                        <?php echo _('Because there are syntax errors, we have evaluated the code and this is the output:') ?>
-                    </p>
-                    <pre  ng-if="syntax_check !== 'No syntax errors detected in -'">{{eval_result}}</pre>
-
-                    <h4><?php echo _('Run the rule') ?></h4>
-                    <p><?php echo _('We run the rule for a minute') ?>  -  ToDo: run the rule (stage 1), keep checking acks</p>
-                </div>
             </div>
         </div>
     </div>

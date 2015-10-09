@@ -136,14 +136,32 @@ function rules_controller() {
                 }
             }
             break;
+        case 'getAndCheckPhpCode':
+            if ($session['read'] == 1) {
+                global $testing_rule; // Used as global to tell the methods (mainly the ones that deal with pending acks) we are testing. 
+                $testing_rule = true;
+                $rules_developer_mode = true; // Force developer mode to allow print
+
+                $fake_rule['blocks'] = get('blocks'); // we create this fake rule with nothing else than blocks as 'blocks are the only thing you need to generate the php code
+                $fake_rule['ruleid'] = get('id');
+                $result['php_code'] = $rules->stagesToPhp($fake_rule, 1, false);
+                $result['syntax_check'] = $rules->checkCodeSyntax($result['php_code']);
+
+                if ($result['syntax_check'] !== 'No syntax errors detected in -') { //in case of syntax error we eval the code to get some extra information about the errors
+               //     error_reporting(-1);
+                 //   ini_set('display_errors', 0); // We don't display errors/warnings notification as it messes up the headers to be returned and the return text doesn't reach the client
+//                    ob_start(); // to get errors thrown by eval()
+                    $result['eval_result'] = $rules->EvalCode($result['php_code']);
+//                    $error = ob_get_contents();
+ //                   ob_end_clean();
+                    //echo $error;
+                    //$result['eval_result'] = strip_tags($error);
+                }
+            } else {
+                $result = "Error: ERROR-CODE - permission denied";
+            }
+            break;
     }
 
-    //return array('content'=>$result);
     return array('content' => $result);
 }
-
-/*
- *     http://localhost/OpenEMan/rules/delete.html?ruleid=3
- * http://localhost/OpenEMan/rules/save-rule?name=%22name%22&description=%22descr%22&run_on=%22run&expiry_date=%22expiry%22&frequency=%22%22&blocks=%22nsls%22
- *  * */
-

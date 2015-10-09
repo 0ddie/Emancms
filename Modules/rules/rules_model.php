@@ -271,6 +271,7 @@ class Rules {
         if (!isset($rules_default_timeout))
             $rules_default_timeout = 60; // secs, defined in settings.php
 
+        ini_set('display_errors', 0); // We don't display errors/warnings notification as it messes up the headers to be returned and the return text doesn't reach the client
         ob_start();
 // 1) Declare variables
         $variables_string = $this->getBlocksString($blocks_string, 'variables');
@@ -281,12 +282,9 @@ class Rules {
         echo '$timedout = ' . (($timedout) ? 'true' : 'false') . ';';
         echo '$ruleid = ' . $rule['ruleid'] . ';';
         foreach ($variables->script as $var) {
-//print_r($var->block);
-//echo '$' . $var->block['var'] . ';';
             if ($this->blocksToPhp($var->block) != '$timedout')
                 echo $this->blocksToPhp($var->block) . ';';
         }
-        echo '';
 
 // 2) Declare variables that hold feeds ids
         $feeds_ids_string = $this->getBlocksString($blocks_string, 'feeds');
@@ -296,7 +294,6 @@ class Rules {
 //print_r($var->block);
             echo $this->blocksToPhp($id->block) . ' = (int) ' . $this->getVariableIdFromBlock($id->block) . ';';
         }
-        echo '';
 
 // 3) Declare variables that hold attributes ids
         $attributes_ids_string = $this->getBlocksString($blocks_string, 'attributes');
@@ -306,7 +303,6 @@ class Rules {
 //print_r($var->block);
             echo $this->blocksToPhp($id->block) . ' = (int) ' . $this->getVariableIdFromBlock($id->block) . ';';
         }
-        echo '';
 
 // 4) Switch for the Stages
         $stages_string = $this->getBlocksString($blocks_string, 'stages');
@@ -326,8 +322,9 @@ class Rules {
         }
         echo ' default:  $ruleid = $rule["ruleid"];  $this->log->warn("Stage not found in the script - Rule: ' . '$ruleid' . ' - Stage: $stage"); break;}';
 
-        $php_code = ob_get_contents(); // $php_code uses  for breaking lines
-        ob_clean();
+        $php_code = ob_get_contents();
+        ob_end_clean();
+
         return $this->formatPhpCode($php_code); // $php_code is just one line of code, after formating the code it becomes readable with <pre></pre>
     }
 
@@ -339,23 +336,19 @@ class Rules {
     }
 
     public function blocksToPhp($block) {
-        $this->printForDeveloper($block);
         if ($block['s']) { // if the block is command
             switch ($block['s']) {
                 case 'doIf':
                     return '   if(' . $this->blocksToPhp($block->block) . '){   ' . $this->blocksToPhp($block->script) . '}';
                     break;
                 case 'doIfElse':
-//print_r($block->script);
                     $statement = '   if(' . $this->blocksToPhp($block->block) . '){     ' . $this->blocksToPhp($block->script[0]) . '   }';
                     $statement .= '   else{     ' . $this->blocksToPhp($block->script[1]) . '   }';
                     return $statement;
                     break;
                 case 'requestFeed':
                     $feed_id = isset($block->l) ? (int) $block->l : $this->blocksToPhp($block->block);
-                    /* echo '<pre>';
-                      print_r($block);
-                      echo '</pre>'; */
+
                     $statement = '/** $register->sendRequestToNode()*/';
                     $statement .= '$this->addPendingAck("requestFeed", $ruleid, $stage + 1, ["feedid"=>' . $feed_id . '], $timeout);';
                     return $statement;
@@ -690,21 +683,23 @@ class Rules {
     public function runRule($rule, $stage, $timedout = false) {
         global $feed, $register;
 
-        $php_string = $this->stagesToPhp($rule, $stage, $timedout); // We run the stage 1 of the rule;
+        $php_string = $this->stagesToPhp($rule, $stage, $timedout);
         //$this->printForDeveloper($php_string);
         $syntax_error = $this->checkCodeSyntax($php_string);
         if ($syntax_error !== 'No syntax errors detected in -') {
             $this->log->warn("Rule: " . $rule['ruleid'] . " - There is an error with the syntax of the rule - The error message: $syntax_error");
             $this->printForDeveloper("Rule: " . $rule['ruleid'] . " - There is an error with the syntax of the rule - The error message: $syntax_error");
-            $this->printForDeveloper("Rule will still be run to get more informatin about the errors.");
+            $this->printForDeveloper("Rule will still be run to get more information about the errors.");
         }
-// eval the code. We run the code even if there has been syntax error, running eval and catching the output will let us display more errrors
+
+        // eval the code. We run the code even if there has been syntax error, running eval and catching the output will let us display more errrors
         $this->printForDeveloper("Running rule with ruleid: " . $rule['ruleid'] . ' - Stage: ' . $stage . ($timedout === true ? ' - Timedout: true' : ''));
         $this->printForDeveloper("eval()");
         error_reporting(-1);
         ob_start(); // to get errors thrown by eval()
         eval($php_string);
-        $eval_output = ob_get_clean();
+        $eval_output = ob_get_contents();
+        ob_end_clean();
         if ($eval_output != '') {
             $this->log->warn("Rule: " . $rule['ruleid'] . " - Stage: 1 --- eval() output: \n" . strip_tags($eval_output) . "\n");
             $this->printForDeveloper("Rule: " . $rule['ruleid'] . " - Stage: 1 --- eval() output: \n" . strip_tags($eval_output));
@@ -829,7 +824,13 @@ class Rules {
     }
 
     public function EvalCode($php_code) {
-        return eval($php_code);
+        error_reporting(0);
+        ini_set('display_errors', 0); // We don't display errors/warnings notification as it messes up the headers to be returned and the return text doesn't reach the client
+        ob_start(); // to get errors thrown by eval()
+        eval($php_code);
+        $message = ob_get_contents();
+        ob_end_clean();
+        return $message;
     }
 
 }

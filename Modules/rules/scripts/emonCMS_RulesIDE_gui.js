@@ -857,7 +857,7 @@ emonCMS_RulesIDE_Morph.prototype.loadBlocks = function (blocks_string) {
 
     // Load Stages
     loadStages(stages_string, this.stagesPane);
-    console.log(stages_string);
+    //console.log(stages_string);
 
 
     // Local functions
